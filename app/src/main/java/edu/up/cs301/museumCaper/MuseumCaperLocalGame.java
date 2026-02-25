@@ -45,7 +45,7 @@ public class MuseumCaperLocalGame extends LocalGame {
 	public MuseumCaperLocalGame(GameState state) {
 		// initialize the game state, with the counter value starting at 0
 		if (! (state instanceof MuseumCaperState)) {
-			state = new MuseumCaperState(0);
+			state = new MuseumCaperState();
 		}
 		this.gameState = (MuseumCaperState)state;
 		super.state = state;

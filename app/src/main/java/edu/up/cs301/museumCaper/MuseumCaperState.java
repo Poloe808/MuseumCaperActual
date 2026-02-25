@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 
@@ -10,22 +12,22 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  * @author Steven R. Vegdahl
  * @version July 2013
  */
+
+
 public class MuseumCaperState extends GameState {
-	
-	// to satisfy Serializable interface
-	private static final long serialVersionUID = 7737393762469851826L;
-	
-	// the value of the counter
-	private int counter;
-	
+
+	private int turn;
+    private boolean isVisible;
+    private int stolenPaintings;
+
 	/**
 	 * constructor, initializing the counter value from the parameter
-	 * 
-	 * @param counterVal
-	 * 		the value to which the counter's value should be initialized
-	 */
-	public MuseumCaperState(int counterVal) {
-		counter = counterVal;
+	 *
+     */
+	public MuseumCaperState() {
+        turn = 0;
+        isVisible = false;
+        stolenPaintings = 0;
 	}
 	
 	/**
@@ -35,8 +37,9 @@ public class MuseumCaperState extends GameState {
 	 * 		the object from which the copy should be made
 	 */
 	public MuseumCaperState(MuseumCaperState orig) {
-		// set the counter to that of the original
-		this.counter = orig.counter;
+        this.turn = orig.turn;
+        this.isVisible = orig.isVisible;
+        this.stolenPaintings = orig.stolenPaintings;
 	}
 
 	/**
@@ -45,17 +48,38 @@ public class MuseumCaperState extends GameState {
 	 * @return
 	 * 		the value of the counter
 	 */
-	public int getCounter() {
-		return counter;
+	public int getTurn() {
+        return this.turn;
 	}
-	
+
+    public boolean getIsVisible() {
+        return this.isVisible;
+    }
+
+    public int getStolenPaintings() {
+        return this.stolenPaintings;
+    }
 	/**
 	 * setter method for the counter
 	 * 
-	 * @param counter
+	 * @param newTurn
 	 * 		the value to which the counter should be set
 	 */
-	public void setCounter(int counter) {
-		this.counter = counter;
+	public void setTurn(int newTurn) {
+        turn = newTurn;
 	}
+
+    public void setVisible(boolean visibilityCheck) {
+        isVisible = visibilityCheck;
+    }
+
+    public int setStolenPaintings(int newStolenPaintings) {
+        stolenPaintings = newStolenPaintings;
+    }
+
+    public String toString() {
+        return "Turn: " + turn + "Is Thief Visible: "
+                + isVisible + "Amount of Stolen Paintings: " + stolenPaintings;
+
+    }
 }
