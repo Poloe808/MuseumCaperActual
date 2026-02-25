@@ -63,7 +63,8 @@ public class MuseumCaperState extends GameState {
 	 * setter method for the counter
 	 * 
 	 * @param newTurn
-	 * 		the value to which the counter should be set
+	 *
+     * the value to which the counter should be set
 	 */
 	public void setTurn(int newTurn) {
         turn = newTurn;
