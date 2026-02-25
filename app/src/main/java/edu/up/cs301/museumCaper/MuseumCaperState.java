@@ -74,8 +74,9 @@ public class MuseumCaperState extends GameState {
         isVisible = visibilityCheck;
     }
 
-    public int setStolenPaintings(int newStolenPaintings) {
+    public void setStolenPaintings(int newStolenPaintings) {
         stolenPaintings = newStolenPaintings;
+
     }
 
     public String toString() {

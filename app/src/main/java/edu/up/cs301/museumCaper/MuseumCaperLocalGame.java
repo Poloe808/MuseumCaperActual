@@ -64,8 +64,8 @@ public class MuseumCaperLocalGame extends LocalGame {
 			MuseumCaperMoveAction cma = (MuseumCaperMoveAction)action;
 
 			// Update the counter values based upon the action
-			int result = gameState.getCounter() + (cma.isPlus() ? 1 : -1);
-			gameState.setCounter(result);
+			//int result = gameState.getCounter() + (cma.isPlus() ? 1 : -1);
+			//gameState.setCounter(result);
 			
 			// denote that this was a legal/successful move
 			return true;
@@ -99,7 +99,7 @@ public class MuseumCaperLocalGame extends LocalGame {
 	protected String checkIfGameOver() {
 		
 		// get the value of the counter
-		int counterVal = this.gameState.getCounter();
+		int counterVal = 0;
 		
 		if (counterVal >= TARGET_MAGNITUDE) {
 			// counter has reached target magnitude, so return message that

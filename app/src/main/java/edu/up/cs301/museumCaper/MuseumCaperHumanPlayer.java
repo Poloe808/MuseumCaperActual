@@ -59,7 +59,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 	 */
 	protected void updateDisplay() {
 		// set the text in the appropriate widget
-		counterValueTextView.setText("" + state.getCounter());
+		//counterValueTextView.setText("" + state.getCounter());
 	}
 
 	/**
