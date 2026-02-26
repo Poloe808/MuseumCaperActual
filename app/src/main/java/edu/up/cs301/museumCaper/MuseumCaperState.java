@@ -19,7 +19,13 @@ public class MuseumCaperState extends GameState {
 	private int turn;
     private boolean isVisible;
     private int stolenPaintings;
-
+    private int currentPlayer;     // whose turn
+    private int thiefPlayerId;     // which player is the thief
+    private int numPlayers;
+    private Camera[][] cameras;        // camera locations
+    private boolean thiefEscaped;
+    private boolean thiefCaught;
+    private boolean thiefVisible;
 	/**
 	 * constructor, initializing the counter value from the parameter
 	 *
@@ -36,10 +42,24 @@ public class MuseumCaperState extends GameState {
 	 * @param orig
 	 * 		the object from which the copy should be made
 	 */
-	public MuseumCaperState(MuseumCaperState orig) {
+	public MuseumCaperState(MuseumCaperState orig, int playerID) {
         this.turn = orig.turn;
         this.isVisible = orig.isVisible;
         this.stolenPaintings = orig.stolenPaintings;
+        this.currentPlayer = orig.currentPlayer;
+        this.thiefPlayerId = orig.thiefPlayerId;
+        this.numPlayers = orig.numPlayers;
+        this.cameras = orig.cameras;
+        this.thiefEscaped = orig.thiefEscaped;
+        this.thiefCaught = orig.thiefCaught;
+        this.thiefVisible = orig.thiefVisible;
+
+        if(playerID == thiefPlayerId){
+            // have the coordinates of the thief
+        }else{
+            //have it hidden from everyone else.
+        }
+
 	}
 
 	/**
@@ -81,7 +101,9 @@ public class MuseumCaperState extends GameState {
 
     public String toString() {
         return "Turn: " + turn + "Is Thief Visible: "
-                + isVisible + "Amount of Stolen Paintings: " + stolenPaintings;
+                + isVisible + "Amount of Stolen Paintings: " + stolenPaintings +
+                "\nThief Escaped: " + thiefEscaped +
+                "\nThief Caught: " + thiefCaught;
 
     }
 }
