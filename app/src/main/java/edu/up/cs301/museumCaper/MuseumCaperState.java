@@ -13,6 +13,24 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  * @version July 2013
  */
 
+/**
+ * sequence of moves to finish game quickly
+ * thief enters through window in green room, moves two spaces to the nearest painting
+ *      MuseumCaperMoveAction()
+ *      MuseumCaperMoveAction()
+ * thief steals painting
+ *      MuseumCaperStealPaintingAction()
+ * guard one takes turn - rolls a one on move die
+ *      MuseumCaperUseEyesAction()
+ *      MuseumCaperMoveAction()
+ * thief moves back to the window
+ *      MuseumCaperMoveAction()
+ *      MuseumCaperMoveAction()
+ * thief checks lock, comes back unlocked
+ *      MuseumCaperCheckLockAction()
+ * thief escapes
+ *
+ */
 
 public class MuseumCaperState extends GameState {
 
