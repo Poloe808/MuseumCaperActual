@@ -26,7 +26,13 @@ public class MuseumCaperState extends GameState {
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
-	/**
+    private int[][] board = {{},{}};
+    int x;
+    int y;
+    private boolean unlocked;
+    boolean[] locks = {true,true,true,true,true,true,true,true,true,true,true};
+
+    /**
 	 * constructor, initializing the counter value from the parameter
 	 *
      */
@@ -53,6 +59,10 @@ public class MuseumCaperState extends GameState {
         this.thiefEscaped = orig.thiefEscaped;
         this.thiefCaught = orig.thiefCaught;
         this.thiefVisible = orig.thiefVisible;
+        this.x = orig.x;
+        this.y = orig.y;
+        this.locks = orig.locks;
+        this.unlocked = orig.unlocked;
 
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
@@ -104,6 +114,58 @@ public class MuseumCaperState extends GameState {
                 + isVisible + "Amount of Stolen Paintings: " + stolenPaintings +
                 "\nThief Escaped: " + thiefEscaped +
                 "\nThief Caught: " + thiefCaught;
+    }
+    public boolean stealPainting(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        if(board[x][y] == '?') {
+            setStolenPaintings(getStolenPaintings() + 1);
+        }
+        return true;
+    }
 
+    public boolean checkLock(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        int rand = (int)(Math.random()*2);
+
+        return true;
+    }
+
+    public boolean move(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean disableCamera(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean useEyes(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean motionDetector(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean endTurn(GameState action) {
+        if(!(action instanceof GameState)) {
+            return false;
+        }
+        return true;
     }
 }
