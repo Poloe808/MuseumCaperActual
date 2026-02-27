@@ -59,21 +59,34 @@ public class MuseumCaperLocalGame extends LocalGame {
 	 */
 	@Override
 	protected boolean makeMove(GameAction action) {
-        stealPainting(action);
-        checkLock(action);
-        move(action);
-        disableCamera(action);
-        useEyes(action);
-        motionDetector(action);
-        endTurn(action);
-
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        if(action instanceof MuseumCaperStealPaintingAction) {
+            return stealPainting(action);
+        }
+        if(action instanceof MuseumCaperCheckLockAction) {
+            return checkLock(action);
+        }
+        if(action instanceof MuseumCaperMoveAction) {
+            return move(action);
+        }
+        if(action instanceof MuseumCaperDisableCameraAction) {
+            return disableCamera(action);
+        }
+        if(action instanceof MuseumCaperUseEyesAction) {
+            return useEyes(action);
+        }
+        if(action instanceof MuseumCaperMotionDetectorAction) {
+            return motionDetector(action);
+        }
+        if(action instanceof MuseumCaperEndTurnAction) {
+            return endTurn(action);
+        }
         return false;
 	}//makeMove
 
     public boolean stealPainting(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
             gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
         }
@@ -81,48 +94,29 @@ public class MuseumCaperLocalGame extends LocalGame {
     }
 
     public boolean checkLock(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         int rand = (int)(Math.random()*2);
         for(int i=2;i< gameState.locks.length;i++) {
-
         }
         return true;
     }
 
     public boolean move(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         return true;
     }
 
     public boolean disableCamera(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         return true;
     }
 
     public boolean useEyes(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         return true;
     }
 
     public boolean motionDetector(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         return true;
     }
 
     public boolean endTurn(GameAction action) {
-        if(!(action instanceof GameAction)) {
-            return false;
-        }
         return true;
     }
 	/**

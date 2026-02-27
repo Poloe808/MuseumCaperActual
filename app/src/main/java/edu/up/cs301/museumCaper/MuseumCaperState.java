@@ -59,6 +59,7 @@ public class MuseumCaperState extends GameState {
         this.thiefEscaped = orig.thiefEscaped;
         this.thiefCaught = orig.thiefCaught;
         this.thiefVisible = orig.thiefVisible;
+        this.board = orig.board;
         this.x = orig.x;
         this.y = orig.y;
         this.locks = orig.locks;
