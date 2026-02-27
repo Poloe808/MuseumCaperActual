@@ -12,34 +12,37 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
  * @version September 2012
  */
 public class MuseumCaperMoveAction extends GameAction {
-	
+	private int row;
+    private int col;
 	// to satisfy the serializable interface
 	private static final long serialVersionUID = 28062013L;
 
 	//whether this move is a plus (true) or minus (false)
-	private boolean isPlus;
+
 	
 	/**
 	 * Constructor for the CounterMoveAction class.
 	 * 
 	 * @param player
 	 *            the player making the move
-	 * @param isPlus
-	 *            value to initialize this.isPlus
+	 *
 	 */
-	public MuseumCaperMoveAction(GamePlayer player, boolean isPlus) {
+	public MuseumCaperMoveAction(GamePlayer player, int row, int col) {
 		super(player);
-		this.isPlus = isPlus;
+        this.row = row;
+        this.col = col;
 	}
-	
+
 	/**
-	 * getter method, to tell whether the move is a "plus"
-	 * 
-	 * @return
-	 * 		a boolean that tells whether this move is a "plus"
+	 * getter method, for the row and col
+	 *
 	 */
-	public boolean isPlus() {
-		return isPlus;
-		
-	}
+}//class CaperMoveAction
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
 }//class CounterMoveAction

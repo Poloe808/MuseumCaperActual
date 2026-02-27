@@ -77,11 +77,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 		GameAction action = null;
 		if (button.getId() == R.id.plusButton) {
 			// plus button: create "increment" action
-			action = new MuseumCaperMoveAction(this, true);
+			action = new MuseumCaperMoveAction(this);
 		}
 		else if (button.getId() == R.id.minusButton) {
 			// minus button: create "decrement" action
-			action = new MuseumCaperMoveAction(this, false);
+			action = new MuseumCaperMoveAction(this.);
 		}
 		else {
 			// something else was pressed: ignore
