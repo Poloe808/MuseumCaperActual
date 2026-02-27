@@ -17,9 +17,13 @@ import android.widget.TextView;
 * display the game as it is progressing, so if there is no human player on the
 * device, this player will display a GUI that shows the value of the counter
 * as the game is being played.
-* 
-* @author Steven R. Vegdahl
-* @author Andrew M. Nuxoll
+*
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
 * @version September 2013
 */
 public class MuseumCaperComputerPlayer2 extends MuseumCaperComputerPlayer1 {

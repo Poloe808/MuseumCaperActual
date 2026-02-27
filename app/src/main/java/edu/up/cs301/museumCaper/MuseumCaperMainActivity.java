@@ -10,9 +10,12 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
 
 /**
  * this is the primary activity for Counter game
- * 
- * @author Andrew M. Nuxoll
- * @author Steven R. Vegdahl
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
  * @version July 2013
  */
 public class MuseumCaperMainActivity extends GameMainActivity {

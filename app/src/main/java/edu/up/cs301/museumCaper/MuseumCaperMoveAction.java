@@ -7,8 +7,12 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
  * A CounterMoveAction is an action that is a "move" the game: either increasing
  * or decreasing the counter value.
  *
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
  * @version September 2012
  */
 public class MuseumCaperMoveAction extends GameAction {

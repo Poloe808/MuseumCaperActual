@@ -8,9 +8,13 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * A computer-version of a counter-player.  Since this is such a simple game,
  * it just sends "+" and "-" commands with equal probability, at an average
  * rate of one per second. 
- * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
+ *
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
  * @version September 2013
  */
 public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Tickable {

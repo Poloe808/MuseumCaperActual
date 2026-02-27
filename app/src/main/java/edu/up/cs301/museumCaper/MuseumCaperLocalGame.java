@@ -10,9 +10,13 @@ import android.util.Log;
  * A class that represents the state of a game. In our counter game, the only
  * relevant piece of information is the value of the game's counter. The
  * CounterState object is therefore very simple.
- * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
+ *
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
  * @version July 2013
  */
 public class MuseumCaperLocalGame extends LocalGame {
