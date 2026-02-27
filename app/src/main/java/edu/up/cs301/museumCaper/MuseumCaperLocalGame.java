@@ -39,6 +39,9 @@ public class MuseumCaperLocalGame extends LocalGame {
 		return true;
 	}
 
+    public MuseumCaperLocalGame() {
+        MuseumCaperState gameState = new MuseumCaperState();
+    }
 	/**
 	 * This ctor should be called when a new counter game is started
 	 */
@@ -56,26 +59,72 @@ public class MuseumCaperLocalGame extends LocalGame {
 	 */
 	@Override
 	protected boolean makeMove(GameAction action) {
-		Log.i("action", action.getClass().toString());
-		
-		if (action instanceof MuseumCaperMoveAction) {
-		
-			// cast so that we Java knows it's a CounterMoveAction
-			MuseumCaperMoveAction cma = (MuseumCaperMoveAction)action;
+        stealPainting(action);
+        checkLock(action);
+        move(action);
+        disableCamera(action);
+        useEyes(action);
+        motionDetector(action);
+        endTurn(action);
 
-			// Update the counter values based upon the action
-			//int result = gameState.getCounter() + (cma.isPlus() ? 1 : -1);
-			//gameState.setCounter(result);
-			
-			// denote that this was a legal/successful move
-			return true;
-		}
-		else {
-			// denote that this was an illegal move
-			return false;
-		}
+        return false;
 	}//makeMove
-	
+
+    public boolean stealPainting(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
+            gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
+        }
+        return true;
+    }
+
+    public boolean checkLock(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        int rand = (int)(Math.random()*2);
+        for(int i=2;i< gameState.locks.length;i++) {
+
+        }
+        return true;
+    }
+
+    public boolean move(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean disableCamera(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean useEyes(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean motionDetector(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean endTurn(GameAction action) {
+        if(!(action instanceof GameAction)) {
+            return false;
+        }
+        return true;
+    }
 	/**
 	 * send the updated state to a given player
 	 */
@@ -83,8 +132,7 @@ public class MuseumCaperLocalGame extends LocalGame {
 	protected void sendUpdatedStateTo(GamePlayer p) {
 		// this is a perfect-information game, so we'll make a
 		// complete copy of the state to send to the player
-		p.sendInfo(new MuseumCaperState(this.gameState));
-		
+		p.sendInfo(new MuseumCaperState(this.gameState, getPlayerIdx(p)));
 	}//sendUpdatedSate
 	
 	/**
@@ -97,31 +145,8 @@ public class MuseumCaperLocalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
-		
-		// get the value of the counter
-		int counterVal = 0;
-		
-		if (counterVal >= TARGET_MAGNITUDE) {
-			// counter has reached target magnitude, so return message that
-			// player 0 has won.
-			return playerNames[0]+" has won.";
-		}
-		else if (counterVal <= -TARGET_MAGNITUDE) {
-			// counter has reached negative of target magnitude; if there
-			// is a second player, return message that this player has won,
-			// otherwise that the first player has lost
-			if (playerNames.length >= 2) {
-				return playerNames[1]+" has won.";
-			}
-			else {
-				return playerNames[0]+" has lost.";
-			}
-		}else {
-			// game is still between the two limit: return null, as the game
-			// is not yet over
-			return null;
-		}
-
+        return null;
 	}
+
 
 }// class CounterLocalGame

@@ -78,6 +78,9 @@ public class MuseumCaperState extends GameState {
 	 * @return
 	 * 		the value of the counter
 	 */
+    public int[][] getBoard() {
+        return this.board;
+    }
 	public int getTurn() {
         return this.turn;
 	}
@@ -115,57 +118,5 @@ public class MuseumCaperState extends GameState {
                 "\nThief Escaped: " + thiefEscaped +
                 "\nThief Caught: " + thiefCaught;
     }
-    public boolean stealPainting(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        if(board[x][y] == '?') {
-            setStolenPaintings(getStolenPaintings() + 1);
-        }
-        return true;
-    }
 
-    public boolean checkLock(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        int rand = (int)(Math.random()*2);
-
-        return true;
-    }
-
-    public boolean move(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean disableCamera(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean useEyes(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean motionDetector(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean endTurn(GameState action) {
-        if(!(action instanceof GameState)) {
-            return false;
-        }
-        return true;
-    }
 }
