@@ -36,6 +36,8 @@ public class MuseumCaperState extends GameState {
 	 * @param orig
 	 * 		the object from which the copy should be made
 	 */
+    //double check this every now and again to make sure we dont need a
+    //deep copy constructor
 	public MuseumCaperState(MuseumCaperState orig) {
         this.turn = orig.turn;
         this.isVisible = orig.isVisible;
