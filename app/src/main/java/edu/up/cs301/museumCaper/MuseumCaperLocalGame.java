@@ -91,9 +91,10 @@ public class MuseumCaperLocalGame extends LocalGame {
 	}//makeMove
 
     public boolean stealPainting(GameAction action) {
-        if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
-            gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
-        }
+        // I fix later - Logan
+        //if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
+        //    gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
+        //}
         return true;
     }
 

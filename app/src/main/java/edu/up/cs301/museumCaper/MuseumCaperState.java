@@ -1,6 +1,7 @@
 package edu.up.cs301.museumCaper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
@@ -38,6 +39,9 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 public class MuseumCaperState extends GameState {
 
+    //these are statics that just make the code more readable
+    private static final boolean TOP = true;
+    private static final boolean LEFT = false;
 	private int turn;
     private boolean isVisible;
     private int stolenPaintings;
@@ -48,7 +52,10 @@ public class MuseumCaperState extends GameState {
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
-    private int[][] board = {{},{}};
+    //fun fact, the board is 12 tiles long, 11 tiles tall, but with the way i'm implementing walls
+    //its gonna be a 12x11 2D ArrayList
+    //Changed this into a 2D Array list, that carries MapTiles for each coordinate plane
+    private List<List<MapTile>> board;
     int x;
     int y;
     private boolean unlocked;
@@ -62,6 +69,77 @@ public class MuseumCaperState extends GameState {
         turn = 0;
         isVisible = false;
         stolenPaintings = 0;
+
+        board = new ArrayList(11);
+        //set up the board and maptiles
+        for(int row = 0; row < 12; row++){
+            board.add(new ArrayList<>(12));
+            for(int col = 0; col < 13; col++){
+                board.get(row).add(new MapTile());
+            }
+        }
+        //set up the walls manually (I'll double check this with pen&paper -Logan <3)
+
+        //This represents the purple room (top left)
+        setWalls(TOP, 0, 2, 2);
+        setWalls(TOP, 0, 2, 5);
+        setWalls(LEFT, 2, 4, 0);
+        setWalls(LEFT, 2, 3, 3);
+
+        //This represents the red room (top)
+        setWalls(TOP, 3, 8, 0);
+        setWalls(LEFT, 0, 1, 3);
+        setWalls(LEFT, 0, 1, 9);
+        setTopWall(2, 3);
+        setTopWall(2, 5);
+        setTopWall(2, 6);
+        setTopWall(2, 8);
+
+        //this represents the blue room (top right)
+        setWalls(TOP, 9, 11, 3);
+        setWalls(TOP, 9, 11, 5);
+        setLeftWall(2,9);
+        setLeftWall(2, 12);
+        setLeftWall(3, 12);
+
+        //this represents the green room (bottom right)
+        setWalls(TOP, 9, 11, 5);
+        setWalls(TOP, 9, 11, 10);
+        //this one is unique as it encroaches one above it's room (just the one below dis one)
+        setWalls(LEFT, 4,8, 12);
+        setWalls(LEFT, 5,6,9);
+        setLeftWall(9, 9);
+
+        //this represents the white room (center) (may need modifications to make more readable)
+        setWalls(LEFT, 3, 7,5);
+        //open up a pooka in the set walls
+        board.get(6).get(4).setLeftWall(false);
+        setWalls(LEFT, 3, 7, 8);
+        board.get(5).get(8).setLeftWall(false);
+        setTopWall(3,4);
+        setTopWall(3, 7);
+        setTopWall(8,4);
+        setTopWall(8, 7);
+
+        //these represent the rooms on the bottom
+        setTopWall(9,3);
+        setTopWall(9,8);
+        setWalls(TOP, 3,8,12);
+        setWalls(LEFT, 9, 10, 3);
+        setWalls(LEFT, 9,10,5);
+        setWalls(LEFT, 9, 10, 7);
+        setWalls(LEFT, 9, 10, 9);
+
+        //Yellow room =)
+        setWalls(TOP, 0, 2, 6);
+        setWalls(TOP, 0, 2, 9);
+        setWalls(LEFT, 6, 8,0);
+        setLeftWall(6,3);
+        setLeftWall(8,3);
+
+        //set cameras manually
+        //set locks manually
+        //set paintings manually
 	}
 	
 	/**
@@ -101,7 +179,7 @@ public class MuseumCaperState extends GameState {
 	 * @return
 	 * 		the value of the counter
 	 */
-    public int[][] getBoard() {
+    public List<List<MapTile>> getBoard() {
         return this.board;
     }
 	public int getTurn() {
@@ -142,4 +220,33 @@ public class MuseumCaperState extends GameState {
                 "\nThief Caught: " + thiefCaught;
     }
 
+    //this is a helper method to set ONE top wall in the specified coordinates
+    public void setTopWall(int row, int col){
+        board.get(row).get(col).setTopWall(true);
+    }
+
+    public void setLeftWall(int row, int col){
+        board.get(row).get(col).setLeftWall(true);
+    }
+
+    //This is a helper method to help set the walls in the constructor (like big rows of walls)
+    //for side, true top walls, false for left walls
+    //startBound for where u wanna begin, endBound for where to end
+    //pos is the row/col the placing is taking place in
+    //example: setWalls(true, 3, 5, 0); will place top walls in board positions (0,3), (0,4), & (0,5)
+    //probably should've just split this into two methods but it too late :sob:
+    public void setWalls(boolean side, int startBound, int endBound, int pos){
+        //Top walls!!
+        if(side){
+            for(int col = startBound; col <= endBound; col++){
+                setTopWall(pos, col);
+            }
+        }
+        //Left Walls!
+        else if(!side){
+            for(int row = startBound; row <= endBound; row++){
+                setLeftWall(row, pos);
+            }
+        }
+    }
 }
