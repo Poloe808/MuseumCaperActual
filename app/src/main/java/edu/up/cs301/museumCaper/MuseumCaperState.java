@@ -124,7 +124,7 @@ public class MuseumCaperState extends GameState {
         //these represent the rooms on the bottom
         setTopWall(9,3);
         setTopWall(9,8);
-        setWalls(TOP, 3,8,12);
+        setWalls(TOP, 3,8,11);
         setWalls(LEFT, 9, 10, 3);
         setWalls(LEFT, 9,10,5);
         setWalls(LEFT, 9, 10, 7);
