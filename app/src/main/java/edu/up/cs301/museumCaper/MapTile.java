@@ -9,6 +9,7 @@ package edu.up.cs301.museumCaper;
  * call a position on the board array, and use the getters/setters associated in this class
  */
 public class MapTile {
+    //todo add lock stuff
     private boolean hasCamera;
     private boolean hasThief;
     private boolean hasGuard;
