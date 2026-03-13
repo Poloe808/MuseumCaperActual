@@ -15,11 +15,19 @@ public class MapTile {
     private boolean hasGuard;
     private boolean hasLeftWall;
     private boolean hasTopWall;
-
+    private boolean hasPainting;
     public MapTile(){
         this.hasCamera = true;
         this.hasThief = true;
         this.hasGuard = true;
+    }
+
+    public MapTile(MapTile m){
+        this.hasCamera = m.hasCamera;
+        this.hasThief = m.hasThief;
+        this.hasGuard = m.hasGuard;
+        this.hasLeftWall = m.hasLeftWall;
+        this.hasTopWall = m.hasLeftWall;
     }
 
     //Getters
@@ -28,6 +36,7 @@ public class MapTile {
     public boolean getGuard(){return hasGuard;}
     public boolean getLeftWall(){return hasLeftWall;}
     public boolean getTopWall(){return hasTopWall;}
+    public boolean getHasPainting(){return hasPainting;}
 
     //Setters
     public void setCamera(boolean status){hasCamera = status;}
@@ -35,4 +44,6 @@ public class MapTile {
     public void setGuard(boolean status){hasGuard = status;}
     public void setLeftWall(boolean status){hasLeftWall = status;}
     public void setTopWall(boolean status){hasTopWall = status;}
+    public boolean setHasPainting(boolean status){hasPainting = status;}
+
 }

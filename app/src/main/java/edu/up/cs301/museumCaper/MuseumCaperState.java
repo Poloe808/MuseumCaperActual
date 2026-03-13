@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import android.graphics.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,9 @@ public class MuseumCaperState extends GameState {
     private boolean isVisible;
     private int stolenPaintings;
     private int currentPlayer;     // whose turn
+    //change this so the thief has a boolean (is turn) and the guards have the int
+    //end of every thief turn change boolean to false, at the end of every guard turn
+    //  change boolean to true, increment by one
     private int thiefPlayerId;     // which player is the thief
     private int numPlayers;
     private Camera[][] cameras;        // camera locations
@@ -60,6 +65,13 @@ public class MuseumCaperState extends GameState {
     int y;
     private boolean unlocked;
     boolean[] locks = {true,true,true,true,true,true,true,true,true,true,true};
+
+    Point theifLoc;
+    Point guardOne;
+    Point guardTwo;
+    Point guardThree;
+
+    Point[] playerLocs = {theifLoc, guardOne, guardTwo, guardThree};
 
     /**
 	 * constructor, initializing the counter value from the parameter
@@ -78,6 +90,14 @@ public class MuseumCaperState extends GameState {
                 board.get(row).add(new MapTile());
             }
         }
+
+        //player location initialization
+        theifLoc = new Point(0,0);
+        guardOne = new Point(0,0);
+        guardTwo = new Point(0,0);
+        guardThree = new Point(0,0);
+
+
         //set up the walls manually (I'll double check this with pen&paper -Logan <3)
 
         //This represents the purple room (top left)
@@ -165,6 +185,11 @@ public class MuseumCaperState extends GameState {
         this.locks = orig.locks;
         this.unlocked = orig.unlocked;
 
+        this.theifLoc = new Point(theifLoc);
+        this.guardOne = new Point(guardOne);
+        this.guardTwo = new Point(guardTwo);
+        this.guardThree = new Point(guardThree);
+
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
         }else{
@@ -193,6 +218,11 @@ public class MuseumCaperState extends GameState {
     public int getStolenPaintings() {
         return this.stolenPaintings;
     }
+
+    public int getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+
 	/**
 	 * setter method for the counter
 	 * 
