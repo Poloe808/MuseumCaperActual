@@ -44,6 +44,6 @@ public class MapTile {
     public void setGuard(boolean status){hasGuard = status;}
     public void setLeftWall(boolean status){hasLeftWall = status;}
     public void setTopWall(boolean status){hasTopWall = status;}
-    public boolean setHasPainting(boolean status){hasPainting = status;}
+    public void setHasPainting(boolean status){hasPainting = status;}
 
 }
