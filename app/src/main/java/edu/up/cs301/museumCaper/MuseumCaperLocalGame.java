@@ -4,6 +4,8 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 import edu.up.cs301.GameFramework.LocalGame;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
+
+import android.graphics.Point;
 import android.util.Log;
 
 /**
@@ -73,7 +75,7 @@ public class MuseumCaperLocalGame extends LocalGame {
             return checkLock(action);
         }
         if(action instanceof MuseumCaperMoveAction) {
-            return move(action);
+            return move((MuseumCaperMoveAction)action);
         }
         if(action instanceof MuseumCaperDisableCameraAction) {
             return disableCamera(action);
@@ -95,6 +97,18 @@ public class MuseumCaperLocalGame extends LocalGame {
         //if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
         //    gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
         //}
+        if (gameState.getCurrentPlayer() == 0){
+            if (gameState.getBoard().get(gameState.theifLoc.y).get(gameState.theifLoc.x).getHasPainting()){
+                gameState.getBoard().get(gameState.theifLoc.y).get(gameState.theifLoc.x).setHasPainting(false);
+                //chjange the turn order (via setting boolean to false)
+                //increment stolen paintings by 1
+                gameState.setStolenPaintings(gameState.getStolenPaintings()+1);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
         return true;
     }
 
@@ -105,7 +119,71 @@ public class MuseumCaperLocalGame extends LocalGame {
         return true;
     }
 
-    public boolean move(GameAction action) {
+    public boolean move(MuseumCaperMoveAction action) {
+        //click button to move (left, right, up, down)
+
+
+        //creates move action -- passes in who made request + direction they want to move in (sets x or y away from 0)
+        int xDir = action.getX();
+        int yDir = action.getY();
+
+        if (gameState.getCurrentPlayer() == 0){
+            Point currentPoint = gameState.playerLocs[0];
+            Point destPoint = new Point(currentPoint.x + xDir, currentPoint.y + yDir);
+
+            MapTile currentTile = gameState.getBoard().get(currentPoint.y).get(currentPoint.x);
+
+            if(gameState.getBoard().get(destPoint.y).get(destPoint.x) == null){
+                return false;
+            }
+            MapTile destTile = gameState.getBoard().get(destPoint.y).get(destPoint.x);
+
+            if(xDir == -1){
+                if (currentTile.getLeftWall()){
+                    return false;
+                }
+                else{
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    gameState.playerLocs[0] = destPoint;
+                }
+            }
+            if(xDir == 1) {
+                if (destTile.getLeftWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    gameState.playerLocs[0] = destPoint;
+                }
+            }
+            if(yDir == -1) {
+                if (destTile.getTopWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    gameState.playerLocs[0] = destPoint;
+                }
+            }
+            if(yDir == 1) {
+                if (currentTile.getTopWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    gameState.playerLocs[0] = destPoint;
+                }
+            }
+        }
+
+        //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
+
+
+        //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
+        //anticipating 1(+) out of bounds errors
+        //check if move is valid -- conflicting object on dest tile
+        //if valid, move piece by setting player boolean on current tile to false + dest tile to true
         return true;
     }
 
@@ -114,6 +192,11 @@ public class MuseumCaperLocalGame extends LocalGame {
     }
 
     public boolean useEyes(GameAction action) {
+        //check in all directions until u hit a wall, then stop
+        //start checking in one direction
+        //if no thief, check if wall,
+        //if no wall, check one above
+        //keep checking until there is a thief or a wall, thren swithch craridnal direcitons
         return true;
     }
 

@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import android.view.View;
+
 import edu.up.cs301.GameFramework.players.GamePlayer;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 
@@ -16,8 +18,9 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
  * @version September 2012
  */
 public class MuseumCaperMoveAction extends GameAction {
-    private int row;
-    private int col;
+    private int x;
+    private int y;
+    private boolean valid;
     // to satisfy the serializable interface
     private static final long serialVersionUID = 28062013L;
 
@@ -31,22 +34,34 @@ public class MuseumCaperMoveAction extends GameAction {
      *            the player making the move
      *
      */
-    public MuseumCaperMoveAction(GamePlayer player, int row, int col) {
+    public MuseumCaperMoveAction(GamePlayer player, int x, int y) {
         super(player);
-        this.row = row;
-        this.col = col;
+        this.x = x;
+        this.y = y;
     }
 
     /**
      * getter method, for the row and col
      *
      */
-    public int getCol() {
-        return col;
+    public int getX() {
+        return x;
     }
 
-    public int getRow() {
-        return row;
+    public int getY() {
+        return y;
     }
+
+    //public GamePlayer getGamePlayer() {return player;}
+
+
+    //click button to move (left, right, up, down)
+    //creates move action -- passes in who made request + direction they want to move in (sets x or y away from 0)
+    //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
+    //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
+    //anticipating 1(+) out of bounds errors
+    //check if move is valid -- conflicting object on dest tile
+    //if valid, move piece by setting player boolean on current tile to false + dest tile to true
+
 
 }//class CounterMoveAction
