@@ -196,19 +196,19 @@ public class MuseumCaperState extends GameState {
         this.guardTwo = new Point(guardTwo);
         this.guardThree = new Point(guardThree);
 
-        this.board = new ArrayList(11);
-
         for(int row = 0; row < board.toArray().length; row++){
             this.board.add(new ArrayList<>(12));
             for(int col = 0; col < board.get(0).toArray().length; col++){
                 this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
             }
         }
+        this.cameras = new ArrayList<Camera>(orig.cameras);
+        this.paintings = new ArrayList<Painting>(orig.paintings);
+        this.locksList = new ArrayList<Lock>(orig.locksList);
 
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
-        }else{
-            //have it hidden from everyone else.
+            this.thiefLoc = new Point(orig.thiefLoc);
         }
 
 	}
