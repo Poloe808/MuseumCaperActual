@@ -9,9 +9,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 /**
- * A class that represents the state of a game. In our counter game, the only
- * relevant piece of information is the value of the game's counter. The
- * CounterState object is therefore very simple.
+ * A class that represents the state of a game.
  *
  *
  * @author Logan Ortogero
@@ -19,16 +17,10 @@ import android.util.Log;
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
  *
- * @version July 2013
+ * @version February 2026
  */
 public class MuseumCaperLocalGame extends LocalGame {
 
-	// When a counter game is played, any number of players. The first player
-	// is trying to get the counter value to TARGET_MAGNITUDE; the second player,
-	// if present, is trying to get the counter to -TARGET_MAGNITUDE. The
-	// remaining players are neither winners nor losers, but can interfere by
-	// modifying the counter.
-	public static final int TARGET_MAGNITUDE = 10;
 
 	// the game's state
 	private MuseumCaperState gameState;
@@ -36,21 +28,32 @@ public class MuseumCaperLocalGame extends LocalGame {
 	/**
 	 * can this player move
 	 * 
-	 * @return
-	 * 		true, because all player are always allowed to move at all times,
-	 * 		as this is a fully asynchronous game
+	 * @param playerIdx the player id of the player trying to make a move
+     * @return true if player if matches current player in turn order
+	 *
 	 */
 	@Override
 	protected boolean canMove(int playerIdx) {
-		return true;
+        if(playerIdx == gameState.getCurrentPlayer()){
+            return true;
+        }
+        return false;
 	}
 
+    /**
+     * constructor for LocalGame
+     */
     public MuseumCaperLocalGame() {
         MuseumCaperState gameState = new MuseumCaperState();
     }
 	/**
 	 * This ctor should be called when a new counter game is started
 	 */
+
+    /**
+     *
+     * @param state
+     */
 	public MuseumCaperLocalGame(GameState state) {
 		// initialize the game state, with the counter value starting at 0
 		if (! (state instanceof MuseumCaperState)) {
@@ -60,9 +63,7 @@ public class MuseumCaperLocalGame extends LocalGame {
 		super.state = state;
 	}
 
-	/**
-	 * The only type of GameAction that should be sent is CounterMoveAction
-	 */
+
 	@Override
 	protected boolean makeMove(GameAction action) {
         if(!(action instanceof GameAction)) {
@@ -180,8 +181,6 @@ public class MuseumCaperLocalGame extends LocalGame {
         }
 
         //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
-
-
         //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
         //anticipating 1(+) out of bounds errors
         //check if move is valid -- conflicting object on dest tile
