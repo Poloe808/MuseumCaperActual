@@ -9,21 +9,24 @@ package edu.up.cs301.museumCaper;
  * call a position on the board array, and use the getters/setters associated in this class
  */
 public class MapTile {
-    //todo add lock stuff
-    private boolean hasCamera;
+    private Camera Camera;
     private boolean hasThief;
     private boolean hasGuard;
     private boolean hasLeftWall;
     private boolean hasTopWall;
-    private boolean hasPainting;
+    private Painting painting;
+    private Lock lock;
+
+
     public MapTile(){
-        this.hasCamera = true;
-        this.hasThief = true;
-        this.hasGuard = true;
+        this.hasThief = false;
+        this.hasGuard = false;
     }
 
     public MapTile(MapTile m){
-        this.hasCamera = m.hasCamera;
+        this.Camera = new Camera(m.Camera);
+        this.painting = new Painting(m.painting);
+        this.lock = new Lock(m.lock);
         this.hasThief = m.hasThief;
         this.hasGuard = m.hasGuard;
         this.hasLeftWall = m.hasLeftWall;
@@ -31,19 +34,24 @@ public class MapTile {
     }
 
     //Getters
-    public boolean getCamera(){return hasCamera;}
+    public Camera getCamera(){return Camera;}
+    public boolean hasCamera(){return (Camera != null);}
+    public Painting getHasPainting(){return painting;}
+    public boolean hasPainting(){return (painting != null);}
     public boolean getThief(){return hasThief;}
     public boolean getGuard(){return hasGuard;}
     public boolean getLeftWall(){return hasLeftWall;}
     public boolean getTopWall(){return hasTopWall;}
-    public boolean getHasPainting(){return hasPainting;}
 
     //Setters
-    public void setCamera(boolean status){hasCamera = status;}
     public void setThief(boolean status){hasThief = status;}
     public void setGuard(boolean status){hasGuard = status;}
     public void setLeftWall(boolean status){hasLeftWall = status;}
     public void setTopWall(boolean status){hasTopWall = status;}
-    public boolean setHasPainting(boolean status){hasPainting = status;}
+    public void setCamera(Camera c){Camera = c;}
+    public void setHasPainting(Painting p){painting = p;}
+    public void removeCamera(){Camera.disableCamera(); Camera = null;}
+    public void removePainting(){painting = null;}
+
 
 }

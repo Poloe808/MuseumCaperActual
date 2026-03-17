@@ -53,7 +53,9 @@ public class MuseumCaperState extends GameState {
     //  change boolean to true, increment by one
     private int thiefPlayerId;     // which player is the thief
     private int numPlayers;
-    private Camera[][] cameras;        // camera locations
+    private List<Camera> cameras;        // camera locations
+    private List<Painting> paintings;
+    private List<Lock> locks;
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
@@ -64,7 +66,7 @@ public class MuseumCaperState extends GameState {
     int x;
     int y;
     private boolean unlocked;
-    boolean[] locks = {true,true,true,true,true,true,true,true,true,true,true};
+    boolean[] locks = {true,true,true,true,true,true,false,false,false,false,false};
 
     Point theifLoc;
     Point guardOne;
@@ -97,6 +99,8 @@ public class MuseumCaperState extends GameState {
         guardTwo = new Point(0,0);
         guardThree = new Point(0,0);
 
+        //Adding new Cameras to the arraylist
+        cameras.add(new Camera(1));
 
         //set up the walls manually (I'll double check this with pen&paper -Logan <3)
 
