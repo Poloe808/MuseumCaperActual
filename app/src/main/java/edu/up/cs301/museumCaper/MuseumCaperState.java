@@ -161,7 +161,7 @@ public class MuseumCaperState extends GameState {
         //set locks manually
         //set paintings manually
 	}
-	
+
 	/**
 	 * copy constructor; makes a copy of the original object
 	 * 
