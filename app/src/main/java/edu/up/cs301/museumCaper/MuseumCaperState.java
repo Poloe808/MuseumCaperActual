@@ -51,9 +51,12 @@ public class MuseumCaperState extends GameState {
     //change this so the thief has a boolean (is turn) and the guards have the int
     //end of every thief turn change boolean to false, at the end of every guard turn
     //  change boolean to true, increment by one
+    private boolean isThiefTurn; //because thief goes every other turn
     private int thiefPlayerId;     // which player is the thief
     private int numPlayers;
-    private Camera[][] cameras;        // camera locations
+    private List<Camera> cameras;        // camera locations
+    private List<Painting> paintings;
+    private List<Lock> locks;
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
@@ -64,14 +67,14 @@ public class MuseumCaperState extends GameState {
     int x;
     int y;
     private boolean unlocked;
-    boolean[] locks = {true,true,true,true,true,true,true,true,true,true,true};
+    boolean[] locks = {true,true,true,true,true,true,false,false,false,false,false};
 
-    Point theifLoc;
+    Point thiefLoc;
     Point guardOne;
     Point guardTwo;
     Point guardThree;
 
-    Point[] playerLocs = {theifLoc, guardOne, guardTwo, guardThree};
+    Point[] playerLocs = {thiefLoc, guardOne, guardTwo, guardThree};
 
     /**
 	 * constructor, initializing the counter value from the parameter
@@ -81,6 +84,7 @@ public class MuseumCaperState extends GameState {
         turn = 0;
         isVisible = false;
         stolenPaintings = 0;
+        isThiefTurn = true;
 
         board = new ArrayList(11);
         //set up the board and maptiles
@@ -92,11 +96,13 @@ public class MuseumCaperState extends GameState {
         }
 
         //player location initialization
-        theifLoc = new Point(0,0);
+        thiefLoc = new Point(0,0);
         guardOne = new Point(0,0);
         guardTwo = new Point(0,0);
         guardThree = new Point(0,0);
 
+        //Adding new Cameras to the arraylist
+        cameras.add(new Camera(1));
 
         //set up the walls manually (I'll double check this with pen&paper -Logan <3)
 
@@ -173,6 +179,7 @@ public class MuseumCaperState extends GameState {
         this.isVisible = orig.isVisible;
         this.stolenPaintings = orig.stolenPaintings;
         this.currentPlayer = orig.currentPlayer;
+        this.isThiefTurn = orig.isThiefTurn;
         this.thiefPlayerId = orig.thiefPlayerId;
         this.numPlayers = orig.numPlayers;
         this.cameras = orig.cameras;
@@ -185,7 +192,7 @@ public class MuseumCaperState extends GameState {
         this.locks = orig.locks;
         this.unlocked = orig.unlocked;
 
-        this.theifLoc = new Point(theifLoc);
+        this.thiefLoc = new Point(thiefLoc);
         this.guardOne = new Point(guardOne);
         this.guardTwo = new Point(guardTwo);
         this.guardThree = new Point(guardThree);
@@ -221,6 +228,10 @@ public class MuseumCaperState extends GameState {
 
     public int getCurrentPlayer() {
         return this.currentPlayer;
+    }
+
+    public Point getThiefLoc(){
+        return this.thiefLoc;
     }
 
 	/**
@@ -278,5 +289,9 @@ public class MuseumCaperState extends GameState {
                 setLeftWall(row, pos);
             }
         }
+    }
+
+    public void setIsThiefTurn(){
+        isThiefTurn = !(isThiefTurn);
     }
 }

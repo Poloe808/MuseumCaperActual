@@ -15,9 +15,11 @@ public class Camera {
         working = true;
         cameraNum = number;
     }
-
-    public void disableCamera(Camera camera){
-        camera.working = false;
+    public Camera(Camera c){
+        this.working = c.working;
+        this.cameraNum = c.cameraNum;
     }
+
+    public void disableCamera(){working = false;}
 }
 
