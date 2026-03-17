@@ -60,7 +60,7 @@ public class MuseumCaperState extends GameState {
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
-    //fun fact, the board is 12 tiles long, 11 tiles tall, but with the way i'm implementing walls
+    //fun fact, the board is 12 tiles long/cols, 11 tiles tall/rows, but with the way i'm implementing walls
     //its gonna be a 12x11 2D ArrayList
     //Changed this into a 2D Array list, that carries MapTiles for each coordinate plane
     private List<List<MapTile>> board;
@@ -185,7 +185,7 @@ public class MuseumCaperState extends GameState {
         this.thiefEscaped = orig.thiefEscaped;
         this.thiefCaught = orig.thiefCaught;
         this.thiefVisible = orig.thiefVisible;
-        this.board = orig.board;
+
         this.x = orig.x;
         this.y = orig.y;
         this.locksList = orig.locksList;
@@ -196,10 +196,19 @@ public class MuseumCaperState extends GameState {
         this.guardTwo = new Point(guardTwo);
         this.guardThree = new Point(guardThree);
 
+        for(int row = 0; row < board.toArray().length; row++){
+            this.board.add(new ArrayList<>(12));
+            for(int col = 0; col < board.get(0).toArray().length; col++){
+                this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
+            }
+        }
+        this.cameras = new ArrayList<Camera>(orig.cameras);
+        this.paintings = new ArrayList<Painting>(orig.paintings);
+        this.locksList = new ArrayList<Lock>(orig.locksList);
+
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
-        }else{
-            //have it hidden from everyone else.
+            this.thiefLoc = new Point(orig.thiefLoc);
         }
 
 	}
