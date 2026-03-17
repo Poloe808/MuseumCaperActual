@@ -32,6 +32,8 @@ public class MuseumCaperMoveAction extends GameAction {
      *
      * @param player
      *            the player making the move
+     * @param x horizontal move value (1 moves right, -1 moves left)
+     * @param y vertical move value (1 moves up, -1 moves down)
      *
      */
     public MuseumCaperMoveAction(GamePlayer player, int x, int y) {

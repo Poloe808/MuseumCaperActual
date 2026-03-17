@@ -98,9 +98,11 @@ public class MuseumCaperLocalGame extends LocalGame {
         //    gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
         //}
         if (gameState.getCurrentPlayer() == 0){
-            if (gameState.getBoard().get(gameState.theifLoc.y).get(gameState.theifLoc.x).getHasPainting()){
-                gameState.getBoard().get(gameState.theifLoc.y).get(gameState.theifLoc.x).setHasPainting(false);
-                //chjange the turn order (via setting boolean to false)
+            if (gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).getHasPainting()){
+                gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).setHasPainting(false);
+                //change the turn order (via setting boolean to false) and incrementing turn order
+                gameState.setIsThiefTurn();
+                gameState.setTurn(gameState.getTurn()+1);
                 //increment stolen paintings by 1
                 gameState.setStolenPaintings(gameState.getStolenPaintings()+1);
                 return true;
@@ -188,7 +190,19 @@ public class MuseumCaperLocalGame extends LocalGame {
     }
 
     public boolean disableCamera(GameAction action) {
-        return true;
+        //check if it's thief's turn
+        if((gameState.getCurrentPlayer() == 0)){
+            //get tile the thief is on
+            Point currentPoint = gameState.playerLocs[0];
+            //check if that tile has a camera
+            gameState.getBoard();
+            //todo write that code once the methods exist
+            //turn off the camera on that tile - removing it from the board
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public boolean useEyes(GameAction action) {
@@ -196,15 +210,19 @@ public class MuseumCaperLocalGame extends LocalGame {
         //start checking in one direction
         //if no thief, check if wall,
         //if no wall, check one above
-        //keep checking until there is a thief or a wall, thren swithch craridnal direcitons
+        //keep checking until there is a thief or a wall, then switch cardinal directions
         return true;
     }
 
     public boolean motionDetector(GameAction action) {
+        //get color of tile thief is currently on
+        //route guards towards that room for two turns?
+        //display smth to tell the player what happened
         return true;
     }
 
     public boolean endTurn(GameAction action) {
+        //increment turn order
         return true;
     }
 	/**
