@@ -2,11 +2,14 @@ package edu.up.cs301.museumCaper;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 import java.util.List;
 import java.util.Map;
 
 public class MuseumCaperStateTest extends TestCase {
 
+    @Test
     public void testConstructor() {
         MuseumCaperState test = new MuseumCaperState();
         int turn = test.getTurn();
