@@ -98,8 +98,8 @@ public class MuseumCaperLocalGame extends LocalGame {
         //    gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
         //}
         if (gameState.getCurrentPlayer() == 0){
-            if (gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).getHasPainting()){
-                gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).setHasPainting(false);
+            if (gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).hasPainting()){
+                gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).removePainting();
                 //change the turn order (via setting boolean to false) and incrementing turn order
                 gameState.setIsThiefTurn();
                 gameState.setTurn(gameState.getTurn()+1);
@@ -115,9 +115,9 @@ public class MuseumCaperLocalGame extends LocalGame {
     }
 
     public boolean checkLock(GameAction action) {
-        int rand = (int)(Math.random()*2);
-        for(int i=2;i< gameState.locks.length;i++) {
-        }
+        //int rand = (int)(Math.random()*2);
+        //for(int i=2;i< gameState.locks.length;i++) {
+        //}
         return true;
     }
 

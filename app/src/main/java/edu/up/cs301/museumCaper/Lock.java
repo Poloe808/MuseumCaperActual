@@ -9,11 +9,10 @@ package edu.up.cs301.museumCaper;
 
 public class Lock {
     private boolean unlocked;
-    public Lock(){
-        unlocked = false;
+    public Lock(boolean locked){
+        unlocked = !locked;
     }
-
-    public void unlock(Lock lock){
-        this.unlocked = true;
+    public Lock(Lock l){
+        this.unlocked = l.unlocked;
     }
 }
