@@ -87,9 +87,14 @@ public class MuseumCaperStateTest extends TestCase {
     }
 
     public void testGetStolenPaintings() {
-        MuseumCaperState test = new MuseumCaperState();
-        int stolen = test.getStolenPaintings();
-        assertEquals(0,stolen);
+        MuseumCaperLocalGame localGame = new MuseumCaperLocalGame();
+        MuseumCaperHumanPlayer player = new MuseumCaperHumanPlayer("player");
+        MuseumCaperState newState = new MuseumCaperState();
+        newState.getBoard().get(0).get(0).setHasPainting(new Painting(1));
+        MuseumCaperStealPaintingAction steal = new MuseumCaperStealPaintingAction(player);
+        boolean result = localGame.stealPainting(steal);
+        MuseumCaperState state = (MuseumCaperState)localGame.getGameState();
+        assertTrue(result);
     }
 
     public void testSetTurn() {

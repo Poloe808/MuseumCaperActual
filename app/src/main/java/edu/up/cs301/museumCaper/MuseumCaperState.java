@@ -101,6 +101,7 @@ public class MuseumCaperState extends GameState {
         guardThree = new Point(0,0);
 
         //Adding new Cameras to the arraylist
+        cameras = new ArrayList<Camera>();
         cameras.add(new Camera(1));
 
         //set up the walls manually (I'll double check this with pen&paper -Logan <3)
@@ -220,6 +221,9 @@ public class MuseumCaperState extends GameState {
         return this.turn;
 	}
 
+    public boolean getThiefTurn() {
+        return this.isThiefTurn;
+    }
     public boolean getIsVisible() {
         return this.isVisible;
     }

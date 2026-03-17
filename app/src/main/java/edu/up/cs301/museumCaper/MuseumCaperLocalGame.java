@@ -44,7 +44,7 @@ public class MuseumCaperLocalGame extends LocalGame {
      * constructor for LocalGame
      */
     public MuseumCaperLocalGame() {
-        MuseumCaperState gameState = new MuseumCaperState();
+        gameState = new MuseumCaperState();
     }
 	/**
 	 * This ctor should be called when a new counter game is started
@@ -98,7 +98,7 @@ public class MuseumCaperLocalGame extends LocalGame {
         //if(gameState.getBoard()[gameState.x][gameState.y] == '?') {
         //    gameState.setStolenPaintings(gameState.getStolenPaintings() + 1);
         //}
-        if (gameState.getCurrentPlayer() == 0){
+        if (gameState.getThiefTurn()){
             if (gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).hasPainting()){
                 gameState.getBoard().get(gameState.thiefLoc.y).get(gameState.thiefLoc.x).removePainting();
                 //change the turn order (via setting boolean to false) and incrementing turn order
