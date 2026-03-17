@@ -17,6 +17,7 @@ public class MuseumCaperStateTest extends TestCase {
         MuseumCaperState firstInstance = new MuseumCaperState();
         MuseumCaperState firstCopy = new MuseumCaperState(firstInstance, 0);
         MuseumCaperLocalGame local = new MuseumCaperLocalGame();
+
         //Thief Moves from unlocked window twice towards painting
         local.move(new MuseumCaperMoveAction(local.getPlayers()[0], 1,1));
         assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
@@ -52,7 +53,11 @@ public class MuseumCaperStateTest extends TestCase {
         assertTrue(local.checkIfGameOver()==null);
 
         MuseumCaperState secondInstance = new MuseumCaperState();
+        MuseumCaperState secondCopy = new MuseumCaperState(secondInstance, 0);
 
+        firstCopy.toString();
+        secondCopy.toString();
+        assertEquals( firstCopy.toString(),secondCopy.toString());
     }
 
     public void testGetBoard() {

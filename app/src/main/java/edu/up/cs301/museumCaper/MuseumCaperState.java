@@ -56,7 +56,7 @@ public class MuseumCaperState extends GameState {
     private int numPlayers;
     private List<Camera> cameras;        // camera locations
     private List<Painting> paintings;
-    private List<Lock> locks;
+    private List<Lock> locksList;
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
@@ -67,8 +67,6 @@ public class MuseumCaperState extends GameState {
     int x;
     int y;
     private boolean unlocked;
-    boolean[] locks = {true,true,true,true,true,true,false,false,false,false,false};
-
     Point thiefLoc;
     Point guardOne;
     Point guardTwo;
@@ -189,7 +187,7 @@ public class MuseumCaperState extends GameState {
         this.board = orig.board;
         this.x = orig.x;
         this.y = orig.y;
-        this.locks = orig.locks;
+        this.locksList = orig.locksList;
         this.unlocked = orig.unlocked;
 
         this.thiefLoc = new Point(thiefLoc);
