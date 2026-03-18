@@ -30,4 +30,7 @@ public class Lock {
     public void setUnlocked(boolean unlocked){
         this.unlocked = unlocked;
     }
+    public boolean getLockValue(){
+        return unlocked;
+    }
 }

@@ -74,6 +74,7 @@ public class MuseumCaperState extends GameState {
         isVisible = false;
         stolenPaintings = 0;
         isThiefTurn = true;
+        thiefEscaped = false;
 
         //how many times players are allowed to move
         moveCount = 3;
@@ -246,6 +247,7 @@ public class MuseumCaperState extends GameState {
      * @param test the gameState being tested
      */
     public MuseumCaperState(int test){
+        thiefEscaped = false;
         board = new ArrayList(11);
         //set up the board and maptiles
         for(int row = 0; row < 12; row++){
@@ -262,9 +264,10 @@ public class MuseumCaperState extends GameState {
         locksList = new ArrayList<Lock>();
         paintings = new ArrayList<Painting>();
         setPainting(3, 1, 21);
-        setLocks(0,3, UNLOCKED);
+        setLocks(3,0, UNLOCKED);
         currentPlayer = 0;
         moveCount = 3;
+        isThiefTurn = true;
     }
 
     /**
@@ -406,13 +409,11 @@ public class MuseumCaperState extends GameState {
      */
     public boolean stealPainting(GameAction action) {
 
-        MapTile mt = getBoard().get(thiefLoc.y).get(thiefLoc.x);
+        MapTile mt = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
         if (getThiefTurn()){
             if (mt.hasPainting()){
                 mt.removePainting();
                 //change the turn order (via setting boolean to false) and incrementing turn order
-                setIsThiefTurn();
-                setTurn(getTurn()+1);
                 //increment stolen paintings by 1
                 setStolenPaintings(getStolenPaintings()+1);
                 return true;
@@ -432,10 +433,16 @@ public class MuseumCaperState extends GameState {
      * @return true if lock is unlocked, false if locked
      */
     public boolean checkLock(GameAction action) {
-        //int rand = (int)(Math.random()*2);
-        //for(int i=2;i< gameState.locks.length;i++) {
-        //}
-        return true;
+        MapTile currentTile = board.get(thiefLocation.get(1)).get(thiefLocation.get(0));
+        if (currentTile.hasLock()){
+            if (currentTile.getLock().getLockValue()){
+                thiefEscaped = true;
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -478,7 +485,8 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    return true;
+                    thiefLocation.set(0, destPointx);
+                    thiefLocation.set(1, destPointy);
                 }
             }
             if(yDir == -1) {
@@ -497,12 +505,13 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0].x = destPointx;
-                    playerLocs[0].y = destPointy;
+                    thiefLocation.set(0, destPointx);
+                    thiefLocation.set(1, destPointy);
                 }
             }
             //reduce thief's move total by one
             moveCount--;
+            return true;
         }
 
         //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
@@ -602,6 +611,8 @@ public class MuseumCaperState extends GameState {
         if(currentPlayer != 0){
             moveCount = 3;
         }
+        setIsThiefTurn();
+        setTurn(getTurn()+1);
         return true;
     }
 }
