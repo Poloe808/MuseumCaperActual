@@ -5,6 +5,7 @@ import android.graphics.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 
@@ -164,8 +165,16 @@ public class MuseumCaperState extends GameState {
         setLeftWall(8,3);
 
         //set cameras manually
+        setCamera(2, 3, 1);
+        setCamera(1, 7, 2);
+        setCamera(4,5,3);
+
+        //board.get(2).get(3).setCamera(new Camera(4));
+        //board.get(2).get(3).setCamera(new Camera(5));
+        //board.get(2).get(3).setCamera(new Camera(6));
         //set locks manually
         //set paintings manually
+        board.get(0).get(0).setHasPainting(new Painting(1));
 	}
 
 	/**
@@ -240,13 +249,6 @@ public class MuseumCaperState extends GameState {
         return this.thiefLoc;
     }
 
-	/**
-	 * setter method for the counter
-	 * 
-	 * @param newTurn
-	 *
-     * the value to which the counter should be set
-	 */
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
@@ -299,5 +301,147 @@ public class MuseumCaperState extends GameState {
 
     public void setIsThiefTurn(){
         isThiefTurn = !(isThiefTurn);
+    }
+
+    public void setThiefLoc(int row, int col){
+        thiefLoc.x = col;
+        thiefLoc.y = row;
+    }
+
+    public void setCamera(int row, int col, int number){
+        board.get(row).get(col).setCamera(new Camera(number));
+    }
+
+    //these are the action methods
+    public boolean stealPainting(GameAction action) {
+
+        MapTile mt = getBoard().get(thiefLoc.y).get(thiefLoc.x);
+        if (getThiefTurn()){
+            if (mt.hasPainting()){
+                mt.removePainting();
+                //change the turn order (via setting boolean to false) and incrementing turn order
+                setIsThiefTurn();
+                setTurn(getTurn()+1);
+                //increment stolen paintings by 1
+                setStolenPaintings(getStolenPaintings()+1);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean checkLock(GameAction action) {
+        //int rand = (int)(Math.random()*2);
+        //for(int i=2;i< gameState.locks.length;i++) {
+        //}
+        return true;
+    }
+
+    public boolean move(MuseumCaperMoveAction action) {
+        //click button to move (left, right, up, down)
+
+        //creates move action -- passes in who made request + direction they want to move in (sets x or y away from 0)
+        int xDir = action.getX();
+        int yDir = action.getY();
+
+        if (getCurrentPlayer() == 0){
+            Point currentPoint = playerLocs[0];
+            Point destPoint = new Point(currentPoint.x + xDir, currentPoint.y + yDir);
+
+            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
+
+            if(getBoard().get(destPoint.y).get(destPoint.x) == null){
+                return false;
+            }
+            MapTile destTile = getBoard().get(destPoint.y).get(destPoint.x);
+
+            if(xDir == -1){
+                if (currentTile.getLeftWall()){
+                    return false;
+                }
+                else{
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    playerLocs[0] = destPoint;
+                }
+            }
+            if(xDir == 1) {
+                if (destTile.getLeftWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    playerLocs[0] = destPoint;
+                }
+            }
+            if(yDir == -1) {
+                if (destTile.getTopWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    playerLocs[0] = destPoint;
+                }
+            }
+            if(yDir == 1) {
+                if (currentTile.getTopWall()) {
+                    return false;
+                } else {
+                    currentTile.setThief(false);
+                    destTile.setThief(true);
+                    playerLocs[0] = destPoint;
+                }
+            }
+        }
+
+        //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
+        //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
+        //anticipating 1(+) out of bounds errors
+        //check if move is valid -- conflicting object on dest tile
+        //if valid, move piece by setting player boolean on current tile to false + dest tile to true
+        return true;
+    }
+
+    public boolean disableCamera(GameAction action) {
+        //check if it's thief's turn
+        if((getCurrentPlayer() == 0)){
+            //get tile the thief is on
+            Point currentPoint = playerLocs[0];
+            //check if that tile has a camera
+            getBoard();
+            //todo write that code once the methods exist
+            //turn off the camera on that tile - removing it from the board
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean useEyes(GameAction action) {
+        //check in all directions until u hit a wall, then stop
+        //start checking in one direction
+        //if no thief, check if wall,
+        //if no wall, check one above
+        //keep checking until there is a thief or a wall, then switch cardinal directions
+        return true;
+    }
+
+    public boolean motionDetector(GameAction action) {
+        //get color of tile thief is currently on
+        //route guards towards that room for two turns?
+        //display smth to tell the player what happened
+        return true;
+    }
+
+    public boolean endTurn(GameAction action) {
+        //increment turn order
+        //make thief turn opposite
+        return true;
     }
 }
