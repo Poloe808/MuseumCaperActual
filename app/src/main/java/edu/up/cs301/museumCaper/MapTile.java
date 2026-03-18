@@ -44,6 +44,8 @@ public class MapTile {
     public boolean hasCamera(){return (Camera != null);}
     public Painting getHasPainting(){return painting;}
     public boolean hasPainting(){return (painting != null);}
+    public Lock getLock(){return lock;}
+    public boolean hasLock(){return (lock != null);}
     public boolean getThief(){return hasThief;}
     public boolean getGuard(){return hasGuard;}
     public boolean getLeftWall(){return hasLeftWall;}
