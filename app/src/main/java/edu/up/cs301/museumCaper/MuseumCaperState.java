@@ -59,6 +59,7 @@ public class MuseumCaperState extends GameState {
     private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
 
     Point thiefLoc;
+    private List<Integer> thiefLocation;
     Point guardOne;
     Point guardTwo;
     Point guardThree;
@@ -178,7 +179,6 @@ public class MuseumCaperState extends GameState {
         //set paintings manually
         setPainting(0,0, 1);
 
-        playerLocs[0] = thiefLoc;
         currentPlayer = 0;
 
 	}
@@ -254,14 +254,17 @@ public class MuseumCaperState extends GameState {
                 board.get(row).add(new MapTile());
             }
         }
-        thiefLoc = new Point(0, 3);
+        thiefLocation = new ArrayList<Integer>(2);
+        thiefLocation.add(0);
+        thiefLocation.add(3);
+        board.get(3).get(0).setThief(true);
         currentPlayer = getCurrentPlayer();
         locksList = new ArrayList<Lock>();
         paintings = new ArrayList<Painting>();
         setPainting(3, 1, 21);
         setLocks(0,3, UNLOCKED);
-        playerLocs[0] = thiefLoc;
         currentPlayer = 0;
+        moveCount = 3;
     }
 
     /**
@@ -449,10 +452,9 @@ public class MuseumCaperState extends GameState {
 
         //if the player is the thief (the human player) and they have available moves left
         if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
-            Point currentPoint = playerLocs[0];
-            int destPointx = playerLocs[0].x + xDir;
-            int destPointy =  playerLocs[0].y + yDir;
-            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
+            int destPointx = thiefLocation.get(0) + xDir;
+            int destPointy =  thiefLocation.get(1) + yDir;
+            MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
 
             if(getBoard().get(destPointy).get(destPointx) == null){
                 return false;
@@ -466,8 +468,8 @@ public class MuseumCaperState extends GameState {
                 else{
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0].x = destPointx;
-                    playerLocs[0].y = destPointy;
+                    thiefLocation.set(0, destPointx);
+                    thiefLocation.set(1, destPointy);
                 }
             }
             if(xDir == 1) {
@@ -476,8 +478,6 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0].x = destPointx;
-                    playerLocs[0].y = destPointy;
                     return true;
                 }
             }
@@ -487,8 +487,8 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0].x = destPointx;
-                    playerLocs[0].y = destPointy;
+                    thiefLocation.set(0, destPointx);
+                    thiefLocation.set(1, destPointy);
                 }
             }
             if(yDir == 1) {
