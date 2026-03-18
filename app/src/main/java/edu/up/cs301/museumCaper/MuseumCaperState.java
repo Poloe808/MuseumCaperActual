@@ -74,7 +74,7 @@ public class MuseumCaperState extends GameState {
     Point guardTwo;
     Point guardThree;
 
-    Point[] playerLocs = {thiefLoc, guardOne, guardTwo, guardThree};
+    Point[] playerLocs;
 
     /**
 	 * constructor, initializing the counter value from the parameter
@@ -185,6 +185,10 @@ public class MuseumCaperState extends GameState {
 
         //set paintings manually
         setPainting(0,0, 1);
+
+        playerLocs[0] = thiefLoc;
+        currentPlayer = 0;
+
 	}
 
 	/**
@@ -256,6 +260,8 @@ public class MuseumCaperState extends GameState {
         paintings = new ArrayList<Painting>();
         setPainting(3, 1, 21);
         setLocks(0,3, UNLOCKED);
+        playerLocs[0] = thiefLoc;
+        currentPlayer = 0;
     }
 
     /**
