@@ -7,6 +7,17 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  junit tests for each action currently in the game and the deep copy constructor
+ *
+ *  @author Logan Ortogero
+ *  @author Paloma Wilson
+ *  @author Alberto Lucero
+ *  @author Felipe Lucas Pablo
+ *
+ *  @version February 2026
+ */
+
 public class MuseumCaperStateTest extends TestCase {
 
     @Test
@@ -16,54 +27,39 @@ public class MuseumCaperStateTest extends TestCase {
         assertEquals(0,turn);
     }
 
+
     @Test
     public void testCopyConstructor() {
-        MuseumCaperState firstInstance = new MuseumCaperState(2);
+        MuseumCaperState firstInstance = new MuseumCaperState(0);
         MuseumCaperState firstCopy = new MuseumCaperState(firstInstance, 0);
-        //
+        MuseumCaperLocalGame local = new MuseumCaperLocalGame();
+
+        //Thief Moves from window towards painting
+        firstInstance.move(new MuseumCaperMoveAction(null, 1,0));
+        assertTrue(firstInstance.getBoard().get(3).get(1).getThief());
         /*
-        //Thief Moves from unlocked window twice towards painting
-        firstInstance.move(new MuseumCaperMoveAction(null, 1,1));
-        assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
-
-        firstInstance.move(new MuseumCaperMoveAction(null, 1,1));
-        assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
-
         //Steals painting
         firstCopy.setStolenPaintings(firstInstance.getStolenPaintings()+1);
         assertTrue(firstInstance.getStolenPaintings()==1);
 
-        //Guard 1 turn
-        firstCopy.setTurn(firstInstance.getTurn()+1);
-        assertTrue(firstInstance.getTurn()==1);
+        //Thief Moves from painting towards window
+        firstInstance.move(new MuseumCaperMoveAction(null, -1,0));
+        assertTrue(firstInstance.getBoard().get(0).get(0).getThief());
 
-        local.useEyes(new MuseumCaperUseEyesAction(local.getPlayers()[1]));
-        assertTrue(local.useEyes(new MuseumCaperUseEyesAction(local.getPlayers()[1])));
+        //Thief checks lock to escape
+        firstInstance.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0]));
+        assertTrue(firstInstance.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0])));
 
-        local.move(new MuseumCaperMoveAction(local.getPlayers()[1],1,1));
-        assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
-
-        //Thief turn again, Moves back to window twice
-        local.move(new MuseumCaperMoveAction(local.getPlayers()[0], -1,-1));
-        assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
-
-        local.move(new MuseumCaperMoveAction(local.getPlayers()[0], -1,-1));
-        assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
-
-        local.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0]));
-        assertTrue(local.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0])));
-
+        //Thief ends turn
         local.checkIfGameOver();
         assertTrue(local.checkIfGameOver()==null);
 
-        MuseumCaperState secondInstance = new MuseumCaperState();
+        MuseumCaperState secondInstance = new MuseumCaperState(0);
         MuseumCaperState secondCopy = new MuseumCaperState(secondInstance, 0);
 
-        firstCopy.toString();
-        secondCopy.toString();
-        assertEquals( firstCopy.toString(),secondCopy.toString());
-        */
-        assertEquals(2,2);
+        assertEquals(firstCopy.toString(),secondCopy.toString());
+
+         */
     }
 
     public void testGetBoard() {
