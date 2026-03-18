@@ -229,10 +229,9 @@ public class MuseumCaperState extends GameState {
         this.moveCount = orig.moveCount;
         this.guardMoveTotal = orig.guardMoveTotal;
 
+        board = new ArrayList<>(11);
         for(int row = 0; row < board.toArray().length; row++){
-        board = new ArrayList(11);
-        for(int row = 0; row < orig.board.toArray().length; row++){
-            this.board.add(new ArrayList<>(12));
+        board = new ArrayList(12);
             for(int col = 0; col < orig.board.get(0).toArray().length; col++){
                 this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
             }
@@ -497,8 +496,11 @@ public class MuseumCaperState extends GameState {
         //check in all directions until u hit a wall, then stop
         //start checking in one direction
         //if no thief, check if wall,
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i <= 4; i++){
             MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
+            //tiles for checking if wall is below/to the right
+            MapTile bottomTile = getBoard().get(currentPoint.y-1).get(currentPoint.x);
+            MapTile rightTile = getBoard().get(currentPoint.y).get(currentPoint.x+1);
             for(int a = 0; a < 12; a++){ //todo change hardcoded 12 to a variable ?
                 if(currentTile.getThief()){
                     return true;
@@ -508,18 +510,18 @@ public class MuseumCaperState extends GameState {
                     //move to the next tile
                     currentTile = getBoard().get(currentPoint.y+a).get(currentPoint.x);
                 }
-                else if(i == 2 && !(currentTile.  getTopWall())){
+                //keep checking until there is a thief or a wall, then switch cardinal directions
+                else if(i == 2 && !(rightTile.getLeftWall())){
                     currentTile = getBoard().get(currentPoint.y).get(currentPoint.x+a);
                 }
                 else if(i == 3 &&  !(currentTile.getTopWall())){
                     currentTile = getBoard().get(currentPoint.y-a).get(currentPoint.x);
                 }
-                else if(i == 4 &&  !(currentTile.getLeftWall())){
+                else if(i == 4 &&  !(bottomTile.getTopWall())){
                     currentTile = getBoard().get(currentPoint.y).get(currentPoint.x-a);
                 }
             }
         }
-        //keep checking until there is a thief or a wall, then switch cardinal directions
         return false; //thief isn't able to be seen
     }
 
