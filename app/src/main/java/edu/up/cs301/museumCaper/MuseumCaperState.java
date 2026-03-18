@@ -101,6 +101,7 @@ public class MuseumCaperState extends GameState {
 
         //player location initialization
         thiefLoc = new Point(0,0);
+        currentPlayer = getCurrentPlayer();
         guardOne = new Point(0,0);
         guardTwo = new Point(0,0);
         guardThree = new Point(0,0);
@@ -189,6 +190,7 @@ public class MuseumCaperState extends GameState {
 
         //set paintings manually
         setPainting(0,0, 1);
+        playerLocs[0]=thiefLoc;
 	}
 
 	/**
@@ -246,7 +248,6 @@ public class MuseumCaperState extends GameState {
 
     //this is the constructor for the copyConstructorTest
     public MuseumCaperState(int test){
-        super();
         board = new ArrayList(11);
         //set up the board and maptiles
         for(int row = 0; row < 12; row++){
@@ -256,10 +257,12 @@ public class MuseumCaperState extends GameState {
             }
         }
         thiefLoc = new Point(0, 3);
+        currentPlayer = getCurrentPlayer();
         locksList = new ArrayList<Lock>();
         paintings = new ArrayList<Painting>();
         setPainting(3, 1, 21);
         setLocks(0,3, UNLOCKED);
+        playerLocs[0] = thiefLoc;
     }
 
     /**
@@ -426,14 +429,14 @@ public class MuseumCaperState extends GameState {
 
         if (getCurrentPlayer() == 0){
             Point currentPoint = playerLocs[0];
-            Point destPoint = new Point(currentPoint.x + xDir, currentPoint.y + yDir);
-
+            int destPointx = playerLocs[0].x + xDir;
+            int destPointy =  playerLocs[0].y + yDir;
             MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
 
-            if(getBoard().get(destPoint.y).get(destPoint.x) == null){
+            if(getBoard().get(destPointy).get(destPointx) == null){
                 return false;
             }
-            MapTile destTile = getBoard().get(destPoint.y).get(destPoint.x);
+            MapTile destTile = getBoard().get(destPointy).get(destPointx);
 
             if(xDir == -1){
                 if (currentTile.getLeftWall()){
@@ -442,7 +445,8 @@ public class MuseumCaperState extends GameState {
                 else{
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0] = destPoint;
+                    playerLocs[0].x = destPointx;
+                    playerLocs[0].y = destPointy;
                 }
             }
             if(xDir == 1) {
@@ -451,7 +455,9 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0] = destPoint;
+                    playerLocs[0].x = destPointx;
+                    playerLocs[0].y = destPointy;
+                    return true;
                 }
             }
             if(yDir == -1) {
@@ -460,7 +466,8 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0] = destPoint;
+                    playerLocs[0].x = destPointx;
+                    playerLocs[0].y = destPointy;
                 }
             }
             if(yDir == 1) {
@@ -469,7 +476,8 @@ public class MuseumCaperState extends GameState {
                 } else {
                     currentTile.setThief(false);
                     destTile.setThief(true);
-                    playerLocs[0] = destPoint;
+                    playerLocs[0].x = destPointx;
+                    playerLocs[0].y = destPointy;
                 }
             }
         }
