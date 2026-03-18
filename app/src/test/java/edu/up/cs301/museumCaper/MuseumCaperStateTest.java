@@ -32,12 +32,12 @@ public class MuseumCaperStateTest extends TestCase {
         assertTrue(firstInstance.getStolenPaintings()==1);
 
         //Thief Moves from painting towards window
-        firstInstance.move(new MuseumCaperMoveAction(null, -1,0));
+        firstInstance.move(new MuseumCaperMoveAction(null,-1, 0));
         assertTrue(firstInstance.getBoard().get(0).get(0).getThief());
 
         //Thief checks lock to escape
-        firstInstance.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0]));
-        assertTrue(firstInstance.checkLock(new MuseumCaperCheckLockAction(local.getPlayers()[0])));
+        firstInstance.checkLock(new MuseumCaperCheckLockAction(null);
+        assertTrue(firstInstance.checkLock(new MuseumCaperCheckLockAction(null));
 
         //Thief ends turn
         local.checkIfGameOver();
@@ -47,7 +47,6 @@ public class MuseumCaperStateTest extends TestCase {
         MuseumCaperState secondCopy = new MuseumCaperState(secondInstance, 0);
 
         assertEquals(firstCopy.toString(),secondCopy.toString());
-
          */
     }
 
