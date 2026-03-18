@@ -30,9 +30,9 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  *      MuseumCaperMoveAction()
  * thief steals painting
  *      MuseumCaperStealPaintingAction()
- * guard one takes turn - rolls a one on move die
- *      MuseumCaperUseEyesAction()
- *      MuseumCaperMoveAction()
+ *       guard one takes turn - rolls a one on move die
+ *  *      MuseumCaperUseEyesAction()
+ *  *      MuseumCaperMoveAction()
  * thief moves back to the window
  *      MuseumCaperMoveAction()
  *      MuseumCaperMoveAction()
@@ -227,24 +227,41 @@ public class MuseumCaperState extends GameState {
                 this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
             }
         }
-        this.cameras = new ArrayList<Camera>(orig.cameras);
-        this.paintings = new ArrayList<Painting>(orig.paintings);
-        this.locksList = new ArrayList<Lock>(orig.locksList);
+        if(orig.cameras != null){
+            this.cameras = new ArrayList<Camera>(orig.cameras);
+        }
+        if (orig.paintings != null){
+            this.paintings = new ArrayList<Painting>(orig.paintings);
+        }
+        if (orig.locksList != null){
+            this.locksList = new ArrayList<Lock>(orig.locksList);
+        }
+
 
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
             this.thiefLoc = new Point(orig.thiefLoc);
         }
-
 	}
 
-    public MuseumCaperState(int test) {
+    //this is the constructor for the copyConstructorTest
+    public MuseumCaperState(int test){
         super();
-        thiefLoc.x=0;
-        thiefLoc.y=3;
-        setPainting(3,1,21);
-        setLocks(0,3,UNLOCKED);
+        board = new ArrayList(11);
+        //set up the board and maptiles
+        for(int row = 0; row < 12; row++){
+            board.add(new ArrayList<>(12));
+            for(int col = 0; col < 13; col++){
+                board.get(row).add(new MapTile());
+            }
+        }
+        thiefLoc = new Point(0, 3);
+        locksList = new ArrayList<Lock>();
+        paintings = new ArrayList<Painting>();
+        setPainting(3, 1, 21);
+        setLocks(0,3, UNLOCKED);
     }
+
     /**
      * lock method so that we can have the locks randomly be set to lock or unlock
      * but also preventing them from all being lock or unlock
@@ -498,21 +515,8 @@ public class MuseumCaperState extends GameState {
     }
 
     public boolean endTurn(GameAction action) {
-        if(!isThiefTurn) {
-            setTurn(getTurn()+1);
-        }
-        //Guard 3 turn
-        if(currentPlayer%3==0) {
-            setTurn(getTurn()+1);
-        }
-        //Guard 2 turn
-        if(currentPlayer%3==1) {
-            setTurn(getTurn()+1);
-        }
-        //Guard 1 turn
-        if(currentPlayer%3==2) {
-            setTurn(getTurn()+1);
-        }
+        //increment turn order
+        //make thief turn opposite
         return true;
     }
 }
