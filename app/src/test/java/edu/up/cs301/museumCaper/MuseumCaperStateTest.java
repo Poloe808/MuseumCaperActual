@@ -53,13 +53,11 @@ public class MuseumCaperStateTest extends TestCase {
         result = firstInstance.endTurn(new MuseumCaperEndTurnAction(null));
         assertTrue(result);
 
-        /*
+
         MuseumCaperState secondInstance = new MuseumCaperState(0);
         MuseumCaperState secondCopy = new MuseumCaperState(secondInstance, 0);
 
         assertEquals(firstCopy.toString(),secondCopy.toString());
-
-         */
     }
 
     public void testGetBoard() {
