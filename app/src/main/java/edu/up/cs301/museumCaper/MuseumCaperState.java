@@ -70,6 +70,10 @@ public class MuseumCaperState extends GameState {
     int y;
     private boolean unlocked;
 
+    //variables for checking if the player still has moves available
+    private int moveCount; //counts up how many spaces a player has moved on their turn
+    private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
+
     Point thiefLoc;
     Point guardOne;
     Point guardTwo;
@@ -86,6 +90,9 @@ public class MuseumCaperState extends GameState {
         isVisible = false;
         stolenPaintings = 0;
         isThiefTurn = true;
+
+        //how many times players are allowed to move
+        moveCount = 3;
 
         board = new ArrayList(11);
         //set up the board and maptiles
@@ -207,6 +214,9 @@ public class MuseumCaperState extends GameState {
         this.guardTwo = new Point(guardTwo);
         this.guardThree = new Point(guardThree);
 
+        this.moveCount = orig.moveCount;
+        this.guardMoveTotal = orig.guardMoveTotal;
+
         for(int row = 0; row < board.toArray().length; row++){
             this.board.add(new ArrayList<>(12));
             for(int col = 0; col < board.get(0).toArray().length; col++){
@@ -299,6 +309,7 @@ public class MuseumCaperState extends GameState {
         board.get(row).get(col).setLeftWall(true);
     }
 
+
     //This is a helper method to help set the walls in the constructor (like big rows of walls)
     //for side, true top walls, false for left walls
     //startBound for where u wanna begin, endBound for where to end
@@ -370,7 +381,8 @@ public class MuseumCaperState extends GameState {
         int xDir = action.getX();
         int yDir = action.getY();
 
-        if (getCurrentPlayer() == 0){
+        //if the player is the thief (the human player) and they have available moves left
+        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
             Point currentPoint = playerLocs[0];
             Point destPoint = new Point(currentPoint.x + xDir, currentPoint.y + yDir);
 
@@ -418,6 +430,8 @@ public class MuseumCaperState extends GameState {
                     playerLocs[0] = destPoint;
                 }
             }
+            //reduce thief's move total by one
+            moveCount--;
         }
 
         //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
@@ -433,10 +447,12 @@ public class MuseumCaperState extends GameState {
         if((getCurrentPlayer() == 0)){
             //get tile the thief is on
             Point currentPoint = playerLocs[0];
+            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
             //check if that tile has a camera
-            getBoard();
-            //todo write that code once the methods exist
-            //turn off the camera on that tile - removing it from the board
+            if(currentTile.hasCamera()){
+                //turn off the camera on that tile - removing it from the board
+                currentTile.removeCamera();
+            }
             return true;
         }
         else{
@@ -445,12 +461,37 @@ public class MuseumCaperState extends GameState {
     }
 
     public boolean useEyes(GameAction action) {
+        //get current position of the guard
+        int tempLoc = currentPlayer;
+        Point currentPoint = playerLocs[tempLoc];
+
         //check in all directions until u hit a wall, then stop
         //start checking in one direction
         //if no thief, check if wall,
-        //if no wall, check one above
+        for(int i = 0; i < 4; i++){
+            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
+            for(int a = 0; a < 12; a++){ //todo change hardcoded 12 to a variable ?
+                if(currentTile.getThief()){
+                    return true;
+                }
+                //check if the tile has a wall in the way
+                else if(i == 1 && !(currentTile.getTopWall())){
+                    //move to the next tile
+                    currentTile = getBoard().get(currentPoint.y+a).get(currentPoint.x);
+                }
+                else if(i == 2 && !(currentTile.  getTopWall())){
+                    currentTile = getBoard().get(currentPoint.y).get(currentPoint.x+a);
+                }
+                else if(i == 3 &&  !(currentTile.getTopWall())){
+                    currentTile = getBoard().get(currentPoint.y-a).get(currentPoint.x);
+                }
+                else if(i == 4 &&  !(currentTile.getLeftWall())){
+                    currentTile = getBoard().get(currentPoint.y).get(currentPoint.x-a);
+                }
+            }
+        }
         //keep checking until there is a thief or a wall, then switch cardinal directions
-        return true;
+        return false; //thief isn't able to be seen
     }
 
     public boolean motionDetector(GameAction action) {
@@ -463,6 +504,10 @@ public class MuseumCaperState extends GameState {
     public boolean endTurn(GameAction action) {
         //increment turn order
         //make thief turn opposite
+        //reset thief's number of tiles they can move if it was a guard's turn
+        if(currentPlayer != 0){
+            moveCount = 3;
+        }
         return true;
     }
 }

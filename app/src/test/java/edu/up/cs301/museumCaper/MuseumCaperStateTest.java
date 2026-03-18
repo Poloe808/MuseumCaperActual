@@ -7,6 +7,17 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  junit tests for each action currently in the game and the deep copy constructor
+ *
+ *  @author Logan Ortogero
+ *  @author Paloma Wilson
+ *  @author Alberto Lucero
+ *  @author Felipe Lucas Pablo
+ *
+ *  @version February 2026
+ */
+
 public class MuseumCaperStateTest extends TestCase {
 
     @Test
