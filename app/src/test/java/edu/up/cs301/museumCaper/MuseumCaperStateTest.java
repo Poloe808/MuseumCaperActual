@@ -29,8 +29,9 @@ public class MuseumCaperStateTest extends TestCase {
 
     @Test
     public void testCopyConstructor() {
-        MuseumCaperState firstInstance = new MuseumCaperState();
+        MuseumCaperState firstInstance = new MuseumCaperState(2);
         MuseumCaperState firstCopy = new MuseumCaperState(firstInstance, 0);
+        //
         /*
         //Thief Moves from unlocked window twice towards painting
         firstInstance.move(new MuseumCaperMoveAction(null, 1,1));
