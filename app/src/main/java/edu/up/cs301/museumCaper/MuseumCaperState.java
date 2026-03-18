@@ -46,6 +46,8 @@ public class MuseumCaperState extends GameState {
     //these are statics that just make the code more readable
     private static final boolean TOP = true;
     private static final boolean LEFT = false;
+    private static final boolean LOCKED = true;
+    private static final boolean UNLOCKED = false;
 	private int turn;
     private boolean isVisible;
     private int stolenPaintings;
@@ -109,10 +111,9 @@ public class MuseumCaperState extends GameState {
         guardTwo = new Point(0,0);
         guardThree = new Point(0,0);
 
-        //Adding new Cameras to the arraylist
         cameras = new ArrayList<Camera>();
-        cameras.add(new Camera(1));
-
+        locksList = new ArrayList<Lock>();
+        paintings = new ArrayList<Painting>();
         //set up the walls manually (I'll double check this with pen&paper -Logan <3)
 
         //This represents the purple room (top left)
@@ -176,13 +177,24 @@ public class MuseumCaperState extends GameState {
         setCamera(2, 3, 1);
         setCamera(1, 7, 2);
         setCamera(4,5,3);
-
-        //board.get(2).get(3).setCamera(new Camera(4));
-        //board.get(2).get(3).setCamera(new Camera(5));
-        //board.get(2).get(3).setCamera(new Camera(6));
+        setCamera(7, 1, 4);
+        setCamera(7, 11,5);
+        setCamera(8,8,6);
         //set locks manually
+        setLocks(0,4, UNLOCKED);
+        setLocks(0, 7, UNLOCKED);
+        setLocks(3, 0, UNLOCKED);
+        setLocks(5, 0, UNLOCKED);
+        setLocks(7, 0, UNLOCKED);
+        setLocks(1, 8, UNLOCKED);
+        setLocks(2, 10, UNLOCKED);
+        //setLocks();
+        //setLocks();
+        //setLocks();
+        //setLocks();
+
         //set paintings manually
-        board.get(0).get(0).setHasPainting(new Painting(1));
+        setPainting(0,0, 1);
 	}
 
 	/**
@@ -218,8 +230,10 @@ public class MuseumCaperState extends GameState {
         this.guardMoveTotal = orig.guardMoveTotal;
 
         for(int row = 0; row < board.toArray().length; row++){
+        board = new ArrayList(11);
+        for(int row = 0; row < orig.board.toArray().length; row++){
             this.board.add(new ArrayList<>(12));
-            for(int col = 0; col < board.get(0).toArray().length; col++){
+            for(int col = 0; col < orig.board.get(0).toArray().length; col++){
                 this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
             }
         }
@@ -341,7 +355,20 @@ public class MuseumCaperState extends GameState {
     }
 
     public void setCamera(int row, int col, int number){
-        board.get(row).get(col).setCamera(new Camera(number));
+        Camera c = new Camera(number);
+        cameras.add(c);
+        board.get(row).get(col).setCamera(c);
+    }
+    public void setPainting(int row, int col, int number){
+        Painting p = new Painting(number);
+        paintings.add(p);
+        board.get(row).get(col).setHasPainting(p);
+    }
+
+    public void setLocks(int row, int col, boolean locked){
+        Lock l = new Lock(locked);
+        locksList.add(l);
+        board.get(row).get(col).setLock(l);
     }
 
     //these are the action methods
@@ -366,6 +393,8 @@ public class MuseumCaperState extends GameState {
             return false;
         }
     }
+
+    //These r the start of the action methods
 
     public boolean checkLock(GameAction action) {
         //int rand = (int)(Math.random()*2);

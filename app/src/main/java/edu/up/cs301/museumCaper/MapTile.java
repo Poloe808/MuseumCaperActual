@@ -24,9 +24,15 @@ public class MapTile {
     }
 
     public MapTile(MapTile m){
-        this.Camera = new Camera(m.Camera);
-        this.painting = new Painting(m.painting);
-        this.lock = new Lock(m.lock);
+        if(m.Camera != null){
+            this.Camera = new Camera(m.Camera);
+        }
+        if(m.painting != null){
+            this.painting = new Painting(m.painting);
+        }
+        if(m.lock != null){
+            this.lock = new Lock(m.lock);
+        }
         this.hasThief = m.hasThief;
         this.hasGuard = m.hasGuard;
         this.hasLeftWall = m.hasLeftWall;
@@ -50,6 +56,7 @@ public class MapTile {
     public void setTopWall(boolean status){hasTopWall = status;}
     public void setCamera(Camera c){Camera = c;}
     public void setHasPainting(Painting p){painting = p;}
+    public void setLock(Lock l){lock = l;}
     public void removeCamera(){Camera.disableCamera(); Camera = null;}
     public void removePainting(){painting = null;}
 
