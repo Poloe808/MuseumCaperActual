@@ -15,4 +15,7 @@ public class Lock {
     public Lock(Lock l){
         this.unlocked = l.unlocked;
     }
+    public void setUnlocked(boolean unlocked){
+        this.unlocked = unlocked;
+    }
 }
