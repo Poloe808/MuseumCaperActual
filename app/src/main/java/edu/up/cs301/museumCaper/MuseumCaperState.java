@@ -90,6 +90,9 @@ public class MuseumCaperState extends GameState {
 
         //player location initialization
         thiefLoc = new Point(0,0);
+        thiefLocation = new ArrayList<Integer>(2);
+        thiefLocation.add(0);
+        thiefLocation.add(3);
         currentPlayer = getCurrentPlayer();
         guardOne = new Point(0,0);
         guardTwo = new Point(0,0);
@@ -181,7 +184,6 @@ public class MuseumCaperState extends GameState {
         setPainting(0,0, 1);
 
         currentPlayer = 0;
-
 	}
 
 	/**
@@ -378,9 +380,9 @@ public class MuseumCaperState extends GameState {
         isThiefTurn = !(isThiefTurn);
     }
 
-    public void setThiefLoc(int row, int col){
-        thiefLoc.x = col;
-        thiefLoc.y = row;
+    public void setThiefLocation(int row, int col){
+        thiefLocation.set(0, col);
+        thiefLocation.set(1, row);
     }
 
     public void setCamera(int row, int col, int number){

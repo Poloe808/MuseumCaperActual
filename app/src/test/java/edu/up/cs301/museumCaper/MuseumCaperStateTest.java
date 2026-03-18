@@ -83,12 +83,13 @@ public class MuseumCaperStateTest extends TestCase {
         assertFalse(p1);
     }
 
+    // VVVVVVVVVV Hello this tests the steal painting action, this is the one we made for Project #E VVVVVVVVV
     @Test
     public void testMuseumCaperStealPaintingAction() {
         MuseumCaperState state = new MuseumCaperState();
         MapTile testTile = state.getBoard().get(0).get(0);
         testTile.setHasPainting(new Painting(7));
-        state.setThiefLoc(0, 0);
+        state.setThiefLocation(0, 0);
 
         //Test to make sure the painting is correctly "placed" onto the tile
         assertTrue(testTile.hasPainting());
@@ -106,6 +107,9 @@ public class MuseumCaperStateTest extends TestCase {
         boolean result2 = state.stealPainting(steal2);
         assertTrue(!result2);
     }
+
+    // ^^^^^^^^^^^^^^^^^^^^ HEY YOU WENT TOO FAR STUFF OVER HERE IS A WORK IN PROGRESS LOOK BACK UP ^^^^^^^^^^^^^^^^^^^^^
+    // ==================================================================================================================
 
     public void testSetTurn() {
         MuseumCaperState test = new MuseumCaperState();
