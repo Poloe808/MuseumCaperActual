@@ -4,6 +4,7 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameState;
@@ -222,6 +223,26 @@ public class MuseumCaperState extends GameState {
         }
 
 	}
+    /**
+     * lock method so that we can have the locks randomly be set to lock or unlock
+     * but also preventing them from all being lock or unlock
+     */
+    private void startOfLocks() {
+        locksList = new ArrayList<>();
+        Random rand = new Random();
+        // have a for loop to gurantee 3 of them to be unlock
+        for(int randLock = 3; randLock <=3; randLock++){
+            locksList.add(new Lock(true));
+        }
+        // a for loop to make sure that at least two of them are lock
+        for(int randLock = 2; randLock <=2; randLock++){
+            locksList.add(new Lock(false));
+        }
+        // another loop to randomize the rest of the locks for a total of 11
+        for(int randLock = 5; randLock <=11; randLock++){
+            locksList.add(new Lock(rand.nextBoolean()));
+        }
+    }
 
     public List<List<MapTile>> getBoard() {
         return this.board;
