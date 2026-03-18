@@ -16,11 +16,11 @@ public class MuseumCaperStateTest extends TestCase {
         assertEquals(0,turn);
     }
 
+    @Test
     public void testCopyConstructor() {
         MuseumCaperState firstInstance = new MuseumCaperState();
         MuseumCaperState firstCopy = new MuseumCaperState(firstInstance, 0);
         MuseumCaperLocalGame local = new MuseumCaperLocalGame();
-
         //Thief Moves from unlocked window twice towards painting
         firstInstance.move(new MuseumCaperMoveAction(null, 1,1));
         assertTrue(local.canMove(firstInstance.getCurrentPlayer()));
