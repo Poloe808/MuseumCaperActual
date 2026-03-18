@@ -22,21 +22,6 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  * @version February 2026
  */
 
-/**
- * sequence of moves to finish game quickly
- * thief enters through window in green room, moves one space to the nearest painting
- *      MuseumCaperMoveAction()
- *      MuseumCaperMoveAction()
- * thief steals painting
- *      MuseumCaperStealPaintingAction()
- * thief moves back to the window
- *      MuseumCaperMoveAction()
- *      MuseumCaperMoveAction()
- * thief checks lock, comes back unlocked
- *      MuseumCaperCheckLockAction()
- * thief escapes
- *
- */
 
 public class MuseumCaperState extends GameState {
 
@@ -81,8 +66,7 @@ public class MuseumCaperState extends GameState {
     Point[] playerLocs = {thiefLoc, guardOne, guardTwo, guardThree};
 
     /**
-	 * constructor, initializing the counter value from the parameter
-	 *
+	 * constructor, initializes variables, sets up board
      */
 	public MuseumCaperState() {
         turn = 0;
@@ -199,6 +183,7 @@ public class MuseumCaperState extends GameState {
 	 * 
 	 * @param orig
 	 * 		the object from which the copy should be made
+     * @param playerID the player the copy of the gameState is being sent to
 	 */
 	public MuseumCaperState(MuseumCaperState orig, int playerID) {
         this.turn = orig.turn;
@@ -250,7 +235,11 @@ public class MuseumCaperState extends GameState {
         }
 	}
 
-    //this is the constructor for the copyConstructorTest
+
+    /**
+     * constructor for the copyConstructorTest
+     * @param test the gameState being tested
+     */
     public MuseumCaperState(int test){
         super();
         board = new ArrayList(11);
@@ -288,6 +277,7 @@ public class MuseumCaperState extends GameState {
             locksList.add(new Lock(rand.nextBoolean()));
         }
     }
+
 
     public List<List<MapTile>> getBoard() {
         return this.board;
@@ -345,12 +335,17 @@ public class MuseumCaperState extends GameState {
     }
 
 
-    //This is a helper method to help set the walls in the constructor (like big rows of walls)
-    //for side, true top walls, false for left walls
-    //startBound for where u wanna begin, endBound for where to end
-    //pos is the row/col the placing is taking place in
-    //example: setWalls(true, 3, 5, 0); will place top walls in board positions (0,3), (0,4), & (0,5)
-    //probably should've just split this into two methods but it too late :sob:
+    /**
+     * This is a helper method to help set the walls in the constructor (like big rows of walls)
+     *
+     * @param side true for top walls, false for left walls
+     * @param startBound where the walls begin
+     * @param endBound where the walls end
+     * @param pos the row/col the walls are placed in
+     *
+     *  example: setWalls(true, 3, 5, 0); will place top walls in board positions (0,3), (0,4), & (0,5)
+     *  probably should've just split this into two methods but it too late :sob:
+     */
     public void setWalls(boolean side, int startBound, int endBound, int pos){
         //Top walls!!
         if(side){
@@ -393,6 +388,12 @@ public class MuseumCaperState extends GameState {
     }
 
     //these are the action methods
+
+    /**
+     * steal painting action, removes painting from the tile
+     * @param action
+     * @return true if the painting is successfully stolen, false if not
+     */
     public boolean stealPainting(GameAction action) {
 
         MapTile mt = getBoard().get(thiefLoc.y).get(thiefLoc.x);
@@ -415,8 +416,11 @@ public class MuseumCaperState extends GameState {
         }
     }
 
-    //These r the start of the action methods
-
+    /**
+     * check lock action, tells thief if the lock is locked/unlocked
+     * @param action
+     * @return true if lock is unlocked, false if locked
+     */
     public boolean checkLock(GameAction action) {
         //int rand = (int)(Math.random()*2);
         //for(int i=2;i< gameState.locks.length;i++) {
@@ -424,6 +428,11 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 
+    /**
+     * move action
+     * @param action
+     * @return true if move is valid
+     */
     public boolean move(MuseumCaperMoveAction action) {
         //click button to move (left, right, up, down)
 
@@ -492,6 +501,11 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 
+    /**
+     * disable camera action
+     * @param action
+     * @return true if camera is successfully disabled
+     */
     public boolean disableCamera(GameAction action) {
         //check if it's thief's turn
         if((getCurrentPlayer() == 0)){
@@ -510,6 +524,11 @@ public class MuseumCaperState extends GameState {
         }
     }
 
+    /**
+     * use eyes action for guard ai
+     * @param action
+     * @return true if thief is seen
+     */
     public boolean useEyes(GameAction action) {
         //get current position of the guard
         int tempLoc = currentPlayer;
@@ -547,6 +566,11 @@ public class MuseumCaperState extends GameState {
         return false; //thief isn't able to be seen
     }
 
+    /**
+     * motion detector action for guard ai
+     * @param action
+     * @return
+     */
     public boolean motionDetector(GameAction action) {
         //get color of tile thief is currently on
         //route guards towards that room for two turns?
@@ -554,6 +578,11 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 
+    /**
+     * end turn action - use to move game to next player's turn
+     * @param action
+     * @return
+     */
     public boolean endTurn(GameAction action) {
         //increment turn order
         //make thief turn opposite
