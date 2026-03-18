@@ -237,6 +237,14 @@ public class MuseumCaperState extends GameState {
         }
 
 	}
+
+    public MuseumCaperState(int test) {
+        super();
+        thiefLoc.x=0;
+        thiefLoc.y=3;
+        setPainting(3,1,21);
+        setLocks(0,3,UNLOCKED);
+    }
     /**
      * lock method so that we can have the locks randomly be set to lock or unlock
      * but also preventing them from all being lock or unlock
@@ -490,8 +498,21 @@ public class MuseumCaperState extends GameState {
     }
 
     public boolean endTurn(GameAction action) {
-        //increment turn order
-        //make thief turn opposite
+        if(!isThiefTurn) {
+            setTurn(getTurn()+1);
+        }
+        //Guard 3 turn
+        if(currentPlayer%3==0) {
+            setTurn(getTurn()+1);
+        }
+        //Guard 2 turn
+        if(currentPlayer%3==1) {
+            setTurn(getTurn()+1);
+        }
+        //Guard 1 turn
+        if(currentPlayer%3==2) {
+            setTurn(getTurn()+1);
+        }
         return true;
     }
 }
