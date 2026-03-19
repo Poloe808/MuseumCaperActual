@@ -49,14 +49,4 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
 	/**
 	 * callback method: the timer ticked
 	 */
-	protected void timerTicked() {
-		// 5% of the time, increment or decrement the counter
-		if (Math.random() >= 0.05) return; // do nothing 95% of the time
-
-		// "flip a coin" to determine whether to increment or decrement
-		boolean move = Math.random() >= 0.5;
-		
-		// send the move-action to the game
-		game.sendAction(new MuseumCaperMoveAction(this, 0, 0));
-	}
 }

@@ -119,7 +119,7 @@ public class MuseumCaperComputerPlayer2 extends MuseumCaperComputerPlayer1 {
 	 */
 	@Override
 	public void setAsGui(GameMainActivity a) {
-		
+		/*
 		// remember who our activity is
 		this.activityForGui = a;
 		
@@ -127,7 +127,7 @@ public class MuseumCaperComputerPlayer2 extends MuseumCaperComputerPlayer1 {
 		this.guiHandler = new Handler();
 		
 		// Load the layout resource for the our GUI's configuration
-		activityForGui.setContentView(R.layout.counter_human_player);
+		activityForGui.setContentView(R.*layout.counter_human_player);
 
 		// remember who our text view is, for updating the counter value
 		this.counterValueTextView =
@@ -143,6 +143,7 @@ public class MuseumCaperComputerPlayer2 extends MuseumCaperComputerPlayer1 {
 		if (currentGameState != null) {
 			updateDisplay();
 		}
-	}
 
+		 */
+	}
 }

@@ -161,6 +161,7 @@ public class MuseumCaperState extends GameState {
         setLeftWall(6,3);
         setLeftWall(8,3);
 
+        /*
         //set cameras manually
         setCamera(2, 3, 1);
         setCamera(1, 7, 2);
@@ -193,6 +194,8 @@ public class MuseumCaperState extends GameState {
         setPainting(8, 11,9);
 
         currentPlayer = 0;
+
+         */
 	}
 
 	/**
@@ -219,11 +222,6 @@ public class MuseumCaperState extends GameState {
         this.y = orig.y;
         this.locksList = orig.locksList;
         this.unlocked = orig.unlocked;
-
-        this.thiefLoc = new Point(thiefLoc);
-        this.guardOne = new Point(guardOne);
-        this.guardTwo = new Point(guardTwo);
-        this.guardThree = new Point(guardThree);
 
         this.moveCount = orig.moveCount;
         this.guardMoveTotal = orig.guardMoveTotal;
