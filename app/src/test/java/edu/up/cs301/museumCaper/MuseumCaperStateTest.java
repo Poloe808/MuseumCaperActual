@@ -95,7 +95,8 @@ public class MuseumCaperStateTest extends TestCase {
         //Test to make sure the painting is correctly "placed" onto the tile
         assertTrue(testTile.hasPainting());
 
-        //Create the steal action, If steal action is called when the thief is on the same tile as a painting, it should go through
+        //Create the steal action, If steal action is called when the thief is on the same tile
+        //  as a painting, it should go through
         MuseumCaperStealPaintingAction steal = new MuseumCaperStealPaintingAction(null);
         boolean result = state.stealPainting(steal);
         assertTrue(result);

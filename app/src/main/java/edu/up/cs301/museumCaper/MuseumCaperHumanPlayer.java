@@ -17,7 +17,7 @@ import android.view.View.OnClickListener;
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
  *
- * @version Februrary 2026
+ * @version February 2026
  */
 public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickListener {
 

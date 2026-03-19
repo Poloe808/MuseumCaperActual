@@ -47,7 +47,8 @@ public class MuseumCaperState extends GameState {
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
-    //fun fact, the board is 12 tiles long/cols, 11 tiles tall/rows, but with the way i'm implementing walls
+    //fun fact, the board is 12 tiles long/cols, 11 tiles tall/rows, but with the way i'm
+    //    implementing walls
     //its gonna be a 12x11 2D ArrayList
     //Changed this into a 2D Array list, that carries MapTiles for each coordinate plane
     private List<List<MapTile>> board;
@@ -440,7 +441,8 @@ public class MuseumCaperState extends GameState {
     public boolean move(MuseumCaperMoveAction action) {
         //click button to move (left, right, up, down)
 
-        //creates move action -- passes in who made request + direction they want to move in (sets x or y away from 0)
+        //creates move action -- passes in who made request + direction they want to move in
+        //  (sets x or y away from 0)
         int xDir = action.getX();
         int yDir = action.getY();
 
@@ -502,7 +504,8 @@ public class MuseumCaperState extends GameState {
             moveCount--;
         }
 
-        //localGame receives pos of player who made move request from move action and compares to turn order (check turn)
+        //localGame receives pos of player who made move request from move action and compares to
+        //  turn order (check turn)
         //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
         //anticipating 1(+) out of bounds errors
         //check if move is valid -- conflicting object on dest tile
