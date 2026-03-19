@@ -135,10 +135,6 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 		// the state from the game so that the GUI values are updated
 		if (state != null) {
 			receiveInfo(state);
-
-
-
-
     }
 
          */
