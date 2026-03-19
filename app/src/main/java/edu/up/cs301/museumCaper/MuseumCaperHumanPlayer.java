@@ -4,6 +4,8 @@ import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -67,28 +69,35 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      * @param button the button that was clicked
      */
     public void onClick(View button) {
-        /*
+
 		// if we are not yet connected to a game, ignore
 		if (game == null) return;
 
 		// Construct the action and send it to the game
 		GameAction action = null;
-		if (button.getId() == R.id.plusButton) {
-			// plus button: create "increment" action
-			action = new MuseumCaperMoveAction(this,0,0);
+		if (button.getId() == R.id.upButton) {
+			// up button: creates a "move" action
+			action = new MuseumCaperMoveAction(this,0,1);
 		}
-		else if (button.getId() == R.id.minusButton) {
-			// minus button: create "decrement" action
-			action = new MuseumCaperMoveAction(this,0,0);
+		else if (button.getId() == R.id.downButton) {
+			// down button: creates a "move" action
+			action = new MuseumCaperMoveAction(this,0,-1);
 		}
+        else if (button.getId() == R.id.leftButton) {
+            // left button: creates a "move" action
+            action = new MuseumCaperMoveAction(this,-1,0);
+        }
+        else if (button.getId() == R.id.rightButton) {
+            // left button: creates a "move" action
+            action = new MuseumCaperMoveAction(this,1,0);
+            Log.d("button", "yeah you clicked the right button");
+        }
 		else {
 			// something else was pressed: ignore
 			return;
 		}
 		
 		game.sendAction(action); // send action to the game
-
-         */
     }// onClick
 
     /**
