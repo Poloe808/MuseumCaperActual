@@ -68,6 +68,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      *
      * @param button the button that was clicked
      */
+
+    @Override
     public void onClick(View button) {
 
 		// if we are not yet connected to a game, ignore
@@ -90,7 +92,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         else if (button.getId() == R.id.rightButton) {
             // left button: creates a "move" action
             action = new MuseumCaperMoveAction(this,1,0);
-            Log.d("button", "yeah you clicked the right button");
+            Log.i("button", "yeah you clicked the right button");
         }
 		else {
 			// something else was pressed: ignore
@@ -128,25 +130,34 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		//Load the layout resource for our GUI
 		activity.setContentView(R.layout.activity_main);
-		
-		// make this object the listener for both the '+' and '-' 'buttons
-        /*
-		Button plusButton = (Button) activity.findViewById(R.id.plusButton);
-		plusButton.setOnClickListener(this);
-		Button minusButton = (Button) activity.findViewById(R.id.minusButton);
-		minusButton.setOnClickListener(this);
+        //Button ID's
+        Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
+        Button disableCamera = activity.findViewById(R.id.disableCameraButton);
+        Button checkLock = activity.findViewById(R.id.checkLockButton);
 
-		// remember the field that we update to display the counter's value
-		this.counterValueTextView =
-				(TextView) activity.findViewById(R.id.counterValueTextView);
-		
+        Button upMove = activity.findViewById(R.id.upButton);
+        Button leftMove = activity.findViewById(R.id.leftButton);
+        Button rightMove = activity.findViewById(R.id.rightButton);
+        Button downMove = activity.findViewById(R.id.downButton);
+
+        Button settings = activity.findViewById(R.id.settingsButton);
+
+        //Button Listener's
+        stealPainting.setOnClickListener(this);
+        disableCamera.setOnClickListener(this);
+        checkLock.setOnClickListener(this);
+
+        upMove.setOnClickListener(this);
+        leftMove.setOnClickListener(this);
+        rightMove.setOnClickListener(this);
+        downMove.setOnClickListener(this);
+
+        settings.setOnClickListener(this);
 		// if we have a game state, "simulate" that we have just received
 		// the state from the game so that the GUI values are updated
 		if (state != null) {
 			receiveInfo(state);
     }
-
-         */
 }
 
 }// class CounterHumanPlayer
