@@ -176,13 +176,21 @@ public class MuseumCaperState extends GameState {
         setLocks(7, 0, UNLOCKED);
         setLocks(1, 8, UNLOCKED);
         setLocks(2, 10, UNLOCKED);
-        //setLocks();
-        //setLocks();
-        //setLocks();
-        //setLocks();
+        setLocks(4,11, UNLOCKED);
+        setLocks(7, 11 , UNLOCKED);
+        setLocks(5,10,UNLOCKED);
+        setLocks(6,10, UNLOCKED);
 
         //set paintings manually
-        setPainting(0,0, 1);
+        setPainting(0, 6,1);
+        setPainting(1, 3,2);
+        setPainting(2, 9,3);
+        setPainting(3, 1,4);
+        setPainting(3, 4,5);
+        setPainting(5, 11,6);
+        setPainting(6, 6,7);
+        setPainting(8, 0,8);
+        setPainting(8, 11,9);
 
         currentPlayer = 0;
 	}
