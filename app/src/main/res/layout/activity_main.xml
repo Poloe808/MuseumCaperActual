@@ -326,14 +326,6 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/cutWiresButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:backgroundTint="#818181ff"
-                        android:text="Cut Wires" />
-
-                    <Button
                         android:id="@+id/stealPaintingButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -351,15 +343,6 @@
                         android:text="Disable Camera" />
 
                     <Button
-                        android:id="@+id/cutPowerButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="#818181ff"
-                        android:text="Cut Power" />
-
-                    <Button
                         android:id="@+id/checkLockButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -367,6 +350,51 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="#818181ff"
                         android:text="Check Lock" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Up" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/button5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Left" />
+
+                                <Button
+                                    android:id="@+id/button4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Right" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/button3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Down" />
+
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 
