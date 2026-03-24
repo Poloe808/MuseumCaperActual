@@ -328,6 +328,10 @@ public class MuseumCaperState extends GameState {
         return this.thiefLoc;
     }
 
+    public List<Integer> getThiefLocationRow(){
+        return thiefLocation;
+    }
+
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}

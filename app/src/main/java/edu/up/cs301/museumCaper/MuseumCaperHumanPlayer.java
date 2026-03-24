@@ -33,6 +33,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
     // the android activity that we are running
     private GameMainActivity myActivity;
+    private DrawView dv;
 
     /**
      * constructor
@@ -49,7 +50,6 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      * @return the top object in the GUI's view heirarchy
      */
     public View getTopView() {
-
         return myActivity.findViewById(R.id.myBoard);
     }
 
@@ -58,8 +58,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      * sets the counter value in the text view
      */
     protected void updateDisplay() {
+        dv.setThiefLocation(state.getThiefLocationRow().get(1), 2);
+        dv.invalidate();
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
+
     }
 
     /**
@@ -158,6 +161,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 		if (state != null) {
 			receiveInfo(state);
     }
+        this.myActivity = activity;
+        this.dv = (DrawView) getTopView();
 }
 
 }// class CounterHumanPlayer

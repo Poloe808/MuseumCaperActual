@@ -10,6 +10,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 public class DrawView extends SurfaceView {
+
+    //instance variables
+    int thiefCol;
+    int thiefRow;
+
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
 
@@ -42,7 +47,7 @@ private Paint green = new Paint();
         spaceGrey.setColor(0xFF343d46);
         spaceGrey.setStyle(Paint.Style.FILL);
 
-        drawPawn(canvas,3,1,spaceGrey);
+        drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
         drawPawn(canvas,4,1,spaceGrey);
 
 
@@ -87,6 +92,10 @@ private Paint green = new Paint();
         canvas.drawRect(225,225, 280, 280,green);
     }
 
+    public void setThiefLocation(int row, int col){
+        thiefRow = row;
+        thiefCol = col;
+    }
 }
 // Attributions for the assets used in this project:
 // https://www.sprinttosave.com/product-p-674011.html
