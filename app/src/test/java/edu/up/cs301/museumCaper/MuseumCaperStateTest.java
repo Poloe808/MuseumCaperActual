@@ -57,6 +57,7 @@ public class MuseumCaperStateTest extends TestCase {
         MuseumCaperState secondCopy = new MuseumCaperState(secondInstance, 0);
 
         assertEquals(firstCopy.toString(),secondCopy.toString());
+        assertNotSame(firstInstance.toString(), firstCopy.toString());
     }
 
     public void testGetBoard() {

@@ -43,6 +43,7 @@ public class MuseumCaperState extends GameState {
     private List<Camera> cameras;        // camera locations
     private List<Painting> paintings;
     private List<Lock> locksList;
+    //these variables r redundant im removing them
     private boolean thiefEscaped;
     private boolean thiefCaught;
     private boolean thiefVisible;
