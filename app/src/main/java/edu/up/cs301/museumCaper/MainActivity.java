@@ -25,5 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Creates a reference to the board image
         //DrawView dv = findViewById(R.id.myBoard);
+
     }
 }

@@ -49,6 +49,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      *
      * @return the top object in the GUI's view heirarchy
      */
+    //Creates a reference to the board image
     public View getTopView() {
         return myActivity.findViewById(R.id.myBoard);
     }
