@@ -234,6 +234,11 @@ public class MuseumCaperState extends GameState {
                 this.board.get(row).add(new MapTile(orig.board.get(row).get(col)));
             }
         }
+
+        thiefLocation = new ArrayList<Integer>(2);
+        thiefLocation.add(orig.thiefLocation.get(0));
+        thiefLocation.add(orig.thiefLocation.get(1));
+
         if(orig.cameras != null){
             this.cameras = new ArrayList<Camera>(orig.cameras);
         }
