@@ -13,6 +13,13 @@ public class DrawView extends SurfaceView {
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
 
+    public void drawPawn(Canvas canvas, int x, int y, Paint color) {
+        //Head of piece (circle)
+        canvas.drawCircle((x*100)+8, y*415, 15, color);
+
+        //Top left corner to bottom right of rectangle
+        canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
+    }
 private Paint green = new Paint();
 
     public DrawView(Context context, AttributeSet attrs) {
@@ -35,10 +42,9 @@ private Paint green = new Paint();
         spaceGrey.setColor(0xFF343d46);
         spaceGrey.setStyle(Paint.Style.FILL);
 
-        //Head of piece (circle)
-        canvas.drawCircle(420, 473, 15, spaceGrey);
-        //Body of piece (rectangle)
-        canvas.drawRect(415,473, 425, 500,spaceGrey);
+        drawPawn(canvas,3,1,spaceGrey);
+        drawPawn(canvas,4,1,spaceGrey);
+
 
         Paint red = new Paint();
         red.setColor(Color.RED);
@@ -58,17 +64,27 @@ private Paint green = new Paint();
         green.setColor(Color.GREEN);
         green.setStyle(Paint.Style.FILL);
 
+
         canvas.drawCircle(255, 473, 15, green);
         canvas.drawRect(250,475, 260, 497,green);
+
+
+
 
         Paint yellow = new Paint();
         yellow.setColor(Color.YELLOW);
         yellow.setStyle(Paint.Style.FILL);
 
+        canvas.drawRect(505,225, 560, 280,yellow);
+
         canvas.drawCircle(535, 245, 15, yellow);
         canvas.drawRect(530,245, 540, 278,yellow);
 
         //end of the declaration section
+
+        //test rects
+        canvas.drawRect(225,340, 280, 395,yellow);
+        canvas.drawRect(225,225, 280, 280,green);
     }
 
 }
