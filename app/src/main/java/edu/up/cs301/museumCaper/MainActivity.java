@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        //Creates a reference to the board image
-        DrawView dv = findViewById(R.id.myBoard);
+
     }
 }

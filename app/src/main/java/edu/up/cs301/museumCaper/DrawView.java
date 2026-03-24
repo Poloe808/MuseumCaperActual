@@ -10,15 +10,19 @@ import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 public class DrawView extends SurfaceView {
+    MuseumCaperState state = new MuseumCaperState();
+
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
 
     public void drawPawn(Canvas canvas, int x, int y, Paint color) {
         //Head of piece (circle)
-        canvas.drawCircle((x*100)+8, y*415, 15, color);
+        //canvas.drawCircle((x*100)+8, y*415, 15, color);
 
         //Top left corner to bottom right of rectangle
-        canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
+        //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
+        canvas.drawRect(225+(57*x),225+(57*y),(225+(56*x))+55,(225+(56*y))+55, color);
+
     }
 private Paint green = new Paint();
 
@@ -42,10 +46,9 @@ private Paint green = new Paint();
         spaceGrey.setColor(0xFF343d46);
         spaceGrey.setStyle(Paint.Style.FILL);
 
-        drawPawn(canvas,3,1,spaceGrey);
-        drawPawn(canvas,4,1,spaceGrey);
+        drawPawn(canvas,1,8,spaceGrey);
 
-
+        /*
         Paint red = new Paint();
         red.setColor(Color.RED);
         red.setStyle(Paint.Style.FILL);
@@ -85,6 +88,8 @@ private Paint green = new Paint();
         //test rects
         canvas.drawRect(225,340, 280, 395,yellow);
         canvas.drawRect(225,225, 280, 280,green);
+
+         */
     }
 
 }
