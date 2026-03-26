@@ -481,7 +481,7 @@ public class MuseumCaperState extends GameState {
         //if the player is the thief (the human player) and they have available moves left
         if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
             int destPointx = thiefLocation.get(0) + xDir;
-            int destPointy =  thiefLocation.get(1) + yDir;
+            int destPointy =  thiefLocation.get(1) - yDir;
             MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
 
             if(getBoard().get(destPointy).get(destPointx) == null){
