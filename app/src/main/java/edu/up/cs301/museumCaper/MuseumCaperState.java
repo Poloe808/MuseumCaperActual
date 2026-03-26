@@ -79,7 +79,7 @@ public class MuseumCaperState extends GameState {
         thiefEscaped = false;
 
         //how many times players are allowed to move
-        moveCount = 3;
+        moveCount = 500;
 
         board = new ArrayList(11);
         //set up the board and maptiles
@@ -121,22 +121,22 @@ public class MuseumCaperState extends GameState {
         setTopWall(2, 8);
 
         //this represents the blue room (top right)
-        setWalls(TOP, 9, 11, 3);
-        setWalls(TOP, 9, 11, 5);
+        setWalls(TOP, 9, 11, 2);
+        setWalls(TOP, 9, 11, 4);
         setLeftWall(2,9);
         setLeftWall(2, 12);
         setLeftWall(3, 12);
 
         //this represents the green room (bottom right)
         setWalls(TOP, 9, 11, 5);
-        setWalls(TOP, 9, 11, 10);
+        setWalls(TOP, 9, 11, 9);
         //this one is unique as it encroaches one above it's room (just the one below dis one)
         setWalls(LEFT, 4,8, 12);
         setWalls(LEFT, 5,6,9);
-        setLeftWall(9, 9);
+        setLeftWall(8, 9);
 
         //this represents the white room (center) (may need modifications to make more readable)
-        setWalls(LEFT, 3, 7,5);
+        setWalls(LEFT, 3, 7,4);
         //open up a pooka in the set walls
         board.get(6).get(4).setLeftWall(false);
         setWalls(LEFT, 3, 7, 8);
@@ -162,7 +162,7 @@ public class MuseumCaperState extends GameState {
         setLeftWall(6,3);
         setLeftWall(8,3);
 
-        /*
+
         //set cameras manually
         setCamera(2, 3, 1);
         setCamera(1, 7, 2);
@@ -170,6 +170,7 @@ public class MuseumCaperState extends GameState {
         setCamera(7, 1, 4);
         setCamera(7, 11,5);
         setCamera(8,8,6);
+
         //set locks manually
         setLocks(0,4, UNLOCKED);
         setLocks(0, 7, UNLOCKED);
@@ -193,10 +194,6 @@ public class MuseumCaperState extends GameState {
         setPainting(6, 6,7);
         setPainting(8, 0,8);
         setPainting(8, 11,9);
-
-        currentPlayer = 0;
-
-         */
 	}
 
 	/**
@@ -332,8 +329,9 @@ public class MuseumCaperState extends GameState {
     public Point getThiefLoc(){
         return this.thiefLoc;
     }
+    public int getMoveCount(){return this.moveCount;}
 
-    public List<Integer> getThiefLocationRow(){
+    public List<Integer> getThiefLocation(){
         return thiefLocation;
     }
 
@@ -474,16 +472,16 @@ public class MuseumCaperState extends GameState {
 
         //creates move action -- passes in who made request + direction they want to move in
         //  (sets x or y away from 0)
-        int xDir = action.getX();
-        int yDir = action.getY();
+        int xDir = action.getCol();
+        int yDir = action.getRow();
 
         //if the player is the thief (the human player) and they have available moves left
-        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
+        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 1000){
             int destPointx = thiefLocation.get(0) + xDir;
-            int destPointy =  thiefLocation.get(1) + yDir;
+            int destPointy =  thiefLocation.get(1) - yDir;
             MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
 
-            if(getBoard().get(destPointy).get(destPointx) == null){
+            if(destPointx < 0 || destPointy < 0){
                 return false;
             }
             MapTile destTile = getBoard().get(destPointy).get(destPointx);

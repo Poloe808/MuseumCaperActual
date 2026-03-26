@@ -14,6 +14,7 @@ public class DrawView extends SurfaceView {
     //instance variables
     int thiefCol;
     int thiefRow;
+    int rowDirection;
 
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
@@ -25,6 +26,7 @@ public class DrawView extends SurfaceView {
         //Top left corner to bottom right of rectangle
         //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
         canvas.drawRect(225+(57*x),225+(57*y),(225+(56*x))+55,(225+(56*y))+55, color);
+        canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
     }
 private Paint green = new Paint();
 
@@ -49,7 +51,12 @@ private Paint green = new Paint();
         spaceGrey.setStyle(Paint.Style.FILL);
 
         //drawPawn(canvas,1,8,spaceGrey);
+        //               (0       3)
+        //drawPawn(canvas,1,8,spaceGrey);
         drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
+        //drawPawn(canvas,4,1,spaceGrey);
+        drawPawn(canvas, 0, 10, spaceGrey);
+        drawPawn(canvas, 0, 9, spaceGrey);
         //drawPawn(canvas,4,1,spaceGrey);
 
         /*

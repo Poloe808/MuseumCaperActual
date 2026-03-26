@@ -27,6 +27,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
     // The TextView the displays the current counter value
     private TextView counterValueTextView;
+    //this TextView Displays the amount of moves left the player has
+    private TextView movesLeftTextView;
 
     // the most recent game state, as given to us by the CounterLocalGame
     private MuseumCaperState state;
@@ -56,10 +58,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 
     /**
-     * sets the counter value in the text view
+     * this is where we update ALL the things =)
      */
     protected void updateDisplay() {
-        dv.setThiefLocation(state.getThiefLocationRow().get(1), 2);
+        dv.setThiefLocation(state.getThiefLocation().get(1), state.getThiefLocation().get(0));
+        movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
         dv.invalidate();
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
@@ -134,6 +137,10 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		//Load the layout resource for our GUI
 		activity.setContentView(R.layout.activity_main);
+
+        //Text Views
+        this.movesLeftTextView = activity.findViewById(R.id.movesLeftText);
+
         //Button ID's
         Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
         Button disableCamera = activity.findViewById(R.id.disableCameraButton);
