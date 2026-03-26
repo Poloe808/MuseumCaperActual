@@ -162,7 +162,7 @@ public class MuseumCaperState extends GameState {
         setLeftWall(6,3);
         setLeftWall(8,3);
 
-        /*
+
         //set cameras manually
         setCamera(2, 3, 1);
         setCamera(1, 7, 2);
@@ -170,6 +170,7 @@ public class MuseumCaperState extends GameState {
         setCamera(7, 1, 4);
         setCamera(7, 11,5);
         setCamera(8,8,6);
+
         //set locks manually
         setLocks(0,4, UNLOCKED);
         setLocks(0, 7, UNLOCKED);
@@ -193,10 +194,6 @@ public class MuseumCaperState extends GameState {
         setPainting(6, 6,7);
         setPainting(8, 0,8);
         setPainting(8, 11,9);
-
-        currentPlayer = 0;
-
-         */
 	}
 
 	/**
