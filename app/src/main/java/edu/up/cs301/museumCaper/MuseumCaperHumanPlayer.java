@@ -84,11 +84,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		// Construct the action and send it to the game
 		GameAction action = null;
-		if (button.getId() == R.id.downButton) {
+		if (button.getId() == R.id.upButton) {
 			// up button: creates a "move" action
 			action = new MuseumCaperMoveAction(this,0,1);
 		}
-		else if (button.getId() == R.id.upButton) {
+		else if (button.getId() == R.id.downButton) {
 			// down button: creates a "move" action
 			action = new MuseumCaperMoveAction(this,0,-1);
 		}
