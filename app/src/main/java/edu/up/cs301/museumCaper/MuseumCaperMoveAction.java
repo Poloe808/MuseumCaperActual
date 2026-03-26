@@ -18,8 +18,8 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
  * @version September 2012
  */
 public class MuseumCaperMoveAction extends GameAction {
-    private int x;
-    private int y;
+    private int col;
+    private int row;
     private boolean valid;
     // to satisfy the serializable interface
     private static final long serialVersionUID = 28062013L;
@@ -32,26 +32,26 @@ public class MuseumCaperMoveAction extends GameAction {
      *
      * @param player
      *            the player making the move
-     * @param x horizontal move value (1 moves right, -1 moves left)
-     * @param y vertical move value (1 moves up, -1 moves down)
+     * @param col horizontal move value (1 moves right, -1 moves left)
+     * @param row vertical move value (1 moves up, -1 moves down)
      *
      */
-    public MuseumCaperMoveAction(GamePlayer player, int x, int y) {
+    public MuseumCaperMoveAction(GamePlayer player, int col, int row) {
         super(player);
-        this.x = x;
-        this.y = y;
+        this.col = col;
+        this.row = row;
     }
 
     /**
      * getter method, for the row and col
      *
      */
-    public int getX() {
-        return x;
+    public int getCol() {
+        return col;
     }
 
-    public int getY() {
-        return y;
+    public int getRow() {
+        return row;
     }
 
     //public GamePlayer getGamePlayer() {return player;}

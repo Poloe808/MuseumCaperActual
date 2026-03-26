@@ -332,8 +332,9 @@ public class MuseumCaperState extends GameState {
     public Point getThiefLoc(){
         return this.thiefLoc;
     }
+    public int getMoveCount(){return this.moveCount;}
 
-    public List<Integer> getThiefLocationRow(){
+    public List<Integer> getThiefLocation(){
         return thiefLocation;
     }
 
@@ -474,8 +475,8 @@ public class MuseumCaperState extends GameState {
 
         //creates move action -- passes in who made request + direction they want to move in
         //  (sets x or y away from 0)
-        int xDir = action.getX();
-        int yDir = action.getY();
+        int xDir = action.getCol();
+        int yDir = action.getRow();
 
         //if the player is the thief (the human player) and they have available moves left
         if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
