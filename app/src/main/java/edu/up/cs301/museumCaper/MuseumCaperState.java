@@ -121,22 +121,22 @@ public class MuseumCaperState extends GameState {
         setTopWall(2, 8);
 
         //this represents the blue room (top right)
-        setWalls(TOP, 9, 11, 3);
-        setWalls(TOP, 9, 11, 5);
+        setWalls(TOP, 9, 11, 2);
+        setWalls(TOP, 9, 11, 4);
         setLeftWall(2,9);
         setLeftWall(2, 12);
         setLeftWall(3, 12);
 
         //this represents the green room (bottom right)
         setWalls(TOP, 9, 11, 5);
-        setWalls(TOP, 9, 11, 10);
+        setWalls(TOP, 9, 11, 9);
         //this one is unique as it encroaches one above it's room (just the one below dis one)
         setWalls(LEFT, 4,8, 12);
         setWalls(LEFT, 5,6,9);
-        setLeftWall(9, 9);
+        setLeftWall(8, 9);
 
         //this represents the white room (center) (may need modifications to make more readable)
-        setWalls(LEFT, 3, 7,5);
+        setWalls(LEFT, 3, 7,4);
         //open up a pooka in the set walls
         board.get(6).get(4).setLeftWall(false);
         setWalls(LEFT, 3, 7, 8);
