@@ -79,7 +79,7 @@ public class MuseumCaperState extends GameState {
         thiefEscaped = false;
 
         //how many times players are allowed to move
-        moveCount = 3;
+        moveCount = 500;
 
         board = new ArrayList(11);
         //set up the board and maptiles
@@ -479,12 +479,12 @@ public class MuseumCaperState extends GameState {
         int yDir = action.getRow();
 
         //if the player is the thief (the human player) and they have available moves left
-        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 3){
+        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 1000){
             int destPointx = thiefLocation.get(0) + xDir;
             int destPointy =  thiefLocation.get(1) - yDir;
             MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
 
-            if(getBoard().get(destPointy).get(destPointx) == null){
+            if(destPointx < 0 || destPointy < 0){
                 return false;
             }
             MapTile destTile = getBoard().get(destPointy).get(destPointx);
