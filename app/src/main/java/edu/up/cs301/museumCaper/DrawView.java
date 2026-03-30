@@ -14,9 +14,18 @@ public class DrawView extends SurfaceView {
     //instance variables
     int thiefCol;
     int thiefRow;
+    int guardOneRow;
+    int guardOneCol;
+    int guardTwoRow;
+    int guardTwoCol;
+    int guardThreeRow;
+    int guardThreeCol;
     int rowDirection;
 
-    MuseumCaperState state = new MuseumCaperState();
+    //All le paints
+    private final Paint spaceGrey = new Paint();
+    private final Paint green = new Paint();
+    private final Paint copBlue  = new Paint();
 
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
@@ -29,13 +38,18 @@ public class DrawView extends SurfaceView {
         //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
         canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
     }
-private Paint green = new Paint();
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
         green.setColor(0xFF00FF00);
         green.setStyle(Paint.Style.FILL);
+
+        spaceGrey.setColor(0xFF343d46);
+        spaceGrey.setStyle(Paint.Style.FILL);
+
+        copBlue.setColor(0xFF2200ff);
+        copBlue.setStyle(Paint.Style.FILL);
 
         //Makes the board smaller
         board = Bitmap.createScaledBitmap(board, 1112, 834, false);
@@ -47,64 +61,29 @@ private Paint green = new Paint();
         //This is the beginning of the color declaration section
         //The format for the Player Pieces is as follows:
         //Color
-        Paint spaceGrey = new Paint();
-        spaceGrey.setColor(0xFF343d46);
-        spaceGrey.setStyle(Paint.Style.FILL);
 
-        //drawPawn(canvas,1,8,spaceGrey);
-        //               (0       3)
         drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
-        //drawPawn(canvas,4,1,spaceGrey);
-        drawPawn(canvas, 0, 10, spaceGrey);
-        drawPawn(canvas, 0, 9, spaceGrey);
+        drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
+        drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
+        drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
 
-        /*
-        Paint red = new Paint();
-        red.setColor(Color.RED);
-        red.setStyle(Paint.Style.FILL);
-
-        canvas.drawCircle(822, 470, 15, red);
-        canvas.drawRect(817,465, 828, 497,red);
-
-        Paint blue = new Paint();
-        blue.setColor(Color.BLUE);
-        blue.setStyle(Paint.Style.FILL);
-
-        canvas.drawCircle(425, 800, 15, blue);
-        canvas.drawRect(420,800, 430, 830,blue);
-
-        Paint green = new Paint();
-        green.setColor(Color.GREEN);
-        green.setStyle(Paint.Style.FILL);
-
-
-        canvas.drawCircle(255, 473, 15, green);
-        canvas.drawRect(250,475, 260, 497,green);
-
-
-
-
-        Paint yellow = new Paint();
-        yellow.setColor(Color.YELLOW);
-        yellow.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(505,225, 560, 280,yellow);
-
-        canvas.drawCircle(535, 245, 15, yellow);
-        canvas.drawRect(530,245, 540, 278,yellow);
-
-        //end of the declaration section
-
-        //test rects
-        canvas.drawRect(225,340, 280, 395,yellow);
-        canvas.drawRect(225,225, 280, 280,green);
-
-         */
     }
 
     public void setThiefLocation(int row, int col){
         thiefRow = row;
         thiefCol = col;
+    }
+    public void setGuardOneLocation(int row, int col){
+        guardOneRow = row;
+        guardOneCol = col;
+    }
+    public void setGuardTwoLocation(int row, int col){
+        guardTwoRow = row;
+        guardTwoCol = col;
+    }
+    public void setGuardThreeLocation(int row, int col){
+        guardThreeRow = row;
+        guardThreeCol = col;
     }
 }
 // Attributions for the assets used in this project:

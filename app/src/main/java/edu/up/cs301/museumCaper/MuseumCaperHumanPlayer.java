@@ -61,11 +61,17 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      * this is where we update ALL the things =)
      */
     protected void updateDisplay() {
+        //setting the locations in DrawView in order to change the location of the pawns
         dv.setThiefLocation(state.getThiefLocation().get(1), state.getThiefLocation().get(0));
+        dv.setGuardOneLocation(state.getGuardOneLocation().get(1), state.getGuardOneLocation().get(0));
+        dv.setGuardTwoLocation(state.getGuardTwoLocation().get(1), state.getGuardTwoLocation().get(0));
+        dv.setGuardThreeLocation(state.getGuardThreeLocation().get(1), state.getGuardThreeLocation().get(0));
+
+        //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
+
+        //invalidate DrawView for it to reflect all the changes
         dv.invalidate();
-        // set the text in the appropriate widget
-        //counterValueTextView.setText("" + state.getCounter());
 
     }
 
@@ -100,6 +106,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
             // left button: creates a "move" action
             action = new MuseumCaperMoveAction(this,1,0);
             Log.i("button", "yeah you clicked the right button");
+        }
+        else if (button.getId() == R.id.stealPaintingButton){
+            action = new MuseumCaperStealPaintingAction(this);
         }
 		else {
 			// something else was pressed: ignore

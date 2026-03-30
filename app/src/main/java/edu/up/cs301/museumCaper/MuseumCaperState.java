@@ -1,7 +1,5 @@
 package edu.up.cs301.museumCaper;
 
-import android.graphics.Point;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,8 +9,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 
 /**
- * This contains the state for the Counter game. The state consist of simply
- * the value of the counter.
+ * This contains the state for Museum Caper. The state consists of a lot of stuff.
  *
  * @author Logan Ortogero
  * @author Paloma Wilson
@@ -60,13 +57,10 @@ public class MuseumCaperState extends GameState {
     private int moveCount; //counts up how many spaces a player has moved on their turn
     private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
 
-    Point thiefLoc;
     private List<Integer> thiefLocation;
-    Point guardOne;
-    Point guardTwo;
-    Point guardThree;
-
-    Point[] playerLocs;
+    private List<Integer> guardOneLocation;
+    private List<Integer> guardTwoLocation;
+    private List<Integer> guardThreeLocation;
 
     /**
 	 * constructor, initializes variables, sets up board
@@ -91,14 +85,23 @@ public class MuseumCaperState extends GameState {
         }
 
         //player location initialization
-        thiefLoc = new Point(0,0);
         thiefLocation = new ArrayList<Integer>(2);
         thiefLocation.add(0);
         thiefLocation.add(3);
-        currentPlayer = getCurrentPlayer();
-        guardOne = new Point(0,0);
-        guardTwo = new Point(0,0);
-        guardThree = new Point(0,0);
+        //Guard Locations r static for now <3
+        guardOneLocation = new ArrayList<Integer>(2);
+        guardOneLocation.add(8);
+        guardOneLocation.add(2);
+
+        guardTwoLocation = new ArrayList<Integer>(2);
+        guardTwoLocation.add(6);
+        guardTwoLocation.add(5);
+
+        guardThreeLocation = new ArrayList<Integer>(2);
+        guardThreeLocation.add(4);
+        guardThreeLocation.add(9);
+
+        currentPlayer = 0;
 
         cameras = new ArrayList<Camera>();
         locksList = new ArrayList<Lock>();
@@ -236,6 +239,18 @@ public class MuseumCaperState extends GameState {
         thiefLocation.add(orig.thiefLocation.get(0));
         thiefLocation.add(orig.thiefLocation.get(1));
 
+        guardOneLocation = new ArrayList<Integer>(2);
+        guardOneLocation.add(orig.guardOneLocation.get(0));
+        guardOneLocation.add(orig.guardOneLocation.get(1));
+
+        guardTwoLocation = new ArrayList<Integer>(2);
+        guardTwoLocation.add(orig.guardTwoLocation.get(0));
+        guardTwoLocation.add(orig.guardTwoLocation.get(1));
+
+        guardThreeLocation = new ArrayList<Integer>(2);
+        guardThreeLocation.add(orig.guardThreeLocation.get(0));
+        guardThreeLocation.add(orig.guardThreeLocation.get(1));
+
         if(orig.cameras != null){
             this.cameras = new ArrayList<Camera>(orig.cameras);
         }
@@ -246,10 +261,9 @@ public class MuseumCaperState extends GameState {
             this.locksList = new ArrayList<Lock>(orig.locksList);
         }
 
-
+    //TODO: pls fix <3
         if(playerID == thiefPlayerId){
             // have the coordinates of the thief
-            this.thiefLoc = new Point(orig.thiefLoc);
         }
 	}
 
@@ -277,9 +291,19 @@ public class MuseumCaperState extends GameState {
         paintings = new ArrayList<Painting>();
         setPainting(3, 1, 21);
         setLocks(3,0, UNLOCKED);
-        currentPlayer = 0;
         moveCount = 3;
         isThiefTurn = true;
+        guardOneLocation = new ArrayList<Integer>(2);
+        guardOneLocation.add(8);
+        guardOneLocation.add(2);
+
+        guardTwoLocation = new ArrayList<Integer>(2);
+        guardTwoLocation.add(6);
+        guardTwoLocation.add(5);
+
+        guardThreeLocation = new ArrayList<Integer>(2);
+        guardThreeLocation.add(4);
+        guardThreeLocation.add(9);
     }
 
     /**
@@ -326,15 +350,16 @@ public class MuseumCaperState extends GameState {
         return this.currentPlayer;
     }
 
-    public Point getThiefLoc(){
-        return this.thiefLoc;
-    }
     public int getMoveCount(){return this.moveCount;}
 
     public List<Integer> getThiefLocation(){
         return thiefLocation;
     }
-
+    public List<Integer> getGuardOneLocation(){
+        return guardOneLocation;
+    }
+    public List<Integer> getGuardTwoLocation(){return guardTwoLocation;}
+    public List<Integer> getGuardThreeLocation(){return guardThreeLocation;}
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
@@ -476,7 +501,7 @@ public class MuseumCaperState extends GameState {
         int yDir = action.getRow();
 
         //if the player is the thief (the human player) and they have available moves left
-        if (getCurrentPlayer() == 0 && moveCount > 0 && moveCount <= 1000){
+        if (getCurrentPlayer() == 0 && moveCount > 0){
             int destPointx = thiefLocation.get(0) + xDir;
             int destPointy =  thiefLocation.get(1) - yDir;
             MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
@@ -547,6 +572,7 @@ public class MuseumCaperState extends GameState {
      * @return true if camera is successfully disabled
      */
     public boolean disableCamera(GameAction action) {
+        /*
         //check if it's thief's turn
         if((getCurrentPlayer() == 0)){
             //get tile the thief is on
@@ -562,6 +588,9 @@ public class MuseumCaperState extends GameState {
         else{
             return false;
         }
+
+         */
+        return false;
     }
 
     /**
@@ -571,6 +600,7 @@ public class MuseumCaperState extends GameState {
      */
     public boolean useEyes(GameAction action) {
         //get current position of the guard
+        /*
         int tempLoc = currentPlayer;
         Point currentPoint = playerLocs[tempLoc];
 
@@ -604,6 +634,8 @@ public class MuseumCaperState extends GameState {
             }
         }
         return false; //thief isn't able to be seen
+        */
+        return false;
     }
 
     /**
