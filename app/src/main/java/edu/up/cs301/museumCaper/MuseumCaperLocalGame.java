@@ -114,6 +114,21 @@ public class MuseumCaperLocalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
+        boolean thiefEscape = gameState.getIsThiefEscaped();
+        int paintingsStolen = gameState.getStolenPaintings();
+
+        if (thiefEscape){
+            if (paintingsStolen == 0){
+                return "The thief has escaped.. but with no riches to their name... ";
+            }
+            else if(paintingsStolen == 1) {
+                return "The thief has escaped with a painting in tow! ";
+            }
+            else{
+                return "The thief has escaped with " + paintingsStolen + " paintings!";
+            }
+        }
+
         return null;
 	}
 

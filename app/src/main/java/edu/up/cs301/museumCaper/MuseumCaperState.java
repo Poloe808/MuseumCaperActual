@@ -338,6 +338,7 @@ public class MuseumCaperState extends GameState {
     public boolean getThiefTurn() {
         return this.isThiefTurn;
     }
+    public boolean getIsThiefEscaped(){return thiefEscaped;}
     public boolean getIsVisible() {
         return this.isVisible;
     }
