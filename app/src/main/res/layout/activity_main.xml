@@ -218,29 +218,29 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/arttwo"
-                    android:translationX="180dp"
+                    android:translationX="137dp"
                     android:translationY="35dp" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/artseven"
-                    android:translationX="425dp"
-                    android:translationY="32dp" />
+                    android:translationX="260dp"
+                    android:translationY="0dp" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/arteight"
-                    android:translationX="135dp"
-                    android:translationY="415dp" />
+                    android:translationX="10"
+                    android:translationY="330dp" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/artnine"
-                    android:translationX="478dp"
-                    android:translationY="412dp" />
+                    android:translationX="45dp"
+                    android:translationY="123dp" />
 
                 <ImageView
                     android:layout_width="40dp"
