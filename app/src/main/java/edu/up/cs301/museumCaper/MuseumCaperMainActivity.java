@@ -56,12 +56,12 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 				return new MuseumCaperComputerPlayer2(name);
 			}});
 
-		// Create a game configuration class for Counter:
+		// Create a game configuration class for Museum Caper:
 		// - player types as given above
-		// - from 1 to 2 players
-		// - name of game is "Counter Game"
+		// - 4 players only
+		// - name of game is "Clue: The Great Museum Caper"
 		// - port number as defined above
-		GameConfig defaultConfig = new GameConfig(playerTypes, 1, 2, "Counter Game",
+		GameConfig defaultConfig = new GameConfig(playerTypes, 4, 4, "Clue: The Great Museum Caper",
 				PORT_NUMBER);
 
 		// Add the default players to the configuration

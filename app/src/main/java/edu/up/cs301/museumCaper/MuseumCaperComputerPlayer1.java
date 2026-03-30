@@ -5,9 +5,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
 
 /**
- * A computer-version of a counter-player.  Since this is such a simple game,
- * it just sends "+" and "-" commands with equal probability, at an average
- * rate of one per second. 
+ * A computer-version of a museumCaper-player. Head empty
  *
  *
  * @author Logan Ortogero
@@ -18,7 +16,9 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @version September 2013
  */
 public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Tickable {
-	
+
+    private MuseumCaperState state;
+
     /**
      * Constructor for objects of class CounterComputerPlayer1
      * 
@@ -28,10 +28,6 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
     public MuseumCaperComputerPlayer1(String name) {
         // invoke superclass constructor
         super(name);
-        
-        // start the timer, ticking 20 times per second
-        getTimer().setInterval(50);
-        getTimer().start();
     }
     
     /**
@@ -42,9 +38,20 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
      */
 	@Override
 	protected void receiveInfo(GameInfo info) {
-		// Do nothing, as we ignore all state in deciding our next move. It
-		// depends totally on the timer and random numbers.
+        // ignore the message if it's not a MuseumCaperState message
+        if (!(info instanceof MuseumCaperState)) return;
+
+        this.state = (MuseumCaperState) info;
+        makeMove();
 	}
+
+    //TODO: make a header method for this <3
+    private void makeMove(){
+        if ( (this.playerNum == (state.getTurn() % 3)) && !state.getIsThiefTurn()){
+            game.sendAction(new MuseumCaperMoveAction(this, 0, -1));
+        }
+        game.sendAction(new MuseumCaperEndTurnAction(this));
+    }
 	
 	/**
 	 * callback method: the timer ticked

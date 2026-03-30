@@ -360,6 +360,7 @@ public class MuseumCaperState extends GameState {
     }
     public List<Integer> getGuardTwoLocation(){return guardTwoLocation;}
     public List<Integer> getGuardThreeLocation(){return guardThreeLocation;}
+    public boolean getIsThiefTurn(){return isThiefTurn;}
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
@@ -416,8 +417,8 @@ public class MuseumCaperState extends GameState {
         }
     }
 
-    public void setIsThiefTurn(){
-        isThiefTurn = !(isThiefTurn);
+    public void setIsThiefTurn(boolean thiefTurn){
+        isThiefTurn = thiefTurn;
     }
 
     public void setThiefLocation(int row, int col){
@@ -497,72 +498,94 @@ public class MuseumCaperState extends GameState {
 
         //creates move action -- passes in who made request + direction they want to move in
         //  (sets x or y away from 0)
-        int xDir = action.getCol();
-        int yDir = action.getRow();
+        int colDir = action.getCol();
+        int rowDir = action.getRow();
 
         //if the player is the thief (the human player) and they have available moves left
-        if (getCurrentPlayer() == 0 && moveCount > 0){
-            int destPointx = thiefLocation.get(0) + xDir;
-            int destPointy =  thiefLocation.get(1) - yDir;
-            MapTile currentTile = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
-
-            if(destPointx < 0 || destPointy < 0){
-                return false;
-            }
-            MapTile destTile = getBoard().get(destPointy).get(destPointx);
-
-            if(xDir == -1){
-                if (currentTile.getLeftWall()){
-                    return false;
-                }
-                else{
-                    currentTile.setThief(false);
-                    destTile.setThief(true);
-                    thiefLocation.set(0, destPointx);
-                    thiefLocation.set(1, destPointy);
-                }
-            }
-            if(xDir == 1) {
-                if (destTile.getLeftWall()) {
-                    return false;
-                } else {
-                    currentTile.setThief(false);
-                    destTile.setThief(true);
-                    thiefLocation.set(0, destPointx);
-                    thiefLocation.set(1, destPointy);
-                }
-            }
-            if(yDir == -1) {
-                if (destTile.getTopWall()) {
-                    return false;
-                } else {
-                    currentTile.setThief(false);
-                    destTile.setThief(true);
-                    thiefLocation.set(0, destPointx);
-                    thiefLocation.set(1, destPointy);
-                }
-            }
-            if(yDir == 1) {
-                if (currentTile.getTopWall()) {
-                    return false;
-                } else {
-                    currentTile.setThief(false);
-                    destTile.setThief(true);
-                    thiefLocation.set(0, destPointx);
-                    thiefLocation.set(1, destPointy);
-                }
+        if (currentPlayer == 0 && moveCount > 0){
+            if (movement(thiefLocation, colDir, rowDir) != false){
+                moveCount--;
+                return true;
             }
             //reduce thief's move total by one
-            moveCount--;
+            return false;
+        }
+        else if(currentPlayer == 1){
+            movement(guardOneLocation, colDir, rowDir);
             return true;
         }
+        else if(currentPlayer == 2){
+            movement(guardTwoLocation, colDir, rowDir);
+            return true;
+        }
+        else if(currentPlayer == 3){
+            movement(guardThreeLocation, colDir, rowDir);
+            return true;
+        }
+        return false;
+    }
 
-        //localGame receives pos of player who made move request from move action and compares to
-        //  turn order (check turn)
-        //check if move is valid via comparing current pos to dest pos -- is there a wall in the way
-        //anticipating 1(+) out of bounds errors
-        //check if move is valid -- conflicting object on dest tile
-        //if valid, move piece by setting player boolean on current tile to false + dest tile to true
+    /**
+     * move action
+     * @param location
+     *      the location of the person who is moving
+     * @param colDir
+     *      the direction the player is moving in the x-direction
+     * @param rowDir
+     *      the direction the player is moving in the y-direction
+     * @return true if move is valid
+     */
+    private boolean movement(List<Integer> location, int colDir, int rowDir){
+        int destPointCol = location.get(0) + colDir;
+        int destPointRow =  location.get(1) - rowDir;
+        MapTile currentTile = getBoard().get(location.get(1)).get(location.get(0));
+
+        if(destPointRow < 0 || destPointCol < 0){
+            return false;
+        }
+        MapTile destTile = getBoard().get(destPointRow).get(destPointCol);
+
+        if(colDir == -1){
+            if (currentTile.getLeftWall()){
+                return false;
+            }
+            else{
+                currentTile.setThief(false);
+                destTile.setThief(true);
+                location.set(0, destPointCol);
+                location.set(1, destPointRow);
+            }
+        }
+        if(colDir == 1) {
+            if (destTile.getLeftWall()) {
+                return false;
+            } else {
+                currentTile.setThief(false);
+                destTile.setThief(true);
+                location.set(0, destPointCol);
+                location.set(1, destPointRow);
+            }
+        }
+        if(rowDir == -1) {
+            if (destTile.getTopWall()) {
+                return false;
+            } else {
+                currentTile.setThief(false);
+                destTile.setThief(true);
+                location.set(0, destPointCol);
+                location.set(1, destPointRow);
+            }
+        }
+        if(rowDir == 1) {
+            if (currentTile.getTopWall()) {
+                return false;
+            } else {
+                currentTile.setThief(false);
+                destTile.setThief(true);
+                location.set(0, destPointCol);
+                location.set(1, destPointRow);
+            }
+        }
         return true;
     }
 
@@ -659,11 +682,16 @@ public class MuseumCaperState extends GameState {
         //increment turn order
         //make thief turn opposite
         //reset thief's number of tiles they can move if it was a guard's turn
-        if(currentPlayer != 0){
+        if(!getIsThiefTurn()){
             moveCount = 3;
+            currentPlayer = 0;
         }
-        setIsThiefTurn();
-        setTurn(getTurn()+1);
+        else{
+            currentPlayer = getTurn() % 3 + 1;
+            setTurn(getTurn()+1);
+        }
+        setIsThiefTurn(!getIsThiefTurn());
+
         return true;
     }
 }

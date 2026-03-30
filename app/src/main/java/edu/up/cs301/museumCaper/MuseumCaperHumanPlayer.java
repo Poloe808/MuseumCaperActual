@@ -30,7 +30,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     //this TextView Displays the amount of moves left the player has
     private TextView movesLeftTextView;
 
-    // the most recent game state, as given to us by the CounterLocalGame
+    // the most recent game state, as given to us by the MuseumCaperLocalGame
     private MuseumCaperState state;
 
     // the android activity that we are running
@@ -87,7 +87,10 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		// if we are not yet connected to a game, ignore
 		if (game == null) return;
-
+        //if it is not the thief's turn, don't do sheet braddah (please excuse the profanities thx)
+        if (!state.getIsThiefTurn()){
+            return;
+        }
 		// Construct the action and send it to the game
 		GameAction action = null;
 		if (button.getId() == R.id.upButton) {
@@ -110,6 +113,12 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         else if (button.getId() == R.id.stealPaintingButton){
             action = new MuseumCaperStealPaintingAction(this);
         }
+        else if (button.getId() == R.id.endTurnButton){
+            action = new MuseumCaperEndTurnAction(this);
+        }
+        else if (button.getId() == R.id.checkLockButton){
+            action = new MuseumCaperCheckLockAction(this);
+        }
 		else {
 			// something else was pressed: ignore
 			return;
@@ -125,7 +134,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        // ignore the message if it's not a CounterState message
+        // ignore the message if it's not a MuseumCaperState message
         if (!(info instanceof MuseumCaperState)) return;
 
         // update our state; then update the display
@@ -154,6 +163,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
         Button disableCamera = activity.findViewById(R.id.disableCameraButton);
         Button checkLock = activity.findViewById(R.id.checkLockButton);
+        Button endTurn = activity.findViewById(R.id.endTurnButton);
 
         Button upMove = activity.findViewById(R.id.upButton);
         Button leftMove = activity.findViewById(R.id.leftButton);
@@ -166,6 +176,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         stealPainting.setOnClickListener(this);
         disableCamera.setOnClickListener(this);
         checkLock.setOnClickListener(this);
+        endTurn.setOnClickListener(this);
 
         upMove.setOnClickListener(this);
         leftMove.setOnClickListener(this);
