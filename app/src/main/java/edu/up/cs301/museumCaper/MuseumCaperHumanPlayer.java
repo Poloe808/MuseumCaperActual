@@ -29,6 +29,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     private TextView counterValueTextView;
     //this TextView Displays the amount of moves left the player has
     private TextView movesLeftTextView;
+    private TextView isSeenTextView;
 
     // the most recent game state, as given to us by the MuseumCaperLocalGame
     private MuseumCaperState state;
@@ -69,6 +70,12 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
+        if(state.getIsVisible()){
+            isSeenTextView.setText("You've been seen!");
+        }
+        else{
+            isSeenTextView.setText("You've not yet been spotted...");
+        }
 
         //invalidate DrawView for it to reflect all the changes
         dv.invalidate();
@@ -158,6 +165,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //Text Views
         this.movesLeftTextView = activity.findViewById(R.id.movesLeftText);
+        this.isSeenTextView = activity.findViewById(R.id.seenIndicator);
 
         //Button ID's
         Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
