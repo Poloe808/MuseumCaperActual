@@ -125,7 +125,7 @@ public class MuseumCaperLocalGame extends LocalGame {
                 return "The thief has escaped with a painting in tow! ";
             }
             else{
-                return "The thief has escaped with " + paintingsStolen + " paintings!";
+                return "The thief has escaped with " + paintingsStolen + " paintings! ";
             }
         }
 
