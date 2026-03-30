@@ -49,10 +49,10 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
      * the logic for the computerPlayer when it is their turn to act
      */
     private void makeMove(){
-        if ( (this.playerNum == (state.getTurn() % 3)) && !state.getIsThiefTurn()){
+        if ( (this.playerNum == state.getCurrentPlayer()) && !state.getIsThiefTurn()){
             game.sendAction(new MuseumCaperMoveAction(this, 0, -1));
+            game.sendAction(new MuseumCaperEndTurnAction(this));
         }
-        game.sendAction(new MuseumCaperEndTurnAction(this));
     }
 	
 	/**

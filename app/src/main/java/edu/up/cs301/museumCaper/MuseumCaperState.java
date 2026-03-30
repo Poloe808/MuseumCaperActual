@@ -687,7 +687,7 @@ public class MuseumCaperState extends GameState {
             currentPlayer = 0;
         }
         else{
-            currentPlayer = getTurn() % 3 + 1;
+            currentPlayer = (getTurn() % 3) + 1;
             setTurn(getTurn()+1);
         }
         setIsThiefTurn(!getIsThiefTurn());
