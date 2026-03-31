@@ -112,6 +112,12 @@ public class MuseumCaperStateTest extends TestCase {
     // ^^^^^^^^^^^^^^^^^^^^ HEY YOU WENT TOO FAR STUFF OVER HERE IS A WORK IN PROGRESS LOOK BACK UP ^^^^^^^^^^^^^^^^^^^^^
     // ==================================================================================================================
 
+    //This'll be the test for the movementAction WOW That is a lot more work than i signed up for ok bye
+    @Test
+    public void testMuseumCaperMoveAction(){
+        MuseumCaperState state = new MuseumCaperState();
+    }
+
     public void testSetTurn() {
         MuseumCaperState test = new MuseumCaperState();
         test.setTurn(0);
@@ -155,8 +161,5 @@ public class MuseumCaperStateTest extends TestCase {
         tile.setLeftWall(true);
         boolean tileCheck = tile.getLeftWall();
         assertTrue(tileCheck);
-    }
-
-    public void testSetWalls() {
     }
 }
