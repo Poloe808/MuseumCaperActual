@@ -29,6 +29,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     private TextView movesLeftTextView;
     private TextView isSeenTextView;
 
+    //Button references
+    Button stealPainting;
+    Button disableCamera;
+    Button checkLock;
+
     // the most recent game state, as given to us by the MuseumCaperLocalGame
     private MuseumCaperState state;
 
@@ -74,6 +79,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         else{
             isSeenTextView.setText("You've not yet been spotted...");
         }
+
+        //change stuff about the buttons
+
 
         //invalidate DrawView for it to reflect all the changes
         dv.invalidate();
@@ -166,9 +174,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         this.isSeenTextView = activity.findViewById(R.id.seenIndicator);
 
         //Button ID's
-        Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
-        Button disableCamera = activity.findViewById(R.id.disableCameraButton);
-        Button checkLock = activity.findViewById(R.id.checkLockButton);
+        stealPainting = activity.findViewById(R.id.stealPaintingButton);
+        disableCamera = activity.findViewById(R.id.disableCameraButton);
+        checkLock = activity.findViewById(R.id.checkLockButton);
         Button endTurn = activity.findViewById(R.id.endTurnButton);
 
         Button upMove = activity.findViewById(R.id.upButton);
