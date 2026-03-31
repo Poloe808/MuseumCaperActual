@@ -5,11 +5,17 @@ import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 /**
  *
@@ -82,6 +88,31 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //change stuff about the buttons
 
+        MapTile mt = state.getBoard().get(state.getThiefLocation().get(1)).get(state.getThiefLocation().get(0));
+       //change color of steal painting button
+        if(mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+
+        //change color of disable camera button
+        if(mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+        //change color of check lock button
+        if(mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
 
         //invalidate DrawView for it to reflect all the changes
         dv.invalidate();
@@ -203,6 +234,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 		if (state != null) {
 			receiveInfo(state);
     }
+
         this.myActivity = activity;
         this.dv = (DrawView) getTopView();
 }

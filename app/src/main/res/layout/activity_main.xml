@@ -311,7 +311,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
-                        android:backgroundTint="#818181ff"
                         android:text="Disable Camera" />
 
                     <Button
@@ -320,7 +319,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
-                        android:backgroundTint="#818181ff"
                         android:text="Check Lock" />
 
                     <Button
@@ -329,6 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
+                        android:backgroundTint="#818181ff"
                         android:text="End Turn" />
 
                     <LinearLayout
