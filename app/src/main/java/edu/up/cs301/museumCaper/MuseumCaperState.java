@@ -23,8 +23,10 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 public class MuseumCaperState extends GameState {
 
     //these are statics that just make the code more readable
+    //TOP and LEFT are used for the wall setters
     private static final boolean TOP = true;
     private static final boolean LEFT = false;
+    //LOCKED and UNLOCKED are used for the lock helper methods
     private static final boolean LOCKED = true;
     private static final boolean UNLOCKED = false;
 	private int turn;
@@ -35,7 +37,7 @@ public class MuseumCaperState extends GameState {
     //end of every thief turn change boolean to false, at the end of every guard turn
     //  change boolean to true, increment by one
     private boolean isThiefTurn; //because thief goes every other turn
-    private int thiefPlayerId;     // which player is the thief
+    private int thiefPlayerId;     // which player is the thief (it'll be whoever the human player is.) TODO
     private int numPlayers;
     private List<Camera> cameras;        // camera locations
     private List<Painting> paintings;
@@ -54,7 +56,9 @@ public class MuseumCaperState extends GameState {
     private boolean unlocked;
 
     //variables for checking if the player still has moves available
-    private int moveCount; //counts up how many spaces a player has moved on their turn
+    private int moveCount; //how many moves the player whose turn it is has left
+
+    //may not be necessary but am keeping this for now TODO
     private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
 
     private List<Integer> thiefLocation;
@@ -63,7 +67,7 @@ public class MuseumCaperState extends GameState {
     private List<Integer> guardThreeLocation;
 
     /**
-	 * constructor, initializes variables, sets up board
+	 * constructor, initializes ALL variables, sets up board
      */
 	public MuseumCaperState() {
         turn = 0;
@@ -101,6 +105,7 @@ public class MuseumCaperState extends GameState {
         guardThreeLocation.add(4);
         guardThreeLocation.add(9);
 
+        //The thief player always goes first!
         currentPlayer = 0;
 
         cameras = new ArrayList<Camera>();
@@ -374,7 +379,13 @@ public class MuseumCaperState extends GameState {
         stolenPaintings = newStolenPaintings;
 
     }
-
+    /**
+     * toString method - describes the most important parts of the state of the game in a string!
+     * What turn it is,
+     * If the thief is visible,
+     * How many paintings have been stolen thus far,
+     * And if the thief's escaped or if they've been caught
+     */
     public String toString() {
         return "Turn: " + turn + "Is Thief Visible: "
                 + isVisible + "Amount of Stolen Paintings: " + stolenPaintings +
@@ -382,11 +393,20 @@ public class MuseumCaperState extends GameState {
                 "\nThief Caught: " + thiefCaught;
     }
 
-    //this is a helper method to set ONE top wall in the specified coordinates
+    /**
+     * This is a helper method to help set ONE top wall in the specified coordinates
+     * @param row the row (or y-position) the wall is placed
+     * @param col the col (or x-position) the wall is placed
+     */
     public void setTopWall(int row, int col){
         board.get(row).get(col).setTopWall(true);
     }
 
+    /**
+     * This is a helper method to help set ONE *LEFT* wall in the specified coordinates
+     * @param row the row (or y-position) the wall is placed
+     * @param col the col (or x-position) the wall is placed
+     */
     public void setLeftWall(int row, int col){
         board.get(row).get(col).setLeftWall(true);
     }
@@ -493,6 +513,10 @@ public class MuseumCaperState extends GameState {
      * move action
      * @param action
      * @return true if move is valid
+     *
+     * TODO:
+     * IMPORTANT TO NOTE: This does NOT support the human player being in any position in
+     * the configuation screen. Please put the human player as the first slot thx
      */
     public boolean move(MuseumCaperMoveAction action) {
         //click button to move (left, right, up, down)
@@ -511,14 +535,17 @@ public class MuseumCaperState extends GameState {
             //reduce thief's move total by one
             return false;
         }
+        //guard one
         else if(currentPlayer == 1){
             movement(guardOneLocation, colDir, rowDir);
             return true;
         }
+        //guard two
         else if(currentPlayer == 2){
             movement(guardTwoLocation, colDir, rowDir);
             return true;
         }
+        //guard three
         else if(currentPlayer == 3){
             movement(guardThreeLocation, colDir, rowDir);
             return true;

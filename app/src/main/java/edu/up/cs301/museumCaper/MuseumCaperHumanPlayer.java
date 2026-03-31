@@ -25,8 +25,6 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
     /* instance variables */
 
-    // The TextView the displays the current counter value
-    private TextView counterValueTextView;
     //this TextView Displays the amount of moves left the player has
     private TextView movesLeftTextView;
     private TextView isSeenTextView;
@@ -83,8 +81,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     }
 
     /**
-     * this method gets called when the user clicks the '+' or '-' button. It
-     * creates a new CounterMoveAction to return to the parent activity.
+     * this method gets called when the user clicks on ANY button on the view It
+     * creates a new MuseumCaperMoveAction to return to the parent activity.
      *
      * @param button the button that was clicked
      */
@@ -201,5 +199,5 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         this.dv = (DrawView) getTopView();
 }
 
-}// class CounterHumanPlayer
+}// class MuseumCaperHumanPlayer
 

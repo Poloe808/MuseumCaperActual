@@ -34,7 +34,7 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
      * callback method--game's state has changed
      * 
      * @param info
-     * 		the information (presumably containing the game's state)
+     * 		the information (hypothermically containing the game's state)
      */
 	@Override
 	protected void receiveInfo(GameInfo info) {
@@ -47,6 +47,7 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
 
     /**
      * the logic for the computerPlayer when it is their turn to act
+     * Right now it's just: "When it's my turn, move down one, then end my turn"
      */
     private void makeMove(){
         if ( (this.playerNum == state.getCurrentPlayer()) && !state.getIsThiefTurn()){
