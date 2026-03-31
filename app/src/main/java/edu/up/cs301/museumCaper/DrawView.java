@@ -20,7 +20,6 @@ public class DrawView extends SurfaceView {
     int guardTwoCol;
     int guardThreeRow;
     int guardThreeCol;
-    int rowDirection;
 
     //All le paints
     private final Paint spaceGrey = new Paint();
@@ -29,7 +28,37 @@ public class DrawView extends SurfaceView {
 
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
+    private Bitmap art1 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artone);
+    private Bitmap art2 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.arttwo);
+    private Bitmap art3 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artthree);
+    private Bitmap art4 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artfour);
+    private Bitmap art5 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artfive);
+    private Bitmap art6 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artsix);
+    private Bitmap art7 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artseven);
+    private Bitmap art8 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.arteight);
+    private Bitmap art9 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
 
+    /**
+     * callback method--game's state has changed
+     *
+     * @param canvas
+     * 		the information (hypothermically containing the game's state)
+     * @param x
+     *      the x coordinate of the player's pawn
+     * @param y
+     *      the y coordinate of the player's pawn
+     * @param color
+     *      the color of the pawn
+     */
     public void drawPawn(Canvas canvas, int x, int y, Paint color) {
         //Head of piece (circle)
         //canvas.drawCircle((x*100)+8, y*415, 15, color);
@@ -37,6 +66,10 @@ public class DrawView extends SurfaceView {
         //Top left corner to bottom right of rectangle
         //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
         canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
+    }
+
+    public void drawPainting(Canvas canvas, int col, int row){
+
     }
 
     public DrawView(Context context, AttributeSet attrs) {
