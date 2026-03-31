@@ -110,15 +110,15 @@ public class DrawView extends SurfaceView {
         drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
 
         //draw the paintings
-        drawPainting(canvas, 0,6, art1);
-        drawPainting(canvas, 1,1, art2);
-        drawPainting(canvas, 2,9, art3);
-        drawPainting(canvas, 3,1, art4);
-        drawPainting(canvas, 3,4, art5);
-        drawPainting(canvas, 5,10, art6);
+        drawPainting(canvas, 6,0, art1);
+        drawPainting(canvas, 3,1, art2);
+        drawPainting(canvas, 9,2, art3);
+        drawPainting(canvas, 1,3, art4);
+        drawPainting(canvas, 4,3, art5);
+        drawPainting(canvas, 11,5, art6);
         drawPainting(canvas, 6,6, art7);
-        drawPainting(canvas, 8,0, art8);
-        drawPainting(canvas, 8,10, art9);
+        drawPainting(canvas, 0,8, art8);
+        drawPainting(canvas, 11,8, art9);
 
     }
 
