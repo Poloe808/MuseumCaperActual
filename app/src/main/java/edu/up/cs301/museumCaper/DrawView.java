@@ -46,7 +46,6 @@ public class DrawView extends SurfaceView {
             BitmapFactory.decodeResource(getResources(), R.drawable.arteight);
     private Bitmap art9 =
             BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
-
     /**
      * callback method--game's state has changed
      *
@@ -68,8 +67,8 @@ public class DrawView extends SurfaceView {
         canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
     }
 
-    public void drawPainting(Canvas canvas, int col, int row){
-
+    public void drawPainting(Canvas canvas, int col, int row, Bitmap painting){
+        canvas.drawBitmap(painting, 225+(57*col),(225+(57*row)), null);
     }
 
     public DrawView(Context context, AttributeSet attrs) {
@@ -84,8 +83,18 @@ public class DrawView extends SurfaceView {
         copBlue.setColor(0xFF2200ff);
         copBlue.setStyle(Paint.Style.FILL);
 
-        //Makes the board smaller
+        //Makes the board and arts smaller
         board = Bitmap.createScaledBitmap(board, 1112, 834, false);
+        art1 = Bitmap.createScaledBitmap(art1, 40, 57, false);
+        art2 = Bitmap.createScaledBitmap(art2, 40, 57, false);
+        art3 = Bitmap.createScaledBitmap(art3, 40, 57, false);
+        art4 = Bitmap.createScaledBitmap(art4, 40, 57, false);
+        art5 = Bitmap.createScaledBitmap(art5, 40, 57, false);
+        art6 = Bitmap.createScaledBitmap(art6, 40, 57, false);
+        art7 = Bitmap.createScaledBitmap(art7, 40, 57, false);
+        art8 = Bitmap.createScaledBitmap(art8, 40, 57, false);
+        art9 = Bitmap.createScaledBitmap(art9, 40, 57, false);
+
     }
     @Override
     public void onDraw(Canvas canvas) {
@@ -99,6 +108,17 @@ public class DrawView extends SurfaceView {
         drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
         drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
         drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
+
+        //draw the paintings
+        drawPainting(canvas, 0,6, art1);
+        drawPainting(canvas, 1,1, art2);
+        drawPainting(canvas, 2,9, art3);
+        drawPainting(canvas, 3,1, art4);
+        drawPainting(canvas, 3,4, art5);
+        drawPainting(canvas, 5,10, art6);
+        drawPainting(canvas, 6,6, art7);
+        drawPainting(canvas, 8,0, art8);
+        drawPainting(canvas, 8,10, art9);
 
     }
 

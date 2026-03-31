@@ -11,6 +11,7 @@ package edu.up.cs301.museumCaper;
 
 public class Painting {
     int paintingNum;
+    boolean isStolen;
 
     /**
      * constructor
@@ -18,6 +19,7 @@ public class Painting {
      */
     public Painting(int number){
         paintingNum = number;
+        isStolen = false;
     }
 
     /**
@@ -27,4 +29,6 @@ public class Painting {
     public Painting(Painting p){
         this.paintingNum = p.paintingNum;
     }
+
+    public boolean getStolenStatus(){return isStolen;}
 }

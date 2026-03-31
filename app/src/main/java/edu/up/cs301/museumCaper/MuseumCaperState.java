@@ -200,8 +200,8 @@ public class MuseumCaperState extends GameState {
         setPainting(3, 4,5);
         setPainting(5, 11,6);
         setPainting(6, 6,7);
-        setPainting(8, 0,8);
-        setPainting(8, 11,9);
+        setPainting(9, 0,8);
+        setPainting(9, 10,9);
 	}
 
 	/**
