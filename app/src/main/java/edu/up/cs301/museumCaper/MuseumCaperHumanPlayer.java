@@ -88,6 +88,31 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //change stuff about the buttons
 
+        MapTile mt = state.getBoard().get(state.getThiefLocation().get(1)).get(state.getThiefLocation().get(0));
+       //change color of steal painting button
+        if(mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+
+        //change color of disable camera button
+        if(mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+        //change color of check lock button
+        if(mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
 
         //invalidate DrawView for it to reflect all the changes
         dv.invalidate();
@@ -210,11 +235,6 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 			receiveInfo(state);
     }
 
-        //:( idk where to put the button color change - it needs reference to map tile and to the buttons
-        MapTile mt = state.getBoard().get(state.getThiefLocation().get(1)).get(state.getThiefLocation().get(0));
-        if(mt.hasPainting()){
-            stealPainting.setBackgroundColor(Color.parseColor("#818181ff"));
-        }
         this.myActivity = activity;
         this.dv = (DrawView) getTopView();
 }
