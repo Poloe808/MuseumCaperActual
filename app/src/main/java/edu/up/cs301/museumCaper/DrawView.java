@@ -9,6 +9,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DrawView extends SurfaceView {
 
     //instance variables
@@ -20,6 +23,7 @@ public class DrawView extends SurfaceView {
     int guardTwoCol;
     int guardThreeRow;
     int guardThreeCol;
+    List<Painting> paintings;
 
     //All le paints
     private final Paint spaceGrey = new Paint();
@@ -46,6 +50,8 @@ public class DrawView extends SurfaceView {
             BitmapFactory.decodeResource(getResources(), R.drawable.arteight);
     private Bitmap art9 =
             BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
+
+    private List<Bitmap> artList;
     /**
      * callback method--game's state has changed
      *
@@ -95,6 +101,17 @@ public class DrawView extends SurfaceView {
         art8 = Bitmap.createScaledBitmap(art8, 40, 57, false);
         art9 = Bitmap.createScaledBitmap(art9, 40, 57, false);
 
+        artList = new ArrayList<Bitmap>();
+        artList.add(art1);
+        artList.add(art2);
+        artList.add(art3);
+        artList.add(art4);
+        artList.add(art5);
+        artList.add(art6);
+        artList.add(art7);
+        artList.add(art8);
+        artList.add(art9);
+
     }
     @Override
     public void onDraw(Canvas canvas) {
@@ -110,15 +127,21 @@ public class DrawView extends SurfaceView {
         drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
 
         //draw the paintings
-        drawPainting(canvas, 6,0, art1);
-        drawPainting(canvas, 3,1, art2);
-        drawPainting(canvas, 9,2, art3);
-        drawPainting(canvas, 1,3, art4);
-        drawPainting(canvas, 4,3, art5);
-        drawPainting(canvas, 11,5, art6);
-        drawPainting(canvas, 6,6, art7);
-        drawPainting(canvas, 0,8, art8);
-        drawPainting(canvas, 11,8, art9);
+        //IF they're in the array, draw them on the board. ELSE, draw them in the bank
+        if(paintings != null) {
+            int i = 1;
+            for (Painting p : paintings) {
+                if (i == p.paintingNum) {
+                    if (p.isStolen){
+
+                    }
+                    else {
+                        drawPainting(canvas, p.col, p.row, artList.get(i - 1));
+                    }
+                }
+                i++;
+            }
+        }
 
     }
 
@@ -137,6 +160,10 @@ public class DrawView extends SurfaceView {
     public void setGuardThreeLocation(int row, int col){
         guardThreeRow = row;
         guardThreeCol = col;
+    }
+
+    public void setPaintings(List<Painting> list){
+        paintings = list;
     }
 }
 // Attributions for the assets used in this project:

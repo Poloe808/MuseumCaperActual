@@ -115,6 +115,7 @@ public class MuseumCaperLocalGame extends LocalGame {
 	@Override
 	protected String checkIfGameOver() {
         boolean thiefEscape = gameState.getIsThiefEscaped();
+        boolean thiefCaught = gameState.getIsThiefCaught();
         int paintingsStolen = gameState.getStolenPaintings();
 
         if (thiefEscape){
@@ -127,6 +128,10 @@ public class MuseumCaperLocalGame extends LocalGame {
             else{
                 return "The thief has escaped with " + paintingsStolen + " paintings! ";
             }
+        }
+
+        if (thiefCaught){
+            return "The thief was caught by the guards.. ";
         }
 
         return null;

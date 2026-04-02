@@ -12,6 +12,8 @@ package edu.up.cs301.museumCaper;
 public class Painting {
     int paintingNum;
     boolean isStolen;
+    int col;
+    int row;
 
     /**
      * constructor
@@ -31,4 +33,7 @@ public class Painting {
     }
 
     public boolean getStolenStatus(){return isStolen;}
+    public void setStolen(){isStolen = true;}
+    public void setCol(int _col){col = _col;}
+    public void setRow(int _row){row = _row;}
 }

@@ -76,6 +76,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         dv.setGuardOneLocation(state.getGuardOneLocation().get(1), state.getGuardOneLocation().get(0));
         dv.setGuardTwoLocation(state.getGuardTwoLocation().get(1), state.getGuardTwoLocation().get(0));
         dv.setGuardThreeLocation(state.getGuardThreeLocation().get(1), state.getGuardThreeLocation().get(0));
+        dv.setPaintings(state.getPaintings());
 
         //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());

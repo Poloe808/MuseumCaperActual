@@ -75,9 +75,10 @@ public class MuseumCaperState extends GameState {
         stolenPaintings = 0;
         isThiefTurn = true;
         thiefEscaped = false;
+        thiefCaught = false;
 
         //how many times players are allowed to move
-        moveCount = 500;
+        moveCount = 3;
 
         board = new ArrayList(11);
         //set up the board and maptiles
@@ -344,6 +345,7 @@ public class MuseumCaperState extends GameState {
         return this.isThiefTurn;
     }
     public boolean getIsThiefEscaped(){return thiefEscaped;}
+    public boolean getIsThiefCaught(){return thiefCaught;}
     public boolean getIsVisible() {
         return this.isVisible;
     }
@@ -370,6 +372,10 @@ public class MuseumCaperState extends GameState {
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
+
+    public List<Painting> getPaintings(){return paintings;}
+    public List<Lock> getLocksList(){return locksList;}
+    public List<Camera> getCameras(){return cameras;}
 
     public void setVisible(boolean visibilityCheck) {
         isVisible = visibilityCheck;
@@ -456,6 +462,8 @@ public class MuseumCaperState extends GameState {
         Painting p = new Painting(number);
         paintings.add(p);
         board.get(row).get(col).setHasPainting(p);
+        p.setCol(col);
+        p.setRow(row);
     }
 
     public void setLocks(int row, int col, boolean locked){
@@ -476,6 +484,7 @@ public class MuseumCaperState extends GameState {
         MapTile mt = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
         if (getThiefTurn()){
             if (mt.hasPainting()){
+                mt.getHasPainting().setStolen();
                 mt.removePainting();
                 //change the turn order (via setting boolean to false) and incrementing turn order
                 //increment stolen paintings by 1
@@ -720,6 +729,17 @@ public class MuseumCaperState extends GameState {
         }
         setIsThiefTurn(!getIsThiefTurn());
 
+        //will need to change if has less guards
+        checkIfOccupyingSameSpot(thiefLocation, guardOneLocation);
+        checkIfOccupyingSameSpot(thiefLocation, guardTwoLocation);
+        checkIfOccupyingSameSpot(thiefLocation, guardThreeLocation);
+
         return true;
+    }
+
+    private void checkIfOccupyingSameSpot(List<Integer> thief, List<Integer> guard){
+        if(thief.get(0) == guard.get(0) && thief.get(1) == guard.get(1)){
+            thiefCaught = true;
+        }
     }
 }
