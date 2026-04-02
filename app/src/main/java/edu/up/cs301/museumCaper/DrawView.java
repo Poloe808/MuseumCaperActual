@@ -130,12 +130,10 @@ public class DrawView extends SurfaceView {
         //IF they're in the array, draw them on the board. ELSE, draw them in the bank
         if(paintings != null) {
             int i = 1;
+            int bankRow = 1;
             for (Painting p : paintings) {
                 if (i == p.paintingNum) {
-                    if (p.isStolen){
-
-                    }
-                    else {
+                    if (!p.isStolen){
                         drawPainting(canvas, p.col, p.row, artList.get(i - 1));
                     }
                 }

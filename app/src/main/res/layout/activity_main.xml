@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
@@ -74,45 +75,106 @@
                 android:text="Paintings"
                 android:textSize="25sp" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:visibility="invisible"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/artone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:visibility="invisible"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/artthree" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:visibility="invisible"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/artfour" />
+                    <ImageView
+                        android:id="@+id/artone"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artone"
+                        android:visibility="invisible" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:visibility="invisible"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/artfive" />
+                    <ImageView
+                        android:id="@+id/artthree"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artthree"
+                        android:visibility="invisible" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:visibility="invisible"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/artsix" />
+                    <ImageView
+                        android:id="@+id/artfour"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artfour"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/artfive"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artfive"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/artsix"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artsix"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/artnine"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artnine"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/arteight"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/arteight"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/artseven"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/artseven"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/arttwo"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/arttwo"
+                        android:visibility="invisible"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import static android.view.View.VISIBLE;
+
 import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
@@ -8,14 +10,19 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.Image;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -46,6 +53,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     // the android activity that we are running
     private GameMainActivity myActivity;
     private DrawView dv;
+    private List<ImageView> paintingBankList;
 
     /**
      * constructor
@@ -116,6 +124,14 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         }
 
         //invalidate DrawView for it to reflect all the changes
+
+        if(state.getPaintings() != null) {
+            for (int i = 0; i < state.getPaintings().toArray().length; i++) {
+                if (state.getPaintings().get(i).isStolen) {
+                    paintingBankList.get(i).setVisibility(VISIBLE);
+                }
+            }
+        }
         dv.invalidate();
 
     }
@@ -217,6 +233,19 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         Button downMove = activity.findViewById(R.id.downButton);
 
         Button settings = activity.findViewById(R.id.settingsButton);
+
+        //Image Views - paintings - cameras - locks//
+        paintingBankList = new ArrayList<ImageView>();
+        paintingBankList.add(activity.findViewById(R.id.artone));
+        paintingBankList.add(activity.findViewById(R.id.arttwo));
+        paintingBankList.add(activity.findViewById(R.id.artthree));
+        paintingBankList.add(activity.findViewById(R.id.artfour));
+        paintingBankList.add(activity.findViewById(R.id.artfive));
+        paintingBankList.add(activity.findViewById(R.id.artsix));
+        paintingBankList.add(activity.findViewById(R.id.artseven));
+        paintingBankList.add(activity.findViewById(R.id.arteight));
+        paintingBankList.add(activity.findViewById(R.id.artnine));
+
 
         //Button Listener's
         stealPainting.setOnClickListener(this);
