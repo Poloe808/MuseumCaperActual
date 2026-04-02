@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import java.util.Random;
+
 import edu.up.cs301.GameFramework.players.GameComputerPlayer;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
@@ -51,8 +53,33 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
      */
     private void makeMove(){
         if ( (this.playerNum == state.getCurrentPlayer()) && !state.getIsThiefTurn()){
-            game.sendAction(new MuseumCaperMoveAction(this, 0, -1));
-            game.sendAction(new MuseumCaperEndTurnAction(this));
+            Random rng = new Random();
+
+            if(state.getMoveCount() > 0){
+                int moveDirection = rng.nextInt(4) + 1;
+                if(moveDirection == 1){
+                    game.sendAction(new MuseumCaperMoveAction(this, 1, 0));
+                }
+                else if(moveDirection == 2){
+                    game.sendAction(new MuseumCaperMoveAction(this, -1, 0));
+                }
+                else if(moveDirection == 3){
+                    game.sendAction(new MuseumCaperMoveAction(this, 0, 1));
+                }
+                else if(moveDirection == 4){
+                    game.sendAction(new MuseumCaperMoveAction(this, 0, -1));
+                }
+
+                try{
+                    Thread.sleep(250);
+                }
+                catch(Exception e) {
+                    //do nothign <3
+                }
+            }
+            else{
+                game.sendAction(new MuseumCaperEndTurnAction(this));
+            }
         }
     }
 	

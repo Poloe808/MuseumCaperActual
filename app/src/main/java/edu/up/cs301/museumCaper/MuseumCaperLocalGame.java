@@ -90,6 +90,12 @@ public class MuseumCaperLocalGame extends LocalGame {
         if(action instanceof MuseumCaperEndTurnAction) {
             return gameState.endTurn((MuseumCaperEndTurnAction)action);
         }
+        if(action instanceof MuseumCaperRollActionDie){
+            return gameState.rollActionDie((MuseumCaperRollActionDie)action);
+        }
+        if(action instanceof MuseumCaperRollMoveDie){
+            return gameState.rollMovementDie((MuseumCaperRollMoveDie)action);
+        }
         return false;
 	}//makeMove
 

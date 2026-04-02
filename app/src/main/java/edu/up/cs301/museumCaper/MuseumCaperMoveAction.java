@@ -28,7 +28,7 @@ public class MuseumCaperMoveAction extends GameAction {
 
 
     /**
-     * Constructor for the CounterMoveAction class.
+     * Constructor for the CaperMoveAction class.
      *
      * @param player
      *            the player making the move

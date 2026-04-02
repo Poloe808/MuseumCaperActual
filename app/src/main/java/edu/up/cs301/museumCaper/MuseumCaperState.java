@@ -539,27 +539,35 @@ public class MuseumCaperState extends GameState {
 
         //if the player is the thief (the human player) and they have available moves left
         if (currentPlayer == 0 && moveCount > 0){
-            if (movement(thiefLocation, colDir, rowDir) != false){
+            if (movement(thiefLocation, colDir, rowDir)){
                 moveCount--;
                 return true;
             }
-            //reduce thief's move total by one
             return false;
         }
         //guard one
-        else if(currentPlayer == 1){
-            movement(guardOneLocation, colDir, rowDir);
-            return true;
+        else if(currentPlayer == 1 && moveCount > 0){
+            if(movement(guardOneLocation, colDir, rowDir)){
+                moveCount--;
+                return true;
+            }
+            return false;
         }
         //guard two
-        else if(currentPlayer == 2){
-            movement(guardTwoLocation, colDir, rowDir);
-            return true;
+        else if(currentPlayer == 2 && moveCount > 0){
+            if(movement(guardTwoLocation, colDir, rowDir)){
+                moveCount--;
+                return true;
+            }
+            return false;
         }
         //guard three
-        else if(currentPlayer == 3){
-            movement(guardThreeLocation, colDir, rowDir);
-            return true;
+        else if(currentPlayer == 3 && moveCount > 0) {
+            if (movement(guardThreeLocation, colDir, rowDir)) {
+                moveCount--;
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -726,6 +734,8 @@ public class MuseumCaperState extends GameState {
             currentPlayer = 0;
         }
         else{
+            Random rng = new Random();
+            moveCount = (rng.nextInt(6)) + 1;
             currentPlayer = (getTurn() % 3) + 1;
             setTurn(getTurn()+1);
         }
@@ -743,5 +753,19 @@ public class MuseumCaperState extends GameState {
         if(thief.get(0) == guard.get(0) && thief.get(1) == guard.get(1)){
             thiefCaught = true;
         }
+    }
+
+    //deez r the rolling actions for the guards
+    public boolean rollActionDie(GameAction action){
+        Random rng = new Random();
+
+        return true;
+    }
+    public boolean rollMovementDie(GameAction action){
+        Random rng = new Random();
+        int dieRoll = (rng.nextInt(5)) + 1;
+
+        moveCount = dieRoll;
+        return true;
     }
 }
