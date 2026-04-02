@@ -11,6 +11,8 @@ package edu.up.cs301.museumCaper;
 
 public class Lock {
     private boolean unlocked;
+    public int col;
+    public int row;
 
     /**
      * constructor
@@ -32,5 +34,11 @@ public class Lock {
     }
     public boolean getLockValue(){
         return unlocked;
+    }
+    public void setCol(int _col){
+        col = _col;
+    }
+    public void setRow(int _row){
+        row = _row;
     }
 }

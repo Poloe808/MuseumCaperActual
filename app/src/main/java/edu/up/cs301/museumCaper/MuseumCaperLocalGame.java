@@ -90,6 +90,12 @@ public class MuseumCaperLocalGame extends LocalGame {
         if(action instanceof MuseumCaperEndTurnAction) {
             return gameState.endTurn((MuseumCaperEndTurnAction)action);
         }
+        if(action instanceof MuseumCaperRollActionDie){
+            return gameState.rollActionDie((MuseumCaperRollActionDie)action);
+        }
+        if(action instanceof MuseumCaperRollMoveDie){
+            return gameState.rollMovementDie((MuseumCaperRollMoveDie)action);
+        }
         return false;
 	}//makeMove
 
@@ -114,6 +120,26 @@ public class MuseumCaperLocalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
+        boolean thiefEscape = gameState.getIsThiefEscaped();
+        boolean thiefCaught = gameState.getIsThiefCaught();
+        int paintingsStolen = gameState.getStolenPaintings();
+
+        if (thiefEscape){
+            if (paintingsStolen == 0){
+                return "The thief has escaped.. but with no riches to their name... \nGame Over! ";
+            }
+            else if(paintingsStolen == 1) {
+                return "The thief has escaped with a painting in tow! \nGame Over! ";
+            }
+            else{
+                return "The thief has escaped with " + paintingsStolen + " paintings! \nGame Over! ";
+            }
+        }
+
+        if (thiefCaught){
+            return "The thief was caught by the guards.. \nGame Over! ";
+        }
+
         return null;
 	}
 

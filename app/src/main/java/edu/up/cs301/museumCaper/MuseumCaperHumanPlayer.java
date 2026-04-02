@@ -1,17 +1,28 @@
 package edu.up.cs301.museumCaper;
 
+import static android.view.View.VISIBLE;
+
 import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.media.Image;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,17 +38,22 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
     /* instance variables */
 
-    // The TextView the displays the current counter value
-    private TextView counterValueTextView;
     //this TextView Displays the amount of moves left the player has
     private TextView movesLeftTextView;
+    private TextView isSeenTextView;
 
-    // the most recent game state, as given to us by the CounterLocalGame
+    //Button references
+    Button stealPainting;
+    Button disableCamera;
+    Button checkLock;
+
+    // the most recent game state, as given to us by the MuseumCaperLocalGame
     private MuseumCaperState state;
 
     // the android activity that we are running
     private GameMainActivity myActivity;
     private DrawView dv;
+    private List<ImageView> paintingBankList;
 
     /**
      * constructor
@@ -63,19 +79,67 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      * this is where we update ALL the things =)
      */
     protected void updateDisplay() {
+        //setting the locations in DrawView in order to change the location of the pawns
         dv.setThiefLocation(state.getThiefLocation().get(1), state.getThiefLocation().get(0));
+        dv.setGuardOneLocation(state.getGuardOneLocation().get(1), state.getGuardOneLocation().get(0));
+        dv.setGuardTwoLocation(state.getGuardTwoLocation().get(1), state.getGuardTwoLocation().get(0));
+        dv.setGuardThreeLocation(state.getGuardThreeLocation().get(1), state.getGuardThreeLocation().get(0));
+        dv.setPaintings(state.getPaintings());
+        dv.setLockList(state.getLocksList());
+
+        //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
+        if(state.getIsVisible()){
+            isSeenTextView.setText("You've been seen!");
+        }
+        else{
+            isSeenTextView.setText("You've not yet been spotted...");
+        }
 
+        //change stuff about the buttons
+
+        MapTile mt = state.getBoard().get(state.getThiefLocation().get(1)).get(state.getThiefLocation().get(0));
+       //change color of steal painting button
+        if(mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasPainting()){
+            stealPainting.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+
+        //change color of disable camera button
+        if(mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasCamera()){
+            disableCamera.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+        //change color of check lock button
+        if(mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else if(!mt.hasLock()){
+            checkLock.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
+        //invalidate DrawView for it to reflect all the changes
+
+        if(state.getPaintings() != null) {
+            for (int i = 0; i < state.getPaintings().toArray().length; i++) {
+                if (state.getPaintings().get(i).isStolen) {
+                    paintingBankList.get(i).setVisibility(VISIBLE);
+                }
+            }
+        }
         dv.invalidate();
-        // set the text in the appropriate widget
-        //counterValueTextView.setText("" + state.getCounter());
-
 
     }
 
     /**
-     * this method gets called when the user clicks the '+' or '-' button. It
-     * creates a new CounterMoveAction to return to the parent activity.
+     * this method gets called when the user clicks on ANY button on the view It
+     * creates a new MuseumCaperMoveAction to return to the parent activity.
      *
      * @param button the button that was clicked
      */
@@ -85,7 +149,10 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		// if we are not yet connected to a game, ignore
 		if (game == null) return;
-
+        //if it is not the thief's turn, don't do sheet braddah (please excuse the profanities thx)
+        if (!state.getIsThiefTurn()){
+            return;
+        }
 		// Construct the action and send it to the game
 		GameAction action = null;
 		if (button.getId() == R.id.upButton) {
@@ -105,6 +172,15 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
             action = new MuseumCaperMoveAction(this,1,0);
             Log.i("button", "yeah you clicked the right button");
         }
+        else if (button.getId() == R.id.stealPaintingButton){
+            action = new MuseumCaperStealPaintingAction(this);
+        }
+        else if (button.getId() == R.id.endTurnButton){
+            action = new MuseumCaperEndTurnAction(this);
+        }
+        else if (button.getId() == R.id.checkLockButton){
+            action = new MuseumCaperCheckLockAction(this);
+        }
 		else {
 			// something else was pressed: ignore
 			return;
@@ -120,7 +196,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        // ignore the message if it's not a CounterState message
+        // ignore the message if it's not a MuseumCaperState message
         if (!(info instanceof MuseumCaperState)) return;
 
         // update our state; then update the display
@@ -144,11 +220,13 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //Text Views
         this.movesLeftTextView = activity.findViewById(R.id.movesLeftText);
+        this.isSeenTextView = activity.findViewById(R.id.seenIndicator);
 
         //Button ID's
-        Button stealPainting = activity.findViewById(R.id.stealPaintingButton);
-        Button disableCamera = activity.findViewById(R.id.disableCameraButton);
-        Button checkLock = activity.findViewById(R.id.checkLockButton);
+        stealPainting = activity.findViewById(R.id.stealPaintingButton);
+        disableCamera = activity.findViewById(R.id.disableCameraButton);
+        checkLock = activity.findViewById(R.id.checkLockButton);
+        Button endTurn = activity.findViewById(R.id.endTurnButton);
 
         Button upMove = activity.findViewById(R.id.upButton);
         Button leftMove = activity.findViewById(R.id.leftButton);
@@ -157,10 +235,24 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         Button settings = activity.findViewById(R.id.settingsButton);
 
+        //Image Views - paintings - cameras - locks//
+        paintingBankList = new ArrayList<ImageView>();
+        paintingBankList.add(activity.findViewById(R.id.artone));
+        paintingBankList.add(activity.findViewById(R.id.arttwo));
+        paintingBankList.add(activity.findViewById(R.id.artthree));
+        paintingBankList.add(activity.findViewById(R.id.artfour));
+        paintingBankList.add(activity.findViewById(R.id.artfive));
+        paintingBankList.add(activity.findViewById(R.id.artsix));
+        paintingBankList.add(activity.findViewById(R.id.artseven));
+        paintingBankList.add(activity.findViewById(R.id.arteight));
+        paintingBankList.add(activity.findViewById(R.id.artnine));
+
+
         //Button Listener's
         stealPainting.setOnClickListener(this);
         disableCamera.setOnClickListener(this);
         checkLock.setOnClickListener(this);
+        endTurn.setOnClickListener(this);
 
         upMove.setOnClickListener(this);
         leftMove.setOnClickListener(this);
@@ -173,9 +265,10 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 		if (state != null) {
 			receiveInfo(state);
     }
+
         this.myActivity = activity;
         this.dv = (DrawView) getTopView();
 }
 
-}// class CounterHumanPlayer
+}// class MuseumCaperHumanPlayer
 
