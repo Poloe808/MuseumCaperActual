@@ -126,12 +126,12 @@ public class MuseumCaperLocalGame extends LocalGame {
                 return "The thief has escaped with a painting in tow! \nGame Over! ";
             }
             else{
-                return "The thief has escaped with " + paintingsStolen + " paintings! \nGame Over!";
+                return "The thief has escaped with " + paintingsStolen + " paintings! \nGame Over! ";
             }
         }
 
         if (thiefCaught){
-            return "The thief was caught by the guards.. \nGame Over!";
+            return "The thief was caught by the guards.. \nGame Over! ";
         }
 
         return null;
