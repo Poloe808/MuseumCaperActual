@@ -10,10 +10,10 @@ package edu.up.cs301.museumCaper;
  */
 
 public class Painting {
-    int paintingNum;
-    boolean isStolen;
-    int col;
-    int row;
+    public int paintingNum;
+    public boolean isStolen;
+    public int col;
+    public int row;
 
     /**
      * constructor

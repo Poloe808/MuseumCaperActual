@@ -470,6 +470,8 @@ public class MuseumCaperState extends GameState {
         Lock l = new Lock(locked);
         locksList.add(l);
         board.get(row).get(col).setLock(l);
+        l.setCol(col);
+        l.setRow(row);
     }
 
     //these are the action methods

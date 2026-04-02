@@ -24,6 +24,7 @@ public class DrawView extends SurfaceView {
     int guardThreeRow;
     int guardThreeCol;
     List<Painting> paintings;
+    List<Lock> lockList;
 
     //All le paints
     private final Paint spaceGrey = new Paint();
@@ -50,8 +51,11 @@ public class DrawView extends SurfaceView {
             BitmapFactory.decodeResource(getResources(), R.drawable.arteight);
     private Bitmap art9 =
             BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
+    private Bitmap lockArt =
+            BitmapFactory.decodeResource(getResources(), R.drawable.lock);
 
     private List<Bitmap> artList;
+    private List<Bitmap> cameraArtList;
     /**
      * callback method--game's state has changed
      *
@@ -73,9 +77,10 @@ public class DrawView extends SurfaceView {
         canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
     }
 
-    public void drawPainting(Canvas canvas, int col, int row, Bitmap painting){
-        canvas.drawBitmap(painting, 225+(57*col),(225+(57*row)), null);
+    public void drawObject(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 225+(57*col),(225+(57*row)), null);
     }
+
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -112,15 +117,24 @@ public class DrawView extends SurfaceView {
         artList.add(art8);
         artList.add(art9);
 
+
+
+        //myfacewhenlockart
+        lockArt = Bitmap.createScaledBitmap(lockArt, 57, 57, false);
+
     }
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(board, 0, 130, null);
 
-        //This is the beginning of the color declaration section
-        //The format for the Player Pieces is as follows:
-        //Color
+        //Now draw the locks
+        if(lockList != null){
+            for (int i = 0; i < lockList.size(); i++){
+                drawObject(canvas, lockList.get(i).col, lockList.get(i).row, lockArt);
+            }
+        }
 
+        //draw the players where they're positioned
         drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
         drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
         drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
@@ -134,13 +148,12 @@ public class DrawView extends SurfaceView {
             for (Painting p : paintings) {
                 if (i == p.paintingNum) {
                     if (!p.isStolen){
-                        drawPainting(canvas, p.col, p.row, artList.get(i - 1));
+                        drawObject(canvas, p.col, p.row, artList.get(i - 1));
                     }
                 }
                 i++;
             }
         }
-
     }
 
     public void setThiefLocation(int row, int col){
@@ -162,6 +175,10 @@ public class DrawView extends SurfaceView {
 
     public void setPaintings(List<Painting> list){
         paintings = list;
+    }
+
+    public void setLockList(List<Lock> list){
+        lockList = list;
     }
 }
 // Attributions for the assets used in this project:

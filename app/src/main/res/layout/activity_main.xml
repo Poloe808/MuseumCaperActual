@@ -270,9 +270,11 @@
                 Source: https://www.geeksforgeeks.org/android/framelayout-in-android/
                 Solution: learned how to use a frame layout
             -->
+
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible">
 
                 <edu.up.cs301.museumCaper.DrawView
                     android:id="@+id/myBoard"
@@ -281,20 +283,6 @@
                     android:scaleX="1.5"
                     android:scaleY="1.5" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/camerafive"
-                    android:translationX="375dp"
-                    android:translationY="175dp" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/camerasix"
-                    android:translationX="230dp"
-                    android:translationY="180dp" />
             </FrameLayout>
 
         </LinearLayout>
