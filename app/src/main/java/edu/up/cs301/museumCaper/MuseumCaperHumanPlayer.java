@@ -8,6 +8,8 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
@@ -63,9 +65,11 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     protected void updateDisplay() {
         dv.setThiefLocation(state.getThiefLocation().get(1), state.getThiefLocation().get(0));
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
+
         dv.invalidate();
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
+
 
     }
 
