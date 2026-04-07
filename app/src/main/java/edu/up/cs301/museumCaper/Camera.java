@@ -42,6 +42,9 @@ public class Camera {
             return "Disabled";
         }
     }
+    public int getCameraNum(){
+        return cameraNum;
+    }
 
     public void disableCamera(){working = false;}
     public void setCol(int _col){

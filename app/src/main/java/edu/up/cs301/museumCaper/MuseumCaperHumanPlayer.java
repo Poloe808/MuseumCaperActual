@@ -54,6 +54,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     private GameMainActivity myActivity;
     private DrawView dv;
     private List<ImageView> paintingBankList;
+    private List<ImageView> cameraBankList;
 
     /**
      * constructor
@@ -125,17 +126,24 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
             checkLock.setBackgroundColor(Color.parseColor("#ff828282"));
         }
 
-        //invalidate DrawView for it to reflect all the changes
-
         if(state.getPaintings() != null) {
-            for (int i = 0; i < state.getPaintings().toArray().length; i++) {
+            for (int i = 0; i < state.getPaintings().size(); i++) {
                 if (state.getPaintings().get(i).isStolen) {
                     paintingBankList.get(i).setVisibility(VISIBLE);
                 }
             }
         }
-        dv.invalidate();
 
+        if(state.getCameras() != null) {
+            for (int i = 0; i < state.getCameras().size(); i++) {
+                if (state.getCameras().get(i).toString() == "Disabled") {
+                    cameraBankList.get(i).setVisibility(VISIBLE);
+                }
+            }
+        }
+
+        //invalidate DrawView for it to reflect all the changes :)
+        dv.invalidate();
     }
 
     /**
@@ -150,7 +158,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
 		// if we are not yet connected to a game, ignore
 		if (game == null) return;
-        //if it is not the thief's turn, don't do sheet braddah (please excuse the profanities thx)
+        //if it is not the thief's turn, don't do that braddah
         if (!state.getIsThiefTurn()){
             return;
         }
@@ -181,6 +189,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         }
         else if (button.getId() == R.id.checkLockButton){
             action = new MuseumCaperCheckLockAction(this);
+        }
+        else if (button.getId() == R.id.disableCameraButton){
+            action = new MuseumCaperDisableCameraAction(this);
         }
 		else {
 			// something else was pressed: ignore
@@ -236,7 +247,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         Button settings = activity.findViewById(R.id.settingsButton);
 
-        //Image Views - paintings - cameras - locks//
+        //Image Views - paintings - cameras//
+        //Paintings
         paintingBankList = new ArrayList<ImageView>();
         paintingBankList.add(activity.findViewById(R.id.artone));
         paintingBankList.add(activity.findViewById(R.id.arttwo));
@@ -248,6 +260,14 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         paintingBankList.add(activity.findViewById(R.id.arteight));
         paintingBankList.add(activity.findViewById(R.id.artnine));
 
+        //Cameras
+        cameraBankList = new ArrayList<ImageView>();
+        cameraBankList.add(activity.findViewById(R.id.cameraone));
+        cameraBankList.add(activity.findViewById(R.id.cameratwo));
+        cameraBankList.add(activity.findViewById(R.id.camerathree));
+        cameraBankList.add(activity.findViewById(R.id.camerafour));
+        cameraBankList.add(activity.findViewById(R.id.camerafive));
+        cameraBankList.add(activity.findViewById(R.id.camerasix));
 
         //Button Listener's
         stealPainting.setOnClickListener(this);
