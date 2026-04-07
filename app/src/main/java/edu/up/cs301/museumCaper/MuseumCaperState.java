@@ -273,7 +273,8 @@ public class MuseumCaperState extends GameState {
         }
 	}
 
-
+    // ===============================================================================================================
+    // For the most part, these constructors are for the JUnit tests. you can, for the most part, keep them collapsed.
     /**
      * constructor for the copyConstructorTest
      * @param test the gameState being tested
@@ -311,6 +312,28 @@ public class MuseumCaperState extends GameState {
         guardThreeLocation.add(4);
         guardThreeLocation.add(9);
     }
+    public MuseumCaperState(String moveActionTest){
+        board = new ArrayList(11);
+        //set up the board and maptiles
+        for(int row = 0; row < 12; row++){
+            board.add(new ArrayList<>(12));
+            for(int col = 0; col < 13; col++){
+                board.get(row).add(new MapTile());
+            }
+        }
+
+        thiefLocation = new ArrayList<Integer>(2);
+        thiefLocation.add(0);
+        thiefLocation.add(0);
+
+        board.get(1).get(1).setTopWall(true);
+        board.get(1).get(1).setLeftWall(true);
+        board.get(2).get(1).setTopWall(true);
+        board.get(1).get(2).setLeftWall(true);
+        moveCount = 5;
+    }
+    // ====================================== End of test constructors ==============================================
+    // ==============================================================================================================
 
     /**
      * lock method so that we can have the locks randomly be set to lock or unlock
@@ -457,6 +480,8 @@ public class MuseumCaperState extends GameState {
         Camera c = new Camera(number);
         cameras.add(c);
         board.get(row).get(col).setCamera(c);
+        c.setCol(col);
+        c.setRow(row);
     }
     public void setPainting(int row, int col, int number){
         Painting p = new Painting(number);
@@ -488,7 +513,6 @@ public class MuseumCaperState extends GameState {
             if (mt.hasPainting()){
                 mt.getHasPainting().setStolen();
                 mt.removePainting();
-                //change the turn order (via setting boolean to false) and incrementing turn order
                 //increment stolen paintings by 1
                 setStolenPaintings(getStolenPaintings()+1);
                 return true;
@@ -642,25 +666,19 @@ public class MuseumCaperState extends GameState {
      * @return true if camera is successfully disabled
      */
     public boolean disableCamera(GameAction action) {
-        /*
-        //check if it's thief's turn
-        if((getCurrentPlayer() == 0)){
-            //get tile the thief is on
-            Point currentPoint = playerLocs[0];
-            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
-            //check if that tile has a camera
-            if(currentTile.hasCamera()){
-                //turn off the camera on that tile - removing it from the board
-                currentTile.removeCamera();
+        MapTile mt = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
+        if (getThiefTurn()){
+            if (mt.hasCamera() && mt.getCamera().toString() == "Working"){
+                mt.getCamera().disableCamera();
+                return true;
             }
-            return true;
+            else{
+                return false;
+            }
         }
         else{
             return false;
         }
-
-         */
-        return false;
     }
 
     /**
@@ -741,7 +759,7 @@ public class MuseumCaperState extends GameState {
         }
         setIsThiefTurn(!getIsThiefTurn());
 
-        //will need to change if has less guards
+        //TODO: will need to change if has less guards
         checkIfOccupyingSameSpot(thiefLocation, guardOneLocation);
         checkIfOccupyingSameSpot(thiefLocation, guardTwoLocation);
         checkIfOccupyingSameSpot(thiefLocation, guardThreeLocation);
@@ -769,3 +787,15 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 }
+
+/**
+ * @author Logan Ortogero
+ External Citation
+ Date: 29 March 2026
+ Problem: The Point class is bad and finicky so I replaced them with arrayLists.
+ Referenced the android JDK a lot during this process for methods within the class.
+ Resource: https://developer.android.com/reference/java/util/ArrayList
+ Solution: Utilized the information in the documentation, such as how to use the method get(int x) and such.
+ */
+
+

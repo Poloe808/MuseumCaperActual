@@ -25,6 +25,8 @@ public class DrawView extends SurfaceView {
     int guardThreeCol;
     List<Painting> paintings;
     List<Lock> lockList;
+    List<Camera> workingCameraList;
+    List<Camera> disabledCameraList;
 
     //All le paints
     private final Paint spaceGrey = new Paint();
@@ -53,6 +55,20 @@ public class DrawView extends SurfaceView {
             BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
     private Bitmap lockArt =
             BitmapFactory.decodeResource(getResources(), R.drawable.lock);
+    private Bitmap camera1 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.cameraone);
+    private Bitmap camera2 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.cameratwo);
+    private Bitmap camera3 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.camerathree);
+    private Bitmap camera4 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.camerafour);
+    private Bitmap camera5 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.camerafive);
+    private Bitmap camera6 =
+            BitmapFactory.decodeResource(getResources(), R.drawable.camerasix);
+
+
 
     private List<Bitmap> artList;
     private List<Bitmap> cameraArtList;
@@ -96,15 +112,6 @@ public class DrawView extends SurfaceView {
 
         //Makes the board and arts smaller
         board = Bitmap.createScaledBitmap(board, 1112, 834, false);
-        art1 = Bitmap.createScaledBitmap(art1, 40, 57, false);
-        art2 = Bitmap.createScaledBitmap(art2, 40, 57, false);
-        art3 = Bitmap.createScaledBitmap(art3, 40, 57, false);
-        art4 = Bitmap.createScaledBitmap(art4, 40, 57, false);
-        art5 = Bitmap.createScaledBitmap(art5, 40, 57, false);
-        art6 = Bitmap.createScaledBitmap(art6, 40, 57, false);
-        art7 = Bitmap.createScaledBitmap(art7, 40, 57, false);
-        art8 = Bitmap.createScaledBitmap(art8, 40, 57, false);
-        art9 = Bitmap.createScaledBitmap(art9, 40, 57, false);
 
         artList = new ArrayList<Bitmap>();
         artList.add(art1);
@@ -117,7 +124,9 @@ public class DrawView extends SurfaceView {
         artList.add(art8);
         artList.add(art9);
 
+        sizeDownArt(artList);
 
+        cameraArtList = new ArrayList<Bitmap>();
 
         //myfacewhenlockart
         lockArt = Bitmap.createScaledBitmap(lockArt, 57, 57, false);
@@ -180,6 +189,37 @@ public class DrawView extends SurfaceView {
     public void setLockList(List<Lock> list){
         lockList = list;
     }
+    public void setCameraList(List<Camera> list){
+        workingCameraList = list;
+    }
+
+    //could use tweaking maybe??
+    private void sizeDownArt(List<Bitmap> list){
+        for(int i = 0; i < list.size(); i++){
+            list.set(i, Bitmap.createScaledBitmap(list.get(i), 40, 57, false));
+        }
+    }
 }
 // Attributions for the assets used in this project:
 // https://www.sprinttosave.com/product-p-674011.html
+
+/**
+ * @author Logan Ortogero
+ External Citation
+ Date: 25 March 2026
+ Problem: drawView seemed to be drawing the opposite of what occured on screen, only in the y-direction.
+          The x-dir seemed fine. Ex: move down one, the gui showed that the player moved up one,
+          and vice versa.
+
+ Resource:
+ My good friend Jack Stewart, whom I attended highschool with and regularly play games with.
+ He is a college graduate who also majored in computer science.
+ I did some good o'l rubber duck debugging with him, talking with him about my code and
+ how it's "fundamentally..." "...impossible to translate [it]." on the two axis' if the behavior is like this.
+
+ Solution:
+ So as it turned out it WAS fundamentally impossible because I was not looking at where the root
+ of the real problem was, which was in the movement code, as the player was actually moving in the
+ opposite direction in the y-direction only, due to a confusing part in the code where the arraylist did
+ the opposite of what was intended.
+ */
