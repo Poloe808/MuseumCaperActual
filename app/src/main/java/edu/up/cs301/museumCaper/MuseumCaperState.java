@@ -193,6 +193,9 @@ public class MuseumCaperState extends GameState {
         setLocks(10,5,UNLOCKED);
         setLocks(10,6, UNLOCKED);
 
+        //now RANDOMIZE THEM!!!!!!!!!
+        randomizeLocks();
+
         //set paintings manually
         setPainting(0, 6,1);
         setPainting(1, 3,2);
@@ -339,20 +342,37 @@ public class MuseumCaperState extends GameState {
      * lock method so that we can have the locks randomly be set to lock or unlock
      * but also preventing them from all being lock or unlock
      */
-    private void startOfLocks() {
-        locksList = new ArrayList<>();
+    private void randomizeLocks() {
+        List<Integer> rList = new ArrayList<>();
+
+        for(int i = 0; i < 11; i++){
+            rList.add(i);
+        }
+
         Random rand = new Random();
-        // have a for loop to gurantee 3 of them to be unlock
-        for(int randLock = 3; randLock <=3; randLock++){
-            locksList.add(new Lock(true));
-        }
-        // a for loop to make sure that at least two of them are lock
-        for(int randLock = 2; randLock <=2; randLock++){
-            locksList.add(new Lock(false));
-        }
-        // another loop to randomize the rest of the locks for a total of 11
-        for(int randLock = 5; randLock <=11; randLock++){
-            locksList.add(new Lock(rand.nextBoolean()));
+
+        //TODO: could make helper methods here lol
+        if (locksList != null) {
+            // have a for loop to gurantee 3 of them to be unlock
+            for(int i = 0; i < 3; i++){
+                int chosenLock = rand.nextInt(rList.size());
+                rList.remove(chosenLock);
+                locksList.get(chosenLock).setUnlocked(true);
+            }
+
+            // a for loop to make sure that at least three of them are locked
+            for (int i = 0; i < 3; i++){
+                int chosenLock = rand.nextInt(rList.size());
+                rList.remove(chosenLock);
+                locksList.get(chosenLock).setUnlocked(false);
+            }
+
+            // another loop to randomize the rest of the locks for a total of 11
+            for(Integer i : rList){
+                boolean result = (rand.nextInt(2) == 0);
+                locksList.get(i).setUnlocked(result);
+
+            }
         }
     }
 
