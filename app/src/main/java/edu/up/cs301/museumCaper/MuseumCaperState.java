@@ -38,6 +38,9 @@ public class MuseumCaperState extends GameState {
     //  change boolean to true, increment by one
     private boolean isThiefTurn; //because thief goes every other turn
     private int thiefPlayerId;     // which player is the thief (it'll be whoever the human player is.) TODO
+    private int guardOneId = -1;
+    private int guardTwoId = -1;
+    private int guardThreeId = -1;
     private int numPlayers;
     private List<Camera> cameras;        // camera locations
     private List<Painting> paintings;
@@ -376,7 +379,8 @@ public class MuseumCaperState extends GameState {
         }
     }
 
-
+    //==============================================================================================
+    //================================ START OF THE GETTERS ========================================
     public List<List<MapTile>> getBoard() {
         return this.board;
     }
@@ -415,11 +419,17 @@ public class MuseumCaperState extends GameState {
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
+    public int getGuardOneId(){return guardOneId;}
+    public int getGuardTwoId(){return guardTwoId;}
+    public int getGuardThreeId(){return guardThreeId;}
 
     public List<Painting> getPaintings(){return paintings;}
     public List<Lock> getLocksList(){return locksList;}
     public List<Camera> getCameras(){return cameras;}
 
+    //==============================================================================================
+    //====================== END OF THE GETTERS AND START OF THE SETTERS ===========================
+    //==============================================================================================
     public void setVisible(boolean visibilityCheck) {
         isVisible = visibilityCheck;
     }
@@ -519,8 +529,16 @@ public class MuseumCaperState extends GameState {
         l.setRow(row);
     }
 
-    //these are the action methods
+    public void setThiefPlayerId(int id){thiefPlayerId = id;}
+    public void setGuardOneId(int id){guardOneId = id;}
+    public void setGuardTwoId(int id){guardTwoId = id;}
+    public void setGuardThreeId(int id){guardThreeId = id;}
 
+    // ==================================== END OF THE SETTERS =====================================
+    //==============================================================================================
+
+    //==============================================================================================
+    // ===================================== START OF ACTIONS ======================================
     /**
      * steal painting action, removes painting from the tile
      * @param action

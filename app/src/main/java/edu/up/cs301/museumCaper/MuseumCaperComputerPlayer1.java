@@ -17,6 +17,7 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  *
  * @version September 2013
  */
+
 public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Tickable {
 
     private MuseumCaperState state;
@@ -30,6 +31,15 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
     public MuseumCaperComputerPlayer1(String name) {
         // invoke superclass constructor
         super(name);
+    }
+
+    /**
+     * Returns the Player's ID
+     *
+     * @return playerNum
+     */
+    public int getPlayerID(){
+        return playerNum;
     }
     
     /**

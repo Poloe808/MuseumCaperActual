@@ -61,8 +61,23 @@ public class MuseumCaperLocalGame extends LocalGame {
 		}
 		this.gameState = (MuseumCaperState)state;
 		super.state = state;
+
 	}
 
+    /*
+    /for(GamePlayer p : players){
+            if (p instanceof MuseumCaperHumanPlayer){
+                MuseumCaperHumanPlayer player = (MuseumCaperHumanPlayer) p;
+                gameState.setThiefPlayerId(player.getPlayerID());
+            }
+            else if (p instanceof MuseumCaperComputerPlayer1){
+                MuseumCaperComputerPlayer1 player = (MuseumCaperComputerPlayer1) p;
+                if (gameState.getGuardOneId() == -1) {
+                    gameState.setGuardOneId(player.getPlayerID());
+                }
+            }
+        }
+     */
 
 	@Override
 	protected boolean makeMove(GameAction action) {

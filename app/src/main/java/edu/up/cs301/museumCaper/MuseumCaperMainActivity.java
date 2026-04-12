@@ -84,12 +84,13 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 	 * create a local game
 	 * 
 	 * @return
-	 * 		the local game, a counter game
+	 * 		the local game, a museumCaper game
 	 */
 	@Override
 	public LocalGame createLocalGame(GameState state) {
 		if (state == null) state = new MuseumCaperState();
 		return new MuseumCaperLocalGame(state);
+
 	}
 
 }

@@ -61,9 +61,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      *
      * @param name the player's name
      */
-    public MuseumCaperHumanPlayer(String name) {
-        super(name);
-    }
+    public MuseumCaperHumanPlayer(String name) {super(name);}
 
     /**
      * Returns the GUI's top view object
@@ -75,6 +73,12 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         return myActivity.findViewById(R.id.myBoard);
     }
 
+    /**
+     * Returns the Player's ID
+     *
+     * @return playerNum
+     */
+    public int getPlayerID(){return playerNum;}
 
     /**
      * this is where we update ALL the things =)
