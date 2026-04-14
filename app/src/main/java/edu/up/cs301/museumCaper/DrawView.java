@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -59,7 +61,34 @@ public class DrawView extends SurfaceView {
 
         //Top left corner to bottom right of rectangle
         //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
-        canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
+
+        //THIS ONE
+        //canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
+
+        //external citation: https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
+
+        //draw triangle pawn body
+        color.setStrokeWidth(2);
+        color.setStyle(Paint.Style.FILL_AND_STROKE);
+        color.setAntiAlias(true);
+
+        Point point1_draw = new Point((255+(57*x)),(255+(55*y))-10);
+        Point point2_draw = new Point(225+(57*x)+15, (225+(55*y))+48);
+        Point point3_draw = new Point((225+(57*x))+45,(225+(55*y))+48);
+
+        Path path = new Path();
+        path.setFillType(Path.FillType.EVEN_ODD);
+        path.moveTo(point1_draw.x,point1_draw.y);
+        path.lineTo(point2_draw.x,point2_draw.y);
+        path.lineTo(point3_draw.x,point3_draw.y);
+        path.lineTo(point1_draw.x,point1_draw.y);
+        path.close();
+
+        canvas.drawPath(path, color);
+
+        //draw pawn head
+        canvas.drawCircle((255+(57*x)),(255+(55*y))-10, 12 ,color);
+
     }
 
     public void drawObject(Canvas canvas, int col, int row, Bitmap art){
