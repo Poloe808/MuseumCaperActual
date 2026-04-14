@@ -91,8 +91,16 @@ public class DrawView extends SurfaceView {
 
     }
 
-    public void drawObject(Canvas canvas, int col, int row, Bitmap art){
-        canvas.drawBitmap(art, 225+(57*col),(225+(57*row)), null);
+    public void drawPainting(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 237+(57*col),(232+(55*row)), null);
+    }
+
+    public void drawCamera(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 227+(57*col), (230+(55*row)), null);
+    }
+
+    public void drawLock(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 222+(57*col), (227+(55*row)), null);
     }
 
 
@@ -123,7 +131,7 @@ public class DrawView extends SurfaceView {
         artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.arteight));
         artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artnine));
 
-        sizeDownArt(artList, 40, 57);
+        sizeDownArt(artList, 40, 45);
 
         //define the list of camera arts then size down to appropriate size
         cameraArtList = new ArrayList<Bitmap>();
@@ -134,9 +142,9 @@ public class DrawView extends SurfaceView {
         cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerafive));
         cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerasix));
 
-        sizeDownArt(cameraArtList, 57, 57);
+        sizeDownArt(cameraArtList, 55, 55);
         //myfacewhenlockart
-        lockArt = Bitmap.createScaledBitmap(lockArt, 57, 57, false);
+        lockArt = Bitmap.createScaledBitmap(lockArt, 68, 57, false);
 
     }
     @Override
@@ -146,7 +154,7 @@ public class DrawView extends SurfaceView {
         //Now draw the locks
         if(lockList != null){
             for (int i = 0; i < lockList.size(); i++){
-                drawObject(canvas, lockList.get(i).col, lockList.get(i).row, lockArt);
+                drawLock(canvas, lockList.get(i).col, lockList.get(i).row, lockArt);
             }
         }
 
@@ -156,18 +164,12 @@ public class DrawView extends SurfaceView {
             for (Camera c : workingCameraList) {
                 if (i == c.getCameraNum()) {
                     if (c.toString() == "Working"){
-                        drawObject(canvas, c.col, c.row, cameraArtList.get(i - 1));
+                        drawCamera(canvas, c.col, c.row, cameraArtList.get(i - 1));
                     }
                 }
                 i++;
             }
         }
-
-        //draw the players where they're positioned
-        drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
-        drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
-        drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
-        drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
 
         //draw the paintings
         //IF they're in the array, draw them on the board. ELSE, draw them in the bank
@@ -176,12 +178,19 @@ public class DrawView extends SurfaceView {
             for (Painting p : paintings) {
                 if (i == p.paintingNum) {
                     if (!p.isStolen){
-                        drawObject(canvas, p.col, p.row, artList.get(i - 1));
+                        drawPainting(canvas, p.col, p.row, artList.get(i - 1));
                     }
                 }
                 i++;
             }
         }
+
+        //draw the players where they're positioned
+        drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
+        drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
+        drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
+        drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
+
     }
 
     public void setThiefLocation(int row, int col){

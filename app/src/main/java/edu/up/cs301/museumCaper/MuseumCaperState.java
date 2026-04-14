@@ -180,7 +180,7 @@ public class MuseumCaperState extends GameState {
         setCamera(1, 7, 2);
         setCamera(4,5,3);
         setCamera(7, 1, 4);
-        setCamera(7, 11,5);
+        setCamera(6, 11,5);
         setCamera(8,8,6);
 
         //set locks manually
