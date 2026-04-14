@@ -12,7 +12,7 @@ import static edu.up.cs301.GameFramework.utilities.Saving.SEPARATOR;
  * @version July 2013
  */
 public abstract class GameState extends GameInfo {
-    //Tag for logging
+    ///Tag for logging
     private static final String TAG = "GameState";
     // to satisfy the Serializable interface
     private static final long serialVersionUID = -5109179064333136954L;
