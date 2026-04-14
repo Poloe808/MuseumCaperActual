@@ -12,6 +12,8 @@ package edu.up.cs301.museumCaper;
 public class Camera {
     private boolean working;
     private int cameraNum;
+    public int col;
+    public int row;
 
     /**
      * constructor
@@ -31,6 +33,25 @@ public class Camera {
         this.cameraNum = c.cameraNum;
     }
 
+    @Override
+    public String toString(){
+        if(working){
+            return "Working";
+        }
+        else{
+            return "Disabled";
+        }
+    }
+    public int getCameraNum(){
+        return cameraNum;
+    }
+
     public void disableCamera(){working = false;}
+    public void setCol(int _col){
+        col = _col;
+    }
+    public void setRow(int _row){
+        row = _row;
+    }
 }
 

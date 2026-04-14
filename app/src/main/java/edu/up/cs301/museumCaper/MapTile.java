@@ -36,7 +36,7 @@ public class MapTile {
         this.hasThief = m.hasThief;
         this.hasGuard = m.hasGuard;
         this.hasLeftWall = m.hasLeftWall;
-        this.hasTopWall = m.hasLeftWall;
+        this.hasTopWall = m.hasTopWall;
     }
 
     //Getters

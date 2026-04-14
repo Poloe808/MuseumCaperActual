@@ -25,6 +25,8 @@ public class DrawView extends SurfaceView {
     int guardThreeCol;
     List<Painting> paintings;
     List<Lock> lockList;
+    List<Camera> workingCameraList;
+    List<Camera> disabledCameraList;
 
     //All le paints
     private final Paint spaceGrey = new Paint();
@@ -33,26 +35,9 @@ public class DrawView extends SurfaceView {
 
     private Bitmap board =
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
-    private Bitmap art1 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artone);
-    private Bitmap art2 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.arttwo);
-    private Bitmap art3 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artthree);
-    private Bitmap art4 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artfour);
-    private Bitmap art5 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artfive);
-    private Bitmap art6 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artsix);
-    private Bitmap art7 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artseven);
-    private Bitmap art8 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.arteight);
-    private Bitmap art9 =
-            BitmapFactory.decodeResource(getResources(), R.drawable.artnine);
     private Bitmap lockArt =
             BitmapFactory.decodeResource(getResources(), R.drawable.lock);
+
 
     private List<Bitmap> artList;
     private List<Bitmap> cameraArtList;
@@ -96,29 +81,31 @@ public class DrawView extends SurfaceView {
 
         //Makes the board and arts smaller
         board = Bitmap.createScaledBitmap(board, 1112, 834, false);
-        art1 = Bitmap.createScaledBitmap(art1, 40, 57, false);
-        art2 = Bitmap.createScaledBitmap(art2, 40, 57, false);
-        art3 = Bitmap.createScaledBitmap(art3, 40, 57, false);
-        art4 = Bitmap.createScaledBitmap(art4, 40, 57, false);
-        art5 = Bitmap.createScaledBitmap(art5, 40, 57, false);
-        art6 = Bitmap.createScaledBitmap(art6, 40, 57, false);
-        art7 = Bitmap.createScaledBitmap(art7, 40, 57, false);
-        art8 = Bitmap.createScaledBitmap(art8, 40, 57, false);
-        art9 = Bitmap.createScaledBitmap(art9, 40, 57, false);
 
+        //define the list of painting arts then size down to appropriate size
         artList = new ArrayList<Bitmap>();
-        artList.add(art1);
-        artList.add(art2);
-        artList.add(art3);
-        artList.add(art4);
-        artList.add(art5);
-        artList.add(art6);
-        artList.add(art7);
-        artList.add(art8);
-        artList.add(art9);
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artone));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.arttwo));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artthree));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artfour));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artfive));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artsix));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artseven));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.arteight));
+        artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artnine));
 
+        sizeDownArt(artList, 40, 57);
 
+        //define the list of camera arts then size down to appropriate size
+        cameraArtList = new ArrayList<Bitmap>();
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.cameraone));
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.cameratwo));
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerathree));
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerafour));
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerafive));
+        cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerasix));
 
+        sizeDownArt(cameraArtList, 57, 57);
         //myfacewhenlockart
         lockArt = Bitmap.createScaledBitmap(lockArt, 57, 57, false);
 
@@ -134,6 +121,19 @@ public class DrawView extends SurfaceView {
             }
         }
 
+        //now draw the cameras
+        if(workingCameraList != null) {
+            int i = 1;
+            for (Camera c : workingCameraList) {
+                if (i == c.getCameraNum()) {
+                    if (c.toString() == "Working"){
+                        drawObject(canvas, c.col, c.row, cameraArtList.get(i - 1));
+                    }
+                }
+                i++;
+            }
+        }
+
         //draw the players where they're positioned
         drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
         drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
@@ -144,7 +144,6 @@ public class DrawView extends SurfaceView {
         //IF they're in the array, draw them on the board. ELSE, draw them in the bank
         if(paintings != null) {
             int i = 1;
-            int bankRow = 1;
             for (Painting p : paintings) {
                 if (i == p.paintingNum) {
                     if (!p.isStolen){
@@ -180,6 +179,37 @@ public class DrawView extends SurfaceView {
     public void setLockList(List<Lock> list){
         lockList = list;
     }
+    public void setCameraList(List<Camera> list){
+        workingCameraList = list;
+    }
+
+    //could use tweaking maybe??
+    private void sizeDownArt(List<Bitmap> list, int width, int height){
+        for(int i = 0; i < list.size(); i++){
+            list.set(i, Bitmap.createScaledBitmap(list.get(i), width, height, false));
+        }
+    }
 }
 // Attributions for the assets used in this project:
 // https://www.sprinttosave.com/product-p-674011.html
+
+/**
+ * @author Logan Ortogero
+ External Citation
+ Date: 25 March 2026
+ Problem: drawView seemed to be drawing the opposite of what occured on screen, only in the y-direction.
+          The x-dir seemed fine. Ex: move down one, the gui showed that the player moved up one,
+          and vice versa.
+
+ Resource:
+ My good friend Jack Stewart, whom I attended highschool with and regularly play games with.
+ He is a college graduate who also majored in computer science.
+ I did some good o'l rubber duck debugging with him, talking with him about my code and
+ how it's "fundamentally..." "...impossible to translate [it]." on the two axis' if the behavior is like this.
+
+ Solution:
+ So as it turned out it WAS fundamentally impossible because I was not looking at where the root
+ of the real problem was, which was in the movement code, as the player was actually moving in the
+ opposite direction in the y-direction only, due to a confusing part in the code where the arraylist did
+ the opposite of what was intended.
+ */

@@ -38,6 +38,9 @@ public class MuseumCaperState extends GameState {
     //  change boolean to true, increment by one
     private boolean isThiefTurn; //because thief goes every other turn
     private int thiefPlayerId;     // which player is the thief (it'll be whoever the human player is.) TODO
+    private int guardOneId = -1;
+    private int guardTwoId = -1;
+    private int guardThreeId = -1;
     private int numPlayers;
     private List<Camera> cameras;        // camera locations
     private List<Painting> paintings;
@@ -193,6 +196,9 @@ public class MuseumCaperState extends GameState {
         setLocks(10,5,UNLOCKED);
         setLocks(10,6, UNLOCKED);
 
+        //now RANDOMIZE THEM!!!!!!!!!
+        randomizeLocks();
+
         //set paintings manually
         setPainting(0, 6,1);
         setPainting(1, 3,2);
@@ -273,7 +279,8 @@ public class MuseumCaperState extends GameState {
         }
 	}
 
-
+    // ===============================================================================================================
+    // For the most part, these constructors are for the JUnit tests. you can, for the most part, keep them collapsed.
     /**
      * constructor for the copyConstructorTest
      * @param test the gameState being tested
@@ -311,29 +318,69 @@ public class MuseumCaperState extends GameState {
         guardThreeLocation.add(4);
         guardThreeLocation.add(9);
     }
+    public MuseumCaperState(String moveActionTest){
+        board = new ArrayList(11);
+        //set up the board and maptiles
+        for(int row = 0; row < 12; row++){
+            board.add(new ArrayList<>(12));
+            for(int col = 0; col < 13; col++){
+                board.get(row).add(new MapTile());
+            }
+        }
+
+        thiefLocation = new ArrayList<Integer>(2);
+        thiefLocation.add(0);
+        thiefLocation.add(0);
+
+        board.get(1).get(1).setTopWall(true);
+        board.get(1).get(1).setLeftWall(true);
+        board.get(2).get(1).setTopWall(true);
+        board.get(1).get(2).setLeftWall(true);
+        moveCount = 5;
+    }
+    // ====================================== End of test constructors ==============================================
+    // ==============================================================================================================
 
     /**
      * lock method so that we can have the locks randomly be set to lock or unlock
      * but also preventing them from all being lock or unlock
      */
-    private void startOfLocks() {
-        locksList = new ArrayList<>();
+    private void randomizeLocks() {
+        List<Integer> rList = new ArrayList<>();
+
+        for(int i = 0; i < 11; i++){
+            rList.add(i);
+        }
+
         Random rand = new Random();
-        // have a for loop to gurantee 3 of them to be unlock
-        for(int randLock = 3; randLock <=3; randLock++){
-            locksList.add(new Lock(true));
-        }
-        // a for loop to make sure that at least two of them are lock
-        for(int randLock = 2; randLock <=2; randLock++){
-            locksList.add(new Lock(false));
-        }
-        // another loop to randomize the rest of the locks for a total of 11
-        for(int randLock = 5; randLock <=11; randLock++){
-            locksList.add(new Lock(rand.nextBoolean()));
+
+        //TODO: could make helper methods here lol
+        if (locksList != null) {
+            // have a for loop to gurantee 3 of them to be unlock
+            for(int i = 0; i < 3; i++){
+                int chosenLock = rand.nextInt(rList.size());
+                rList.remove(chosenLock);
+                locksList.get(chosenLock).setUnlocked(true);
+            }
+
+            // a for loop to make sure that at least three of them are locked
+            for (int i = 0; i < 3; i++){
+                int chosenLock = rand.nextInt(rList.size());
+                rList.remove(chosenLock);
+                locksList.get(chosenLock).setUnlocked(false);
+            }
+
+            // another loop to randomize the rest of the locks for a total of 11
+            for(Integer i : rList){
+                boolean result = (rand.nextInt(2) == 0);
+                locksList.get(i).setUnlocked(result);
+
+            }
         }
     }
 
-
+    //==============================================================================================
+    //================================ START OF THE GETTERS ========================================
     public List<List<MapTile>> getBoard() {
         return this.board;
     }
@@ -372,11 +419,17 @@ public class MuseumCaperState extends GameState {
 	public void setTurn(int newTurn) {
         turn = newTurn;
 	}
+    public int getGuardOneId(){return guardOneId;}
+    public int getGuardTwoId(){return guardTwoId;}
+    public int getGuardThreeId(){return guardThreeId;}
 
     public List<Painting> getPaintings(){return paintings;}
     public List<Lock> getLocksList(){return locksList;}
     public List<Camera> getCameras(){return cameras;}
 
+    //==============================================================================================
+    //====================== END OF THE GETTERS AND START OF THE SETTERS ===========================
+    //==============================================================================================
     public void setVisible(boolean visibilityCheck) {
         isVisible = visibilityCheck;
     }
@@ -457,6 +510,8 @@ public class MuseumCaperState extends GameState {
         Camera c = new Camera(number);
         cameras.add(c);
         board.get(row).get(col).setCamera(c);
+        c.setCol(col);
+        c.setRow(row);
     }
     public void setPainting(int row, int col, int number){
         Painting p = new Painting(number);
@@ -474,8 +529,16 @@ public class MuseumCaperState extends GameState {
         l.setRow(row);
     }
 
-    //these are the action methods
+    public void setThiefPlayerId(int id){thiefPlayerId = id;}
+    public void setGuardOneId(int id){guardOneId = id;}
+    public void setGuardTwoId(int id){guardTwoId = id;}
+    public void setGuardThreeId(int id){guardThreeId = id;}
 
+    // ==================================== END OF THE SETTERS =====================================
+    //==============================================================================================
+
+    //==============================================================================================
+    // ===================================== START OF ACTIONS ======================================
     /**
      * steal painting action, removes painting from the tile
      * @param action
@@ -488,7 +551,6 @@ public class MuseumCaperState extends GameState {
             if (mt.hasPainting()){
                 mt.getHasPainting().setStolen();
                 mt.removePainting();
-                //change the turn order (via setting boolean to false) and incrementing turn order
                 //increment stolen paintings by 1
                 setStolenPaintings(getStolenPaintings()+1);
                 return true;
@@ -642,25 +704,19 @@ public class MuseumCaperState extends GameState {
      * @return true if camera is successfully disabled
      */
     public boolean disableCamera(GameAction action) {
-        /*
-        //check if it's thief's turn
-        if((getCurrentPlayer() == 0)){
-            //get tile the thief is on
-            Point currentPoint = playerLocs[0];
-            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
-            //check if that tile has a camera
-            if(currentTile.hasCamera()){
-                //turn off the camera on that tile - removing it from the board
-                currentTile.removeCamera();
+        MapTile mt = getBoard().get(thiefLocation.get(1)).get(thiefLocation.get(0));
+        if (getThiefTurn()){
+            if (mt.hasCamera() && mt.getCamera().toString() == "Working"){
+                mt.getCamera().disableCamera();
+                return true;
             }
-            return true;
+            else{
+                return false;
+            }
         }
         else{
             return false;
         }
-
-         */
-        return false;
     }
 
     /**
@@ -741,7 +797,7 @@ public class MuseumCaperState extends GameState {
         }
         setIsThiefTurn(!getIsThiefTurn());
 
-        //will need to change if has less guards
+        //TODO: will need to change if has less guards
         checkIfOccupyingSameSpot(thiefLocation, guardOneLocation);
         checkIfOccupyingSameSpot(thiefLocation, guardTwoLocation);
         checkIfOccupyingSameSpot(thiefLocation, guardThreeLocation);
@@ -769,3 +825,15 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 }
+
+/**
+ * @author Logan Ortogero
+ External Citation
+ Date: 29 March 2026
+ Problem: The Point class is bad and finicky so I replaced them with arrayLists.
+ Referenced the android JDK a lot during this process for methods within the class.
+ Resource: https://developer.android.com/reference/java/util/ArrayList
+ Solution: Utilized the information in the documentation, such as how to use the method get(int x) and such.
+ */
+
+

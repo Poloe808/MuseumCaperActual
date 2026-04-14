@@ -67,6 +67,8 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 		// Add the default players to the configuration
 		defaultConfig.addPlayer("Human", 0); // player 1: a human player
 		defaultConfig.addPlayer("Computer", 1); // player 2: a computer player
+        defaultConfig.addPlayer("Computer2", 2);
+        defaultConfig.addPlayer("Computer3", 3);
 		
 		// Set the default remote-player setup:
 		// - player name: "Remote Player"
@@ -82,12 +84,13 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 	 * create a local game
 	 * 
 	 * @return
-	 * 		the local game, a counter game
+	 * 		the local game, a museumCaper game
 	 */
 	@Override
 	public LocalGame createLocalGame(GameState state) {
 		if (state == null) state = new MuseumCaperState();
 		return new MuseumCaperLocalGame(state);
+
 	}
 
 }

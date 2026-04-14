@@ -27,6 +27,8 @@ public class MuseumCaperStateTest extends TestCase {
         assertEquals(0,turn);
     }
 
+    // ====================================================================================================================
+    // ============================ (This is the start of the test cases for actions) =====================================
 
     @Test
     public void testCopyConstructor() {
@@ -82,8 +84,12 @@ public class MuseumCaperStateTest extends TestCase {
         boolean p1 = test.getIsVisible();
         assertFalse(p1);
     }
+    // ====================================================================================================================
+    // =========================== (This is the start of the test cases for actions) ====================================
 
-    // VVVVVVVVVV Hello this tests the steal painting action, this is the one we made for Project #E VVVVVVVVV
+    /**
+     * This be the test for the Stealin a painting
+     */
     @Test
     public void testMuseumCaperStealPaintingAction() {
         MuseumCaperState state = new MuseumCaperState();
@@ -109,14 +115,171 @@ public class MuseumCaperStateTest extends TestCase {
         assertTrue(!result2);
     }
 
-    // ^^^^^^^^^^^^^^^^^^^^ HEY YOU WENT TOO FAR STUFF OVER HERE IS A WORK IN PROGRESS LOOK BACK UP ^^^^^^^^^^^^^^^^^^^^^
-    // ==================================================================================================================
+    /**
+     * This be the test for the disabling a camera
+     */
+    @Test
+    public void testMuseumCaperDisableCameraAction(){
+        MuseumCaperState state = new MuseumCaperState();
+        boolean result;
 
-    //This'll be the test for the movementAction WOW That is a lot more work than i signed up for ok bye
+        MuseumCaperStealPaintingAction action = new MuseumCaperStealPaintingAction(null);
+
+        state.setThiefLocation(1, 1);
+        state.setCamera(1, 1, 9);
+
+        assertTrue(state.getBoard().get(1).get(1).hasCamera());
+        assertEquals("Working", state.getBoard().get(1).get(1).getCamera().toString());
+        result = state.disableCamera(action);
+
+        assertTrue(result);
+        assertEquals("Disabled", state.getBoard().get(1).get(1).getCamera().toString());
+
+        result = state.disableCamera(action);
+        assertFalse(result);
+
+        assertEquals("Disabled", state.getBoard().get(1).get(1).getCamera().toString());
+    }
+
+
+    /**
+     * This be the test for the MoveAction
+     */
     @Test
     public void testMuseumCaperMoveAction(){
-        MuseumCaperState state = new MuseumCaperState();
+        MuseumCaperState state = new MuseumCaperState("John caperState is moving");
+        boolean result;
+
+        MuseumCaperMoveAction moveRight = new MuseumCaperMoveAction(null, 1, 0);
+        MuseumCaperMoveAction moveLeft= new MuseumCaperMoveAction(null, -1, 0);
+        MuseumCaperMoveAction moveUp = new MuseumCaperMoveAction(null, 0, 1);
+        MuseumCaperMoveAction moveDown = new MuseumCaperMoveAction(null, 0, -1);
+
+        //move up no obstruction should PASS *and* should move the piece up one
+        state.setThiefLocation(10, 0);
+        result = state.move(moveUp);
+        assertTrue(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 9, 0));
+
+        //move down no obstruction should pass and should move the piece down one
+        result = state.move(moveDown);
+        assertTrue(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 10, 0));
+
+        //move right no obstruction should pass and should move the piece right one
+        result = state.move(moveRight);
+        assertTrue(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 10, 1));
+
+        //move left no obstruction should PASS and should move the piece left one
+        result = state.move(moveLeft);
+        assertTrue(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 10, 0));
+
+        //move against obstruction WITH moves left should fail, and should stay in the same position
+        assertTrue(state.getMoveCount() > 0);
+        state.setThiefLocation(1, 1);
+
+        //move with no moves left should fail
+        //move up
+        result = state.move(moveUp);
+        assertFalse(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 1, 1));
+
+        //move down
+        result = state.move(moveDown);
+        assertFalse(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 1, 1));
+
+        //move right
+        result = state.move(moveRight);
+        assertFalse(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 1, 1));
+
+        //move left
+        result = state.move(moveLeft);
+        assertFalse(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 1, 1));
+
+        //move with NO obstruction but with 0 moveCount should FAIL.
+        state.setThiefLocation(0,0);
+        state.move(moveRight);
+
+        assertEquals(0, state.getMoveCount());
+        result = state.move(moveRight);
+
+        assertFalse(result);
+        assertTrue(checkCoords(state.getThiefLocation(), 0, 1));
     }
+
+    /**
+     * Helper method that checks whether or not the coordinates of a player match the expected ones
+     * @param thiefLocation
+     *      The list of the player that contains what row and col they are actually in
+     * @param expectedRow
+     *      The row (y-position) we expect them to be in
+     * @param expectedCol
+     *      the col (x-position) we expect them to be in
+     */
+    //helper method to help with 2d coordinates for the moveAction test
+    public boolean checkCoords(List<Integer> thiefLocation, int expectedRow, int expectedCol){
+        return (thiefLocation.get(0) == expectedCol && thiefLocation.get(1) == expectedRow);
+    }
+
+    /**
+     * This be the test for the EndTurn
+     */
+    @Test
+    public void testMuseumCaperEndTurnAction(){
+        MuseumCaperState state = new MuseumCaperState();
+        boolean result;
+
+        MuseumCaperEndTurnAction action = new MuseumCaperEndTurnAction(null);
+
+        assertTrue(state.getIsThiefTurn());
+        result = state.endTurn(action);
+
+        assertTrue(result);
+        assertFalse(state.getIsThiefTurn());
+        assertEquals(1, state.getTurn());
+
+        result = state.endTurn(action);
+        assertTrue(result);
+
+        assertTrue(state.getIsThiefTurn());
+        assertEquals(1, state.getTurn());
+    }
+
+    /**
+     * This be the test for the UseEyes action
+     */
+    @Test
+    public void testMuseumCaperUseEyesAction(){
+        MuseumCaperState state = new MuseumCaperState();
+        boolean result;
+
+        MuseumCaperUseEyesAction action = new MuseumCaperUseEyesAction(null);
+        //thief in line of sight up
+        //thief in line of sight to the right
+        //thief in line of sight down
+        //thief in line of sight to the left
+
+        //thief behind a wall up
+        //thief behind a wall right
+        //thief behind a wall down
+        //thief behind a wall left
+    }
+
+    /**
+     * This be the test for the Camera action
+     */
+    @Test
+    public void testMuseumCaperCameraAction(){
+
+    }
+
+    // ============================= (This is the end of the test cases for actions) ======================================
+    // ====================================================================================================================
 
     public void testSetTurn() {
         MuseumCaperState test = new MuseumCaperState();
