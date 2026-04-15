@@ -826,7 +826,7 @@ public class MuseumCaperState extends GameState {
                 if(track.isCameraWorking()) {
                     //guard go to this space for 2 turns
                 }
-                //TODO use logan's useEye logic
+                //TODO use Logan's useEye logic
             }
             //if 1 do check if thief in line of sight for guard
             else {
