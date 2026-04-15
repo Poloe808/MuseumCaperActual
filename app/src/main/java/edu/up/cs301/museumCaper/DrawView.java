@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -59,11 +61,46 @@ public class DrawView extends SurfaceView {
 
         //Top left corner to bottom right of rectangle
         //canvas.drawRect((x*55)+225,(y*60)+225,(((x*55)+225)+55),(((y*60)+225)+60),color);
-        canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
+
+        //THIS ONE
+        //canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
+
+        //external citation: https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
+
+        //draw triangle pawn body
+        color.setStrokeWidth(2);
+        color.setStyle(Paint.Style.FILL_AND_STROKE);
+        color.setAntiAlias(true);
+
+        Point point1_draw = new Point((255+(57*x)),(255+(55*y))-10);
+        Point point2_draw = new Point(225+(57*x)+15, (225+(55*y))+48);
+        Point point3_draw = new Point((225+(57*x))+45,(225+(55*y))+48);
+
+        Path path = new Path();
+        path.setFillType(Path.FillType.EVEN_ODD);
+        path.moveTo(point1_draw.x,point1_draw.y);
+        path.lineTo(point2_draw.x,point2_draw.y);
+        path.lineTo(point3_draw.x,point3_draw.y);
+        path.lineTo(point1_draw.x,point1_draw.y);
+        path.close();
+
+        canvas.drawPath(path, color);
+
+        //draw pawn head
+        canvas.drawCircle((255+(57*x)),(255+(55*y))-10, 12 ,color);
+
     }
 
-    public void drawObject(Canvas canvas, int col, int row, Bitmap art){
-        canvas.drawBitmap(art, 225+(57*col),(225+(57*row)), null);
+    public void drawPainting(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 237+(57*col),(232+(55*row)), null);
+    }
+
+    public void drawCamera(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 227+(57*col), (230+(55*row)), null);
+    }
+
+    public void drawLock(Canvas canvas, int col, int row, Bitmap art){
+        canvas.drawBitmap(art, 222+(57*col), (227+(55*row)), null);
     }
 
 
@@ -94,7 +131,7 @@ public class DrawView extends SurfaceView {
         artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.arteight));
         artList.add(BitmapFactory.decodeResource(getResources(), R.drawable.artnine));
 
-        sizeDownArt(artList, 40, 57);
+        sizeDownArt(artList, 40, 45);
 
         //define the list of camera arts then size down to appropriate size
         cameraArtList = new ArrayList<Bitmap>();
@@ -105,9 +142,9 @@ public class DrawView extends SurfaceView {
         cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerafive));
         cameraArtList.add(BitmapFactory.decodeResource(getResources(), R.drawable.camerasix));
 
-        sizeDownArt(cameraArtList, 57, 57);
+        sizeDownArt(cameraArtList, 55, 55);
         //myfacewhenlockart
-        lockArt = Bitmap.createScaledBitmap(lockArt, 57, 57, false);
+        lockArt = Bitmap.createScaledBitmap(lockArt, 68, 57, false);
 
     }
     @Override
@@ -117,7 +154,7 @@ public class DrawView extends SurfaceView {
         //Now draw the locks
         if(lockList != null){
             for (int i = 0; i < lockList.size(); i++){
-                drawObject(canvas, lockList.get(i).col, lockList.get(i).row, lockArt);
+                drawLock(canvas, lockList.get(i).col, lockList.get(i).row, lockArt);
             }
         }
 
@@ -127,18 +164,12 @@ public class DrawView extends SurfaceView {
             for (Camera c : workingCameraList) {
                 if (i == c.getCameraNum()) {
                     if (c.toString() == "Working"){
-                        drawObject(canvas, c.col, c.row, cameraArtList.get(i - 1));
+                        drawCamera(canvas, c.col, c.row, cameraArtList.get(i - 1));
                     }
                 }
                 i++;
             }
         }
-
-        //draw the players where they're positioned
-        drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
-        drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
-        drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
-        drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
 
         //draw the paintings
         //IF they're in the array, draw them on the board. ELSE, draw them in the bank
@@ -147,12 +178,19 @@ public class DrawView extends SurfaceView {
             for (Painting p : paintings) {
                 if (i == p.paintingNum) {
                     if (!p.isStolen){
-                        drawObject(canvas, p.col, p.row, artList.get(i - 1));
+                        drawPainting(canvas, p.col, p.row, artList.get(i - 1));
                     }
                 }
                 i++;
             }
         }
+
+        //draw the players where they're positioned
+        drawPawn(canvas, guardOneCol, guardOneRow, copBlue);
+        drawPawn(canvas, guardTwoCol, guardTwoRow, copBlue);
+        drawPawn(canvas, guardThreeCol, guardThreeRow, copBlue);
+        drawPawn(canvas,thiefCol, thiefRow,spaceGrey);
+
     }
 
     public void setThiefLocation(int row, int col){
