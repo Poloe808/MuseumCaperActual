@@ -258,16 +258,78 @@ public class MuseumCaperStateTest extends TestCase {
         MuseumCaperState state = new MuseumCaperState();
         boolean result;
 
-        MuseumCaperUseEyesAction action = new MuseumCaperUseEyesAction(null);
+        MuseumCaperUseEyesAction eyesAction = new MuseumCaperUseEyesAction(null, 6, 5);
+
         //thief in line of sight up
+        result = useEyesWhenThiefIs(state, eyesAction, 6, 3);
+        assertTrue(result);
+
         //thief in line of sight to the right
+        result = useEyesWhenThiefIs(state, eyesAction, 7, 5);
+        assertTrue(result);
+
         //thief in line of sight down
+        result = useEyesWhenThiefIs(state, eyesAction, 6, 8);
+        assertTrue(result);
+
         //thief in line of sight to the left
+        result = useEyesWhenThiefIs(state, eyesAction, 4, 5);
+        assertTrue(result);
+
+        //thief diagonally up and to the left
+        result = useEyesWhenThiefIs(state, eyesAction, 5, 4);
+        assertFalse(result);
+
+        //thief diagonally up and to the right
+        result = useEyesWhenThiefIs(state, eyesAction, 7, 4);
+        assertFalse(result);
+
+        //thief diagonally down and to the left
+        result = useEyesWhenThiefIs(state, eyesAction, 5, 6);
+        assertFalse(result);
+
+        //thief diagonally down and to the right
+        result = useEyesWhenThiefIs(state, eyesAction, 7, 6);
+        assertFalse(result);
+
+        state.getBoard().get(5).get(6).setTopWall(true);
+        state.getBoard().get(5).get(6).setLeftWall(true);
+        state.getBoard().get(6).get(6).setTopWall(true);
+        state.getBoard().get(5).get(7).setLeftWall(true);
 
         //thief behind a wall up
+        result = useEyesWhenThiefIs(state, eyesAction, 6, 3);
+        assertFalse(result);
+
         //thief behind a wall right
+        result = useEyesWhenThiefIs(state, eyesAction, 7, 5);
+        assertFalse(result);
+
         //thief behind a wall down
+        result = useEyesWhenThiefIs(state, eyesAction, 6, 8);
+        assertFalse(result);
+
         //thief behind a wall left
+        result = useEyesWhenThiefIs(state, eyesAction, 4, 5);
+        assertTrue(result);
+
+    }
+
+    /**
+     * TODO: Update this :)
+     * Helper method that checks whether or not the coordinates of a player match the expected ones
+     * @param state
+     *      The list of the player that contains what row and col they are actually in
+     * @param action
+     *      The row (y-position) we expect them to be in
+     * @param thiefRow
+     *      the col (x-position) we expect them to be in
+     * @param thiefCol
+     *      the col (x-position) we expect them to be in
+     */
+    public boolean useEyesWhenThiefIs(MuseumCaperState state, MuseumCaperUseEyesAction action, int thiefCol, int thiefRow){
+        state.setThiefLocation(thiefRow, thiefCol);
+        return state.useEyes(action);
     }
 
     /**

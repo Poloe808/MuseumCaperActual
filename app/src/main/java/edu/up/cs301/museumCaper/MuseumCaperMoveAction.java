@@ -24,9 +24,6 @@ public class MuseumCaperMoveAction extends GameAction {
     // to satisfy the serializable interface
     private static final long serialVersionUID = 28062013L;
 
-    //whether this move is a plus (true) or minus (false)
-
-
     /**
      * Constructor for the CaperMoveAction class.
      *
@@ -66,4 +63,4 @@ public class MuseumCaperMoveAction extends GameAction {
     //if valid, move piece by setting player boolean on current tile to false + dest tile to true
 
 
-}//class CounterMoveAction
+}

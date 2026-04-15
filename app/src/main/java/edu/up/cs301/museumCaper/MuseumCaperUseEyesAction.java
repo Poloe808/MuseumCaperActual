@@ -10,8 +10,17 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  * @author Felipe Lucas Pablo
  */
 
+
 public class MuseumCaperUseEyesAction extends GameAction {
-    public MuseumCaperUseEyesAction(GamePlayer player) {
+    private int currentCol;
+    private int currentRow;
+
+    public MuseumCaperUseEyesAction(GamePlayer player, int myCol, int myRow) {
         super(player);
+        currentCol = myCol;
+        currentRow = myRow;
     }
+
+    public int getCol(){return currentCol;}
+    public int getRow(){return currentRow;}
 }

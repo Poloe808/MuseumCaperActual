@@ -724,45 +724,50 @@ public class MuseumCaperState extends GameState {
      * @param action
      * @return true if thief is seen
      */
-    public boolean useEyes(GameAction action) {
-        //get current position of the guard
-        /*
-        int tempLoc = currentPlayer;
-        Point currentPoint = playerLocs[tempLoc];
+    public boolean useEyes(MuseumCaperUseEyesAction action) {
+        //current position of the guard is embedded in the action
+        int guardCol = action.getCol();
+        int guardRow = action.getRow();
 
-        //check in all directions until u hit a wall, then stop
-        //start checking in one direction
-        //if no thief, check if wall,
-        for(int i = 0; i <= 4; i++){
-            MapTile currentTile = getBoard().get(currentPoint.y).get(currentPoint.x);
-            //tiles for checking if wall is below/to the right
-            MapTile bottomTile = getBoard().get(currentPoint.y-1).get(currentPoint.x);
-            MapTile rightTile = getBoard().get(currentPoint.y).get(currentPoint.x+1);
-            for(int a = 0; a < 12; a++){ //todo change hardcoded 12 to a variable ?
-                if(currentTile.getThief()){
-                    return true;
-                }
-                //check if the tile has a wall in the way
-                else if(i == 1 && !(currentTile.getTopWall())){
-                    //move to the next tile
-                    currentTile = getBoard().get(currentPoint.y+a).get(currentPoint.x);
-                }
-                //keep checking until there is a thief or a wall, then switch cardinal directions
-                else if(i == 2 && !(rightTile.getLeftWall())){
-                    currentTile = getBoard().get(currentPoint.y).get(currentPoint.x+a);
-                }
-                else if(i == 3 &&  !(currentTile.getTopWall())){
-                    currentTile = getBoard().get(currentPoint.y-a).get(currentPoint.x);
-                }
-                else if(i == 4 &&  !(bottomTile.getTopWall())){
-                    currentTile = getBoard().get(currentPoint.y).get(currentPoint.x-a);
+        for(int dir = 0; dir < 4; dir++){
+            int checkingCol = guardCol;
+            int checkingRow= guardRow;
+            boolean wallInTheWay = false;
+
+            //checking all the tiles to the left til we hit a wall
+            if (dir == 0){
+                while(wallInTheWay == false || thiefVisible == false){
+                    if(board.get(checkingRow).get(checkingCol).getLeftWall()){
+                        wallInTheWay = true;
+                    }
+                    else{
+                        checkingCol -= 1;
+                    }
                 }
             }
+            //checking all the tiles to the right til we hit a wall
+            if (dir == 1){
+
+            }
+            //checking all the tiles down
+            if (dir == 2){
+
+            }
+            //checking all the tiles up
+            if (dir == 3){
+
+            }
         }
-        return false; //thief isn't able to be seen
-        */
+
+        //thief isn't able to be seen
         return false;
     }
+
+    /**
+     * helper method for useEyes
+     * @param action
+     * @return
+     */
 
     /**
      * motion detector action for guard ai
