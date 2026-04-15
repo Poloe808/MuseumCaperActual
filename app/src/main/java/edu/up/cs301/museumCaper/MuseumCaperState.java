@@ -814,14 +814,43 @@ public class MuseumCaperState extends GameState {
     //deez r the rolling actions for the guards
     public boolean rollActionDie(GameAction action){
         Random rng = new Random();
+        int dieAction = (rng.nextInt(6)+1);
+        //eye action
+        if(dieAction==1||dieAction==2||dieAction==3||dieAction==4) {
+            int camOrEye = (rng.nextInt(2));
+            //random number (either 1 or 2)
+            //if 0 do check working camera prompt
+            if(camOrEye==0) {
+                int camNum = (rng.nextInt(6)+1);
+                Camera track = getCameras().get(camNum);
+                if(track.isCameraWorking()) {
+                    //guard go to this space for 2 turns
+                }
+                //TODO use logan's useEye logic
+            }
+            //if 1 do check if thief in line of sight for guard
+            else {
 
+            }
+        }
+        //Scan action
+        if(dieAction==5) {
+            //TODO useEye Logic to prompt if any camera can see thief
+            for(Camera cam : getCameras()) {
+                if(!cam.isCameraWorking()) {
+
+                }
+            }
+        }
+        //Motion Detector Action
+        if(dieAction==6) {
+           getThiefLocation();
+        }
         return true;
     }
     public boolean rollMovementDie(GameAction action){
         Random rng = new Random();
-        int dieRoll = (rng.nextInt(5)) + 1;
-
-        moveCount = dieRoll;
+        moveCount = (rng.nextInt(6)) + 1;
         return true;
     }
 }

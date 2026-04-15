@@ -46,6 +46,9 @@ public class Camera {
         return cameraNum;
     }
 
+    public boolean isCameraWorking() {
+        return working;
+    }
     public void disableCamera(){working = false;}
     public void setCol(int _col){
         col = _col;
