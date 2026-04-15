@@ -24,11 +24,12 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
     private MuseumCaperState state;
     // implement the algorithm BFS
     private Random random = new Random();
-
-
+    // we have it pick a random place in the board.
+    int rowGoal = -1;
+    int colGoal = -1;
     /**
      * Constructor for objects of class CounterComputerPlayer1
-     * 
+     *
      * @param name
      * 		the player's name
      */
@@ -45,25 +46,24 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
     public int getPlayerID(){
         return playerNum;
     }
-    
+
     /**
      * callback method--game's state has changed
-     * 
+     *
      * @param info
      * 		the information (hypothermically containing the game's state)
      */
-	@Override
-	protected void receiveInfo(GameInfo info) {
+    @Override
+    protected void receiveInfo(GameInfo info) {
         // ignore the message if it's not a MuseumCaperState message
         if (!(info instanceof MuseumCaperState)) return;
 
         this.state = (MuseumCaperState) info;
         makeMove();
-	}
+    }
 
     /**
      * the logic for the computerPlayer when it is their turn to act
-     * Right now it's just: "When it's my turn, move down one, then end my turn"
      */
     private void makeMove(){
         if(this.playerNum != state.getCurrentPlayer()){
@@ -72,24 +72,53 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
         if(state.getIsThiefTurn()){
             return;
         }
-
-        // we have it pick a random place in the board.
-        int rowGoal = random.nextInt(12);
-        int colGoal = random.nextInt(13);
-
-        //check that its not a wall
-        //while (state.getBoard().get(rowGoal).get(colGoal).getLeftWall() && state.getBoard().get(rowGoal).get(colGoal).getTopWall()){
-        //    rowGoal = random.nextInt(12);
-        //    colGoal = random.nextInt(13);
-        //}
-        int[] guardPos = getGuardPosition();
-        // now we use the algorithm to move the guards
-        int[] move = PathFinding.getMoveNext(state, guardPos[0],guardPos[1],rowGoal,colGoal);
-        if(state.getMoveCount() > 0 && (move[0] != 0 || move[1] != 0)){
-            game.sendAction(new MuseumCaperMoveAction(this, move[0],move[1]));
+        try{
+            Thread.sleep(300);
         }
+        catch(Exception e){
+            //do nothing
+        }
+
+        int[] guardPos = getGuardPosition();
+
+        // end the turn if no moves left
         if(state.getMoveCount() == 0){
+            do {
+                rowGoal = random.nextInt(12);
+                colGoal = random.nextInt(13);
+            } while ((state.getBoard().get(rowGoal).get(colGoal).getLeftWall() || state.getBoard().get(rowGoal).get(colGoal).getTopWall()));
             game.sendAction(new MuseumCaperEndTurnAction(this));
+            return;
+        }
+
+        // if we already reached the goal, dont end the turn but instead give a new goal
+        if(rowGoal != -1 && guardPos[0] == rowGoal && guardPos[1] == colGoal){
+            rowGoal = -1;
+            colGoal = -1;
+        }
+        // pick new goal if we've reached our previous
+        if(rowGoal == -1){
+            // now check that we arent crashing into walls (blocked)
+            do {
+                rowGoal = random.nextInt(12);
+                colGoal = random.nextInt(13);
+            } while ((state.getBoard().get(rowGoal).get(colGoal).getLeftWall() || state.getBoard().get(rowGoal).get(colGoal).getTopWall()));
+        }
+
+
+        // now we use the algorithm to move the guards
+        int[] move = PathFinding.getMoveNext(state, guardPos[0], guardPos[1], rowGoal, colGoal);
+
+        // check for null (no path found) before using move
+        if(move == null){
+            rowGoal = -1;
+            colGoal = -1;
+            game.sendAction(new MuseumCaperEndTurnAction(this));
+            return; // instead of ending turn we pick a new goal on receiveInfo
+        }
+
+        if(move[0] != 0 || move[1] != 0){
+            game.sendAction(new MuseumCaperMoveAction(this, move[0], move[1]));
         }
     }
 
@@ -113,11 +142,4 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
         }
         return new int[]{0,0};
     }
-
-    // logic for the algorithm for the AI guards BFS
-
-	
-	/**
-	 * callback method: the timer ticked
-	 */
 }
