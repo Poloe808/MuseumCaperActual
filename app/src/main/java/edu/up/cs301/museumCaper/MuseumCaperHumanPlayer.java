@@ -42,6 +42,12 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     private TextView movesLeftTextView;
     private TextView isSeenTextView;
 
+    //TextView turn list references
+    TextView thiefText;
+    TextView p1Text;
+    TextView p2Text;
+    TextView p3Text;
+
     //Button references
     Button stealPainting;
     Button disableCamera;
@@ -61,7 +67,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      *
      * @param name the player's name
      */
-    public MuseumCaperHumanPlayer(String name) {super(name);}
+    public MuseumCaperHumanPlayer(String name) {
+        super(name);
+    }
 
     /**
      * Returns the GUI's top view object
@@ -78,7 +86,9 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
      *
      * @return playerNum
      */
-    public int getPlayerID(){return playerNum;}
+    public int getPlayerID() {
+        return playerNum;
+    }
 
     /**
      * this is where we update ALL the things =)
@@ -95,42 +105,61 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
-        if(state.getIsVisible()){
+        if (state.getIsVisible()) {
             isSeenTextView.setText("You've been seen!");
-        }
-        else{
+        } else {
             isSeenTextView.setText("You've not yet been spotted...");
         }
 
         //change stuff about the buttons
 
         MapTile mt = state.getBoard().get(state.getThiefLocation().get(1)).get(state.getThiefLocation().get(0));
-       //change color of steal painting button
-        if(mt.hasPainting()){
+        //change color of steal painting button
+        if (mt.hasPainting()) {
             stealPainting.setBackgroundColor(Color.parseColor("#818181ff"));
-        }
-        else if(!mt.hasPainting()){
+        } else if (!mt.hasPainting()) {
             stealPainting.setBackgroundColor(Color.parseColor("#ff828282"));
         }
 
 
         //change color of disable camera button
-        if(mt.hasCamera()){
+        if (mt.hasCamera()) {
             disableCamera.setBackgroundColor(Color.parseColor("#818181ff"));
-        }
-        else if(!mt.hasCamera()){
+        } else if (!mt.hasCamera()) {
             disableCamera.setBackgroundColor(Color.parseColor("#ff828282"));
         }
 
         //change color of check lock button
-        if(mt.hasLock()){
+        if (mt.hasLock()) {
             checkLock.setBackgroundColor(Color.parseColor("#818181ff"));
-        }
-        else if(!mt.hasLock()){
+        } else if (!mt.hasLock()) {
             checkLock.setBackgroundColor(Color.parseColor("#ff828282"));
         }
 
-        if(state.getPaintings() != null) {
+        //change the highlight for the current turn list
+        if (getPlayerID() == 0) {
+            thiefText.setBackgroundColor(Color.parseColor("#818181ff"));
+            p1Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p2Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p3Text.setBackgroundColor(Color.parseColor("#00000000"));
+        } else if (getPlayerID() == 1) {
+            thiefText.setBackgroundColor(Color.parseColor("#00000000"));
+            p1Text.setBackgroundColor(Color.parseColor("#818181ff"));
+            p2Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p3Text.setBackgroundColor(Color.parseColor("#00000000"));
+        } else if (getPlayerID() == 2) {
+            thiefText.setBackgroundColor(Color.parseColor("#00000000"));
+            p1Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p2Text.setBackgroundColor(Color.parseColor("#818181ff"));
+            p3Text.setBackgroundColor(Color.parseColor("#00000000"));
+        } else if (getPlayerID() == 3) {
+            thiefText.setBackgroundColor(Color.parseColor("#00000000"));
+            p1Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p2Text.setBackgroundColor(Color.parseColor("#00000000"));
+            p3Text.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+
+        if (state.getPaintings() != null) {
             for (int i = 0; i < state.getPaintings().size(); i++) {
                 if (state.getPaintings().get(i).isStolen) {
                     paintingBankList.get(i).setVisibility(VISIBLE);
@@ -138,7 +167,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
             }
         }
 
-        if(state.getCameras() != null) {
+        if (state.getCameras() != null) {
             for (int i = 0; i < state.getCameras().size(); i++) {
                 if (state.getCameras().get(i).toString() == "Disabled") {
                     cameraBankList.get(i).setVisibility(VISIBLE);
@@ -149,6 +178,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         //invalidate DrawView for it to reflect all the changes :)
         dv.invalidate();
     }
+
 
     /**
      * this method gets called when the user clicks on ANY button on the view It
@@ -237,6 +267,12 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         //Text Views
         this.movesLeftTextView = activity.findViewById(R.id.movesLeftText);
         this.isSeenTextView = activity.findViewById(R.id.seenIndicator);
+
+        //Turn List TextViews
+        thiefText = activity.findViewById(R.id.thiefText);
+        p1Text = activity.findViewById(R.id.playerOneText);
+        p2Text = activity.findViewById(R.id.playerTwoText);
+        p3Text = activity.findViewById(R.id.playerThreeText);
 
         //Button ID's
         stealPainting = activity.findViewById(R.id.stealPaintingButton);

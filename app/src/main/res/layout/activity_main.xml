@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Thief"
-                android:textColor="#0A2DF4"
                 android:textSize="15sp" />
 
             <TextView
@@ -145,7 +144,7 @@
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/artnine"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"/>
 
                     <ImageView
                         android:id="@+id/arteight"
@@ -154,7 +153,7 @@
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/arteight"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"/>
 
                     <ImageView
                         android:id="@+id/artseven"
@@ -163,7 +162,7 @@
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/artseven"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"/>
 
                     <ImageView
                         android:id="@+id/arttwo"
@@ -172,7 +171,7 @@
                         android:layout_margin="5dp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/arttwo"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"/>
 
                 </LinearLayout>
 
@@ -208,7 +207,7 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/cameraone"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
 
                 <ImageView
                     android:id="@+id/cameratwo"
@@ -217,7 +216,7 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/cameratwo"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
 
                 <ImageView
                     android:id="@+id/camerathree"
@@ -226,7 +225,8 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/camerathree"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    android:background="@android:color/transparent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -241,7 +241,7 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/camerafour"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
 
                 <ImageView
                     android:id="@+id/camerafive"
@@ -250,8 +250,7 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/camerafive"
-                    android:visibility="invisible" />
-
+                    android:visibility="invisible"/>
                 <ImageView
                     android:id="@+id/camerasix"
                     android:layout_width="40dp"
@@ -259,12 +258,13 @@
                     android:layout_margin="5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/camerasix"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
+    <!-- Second Column, The board n stuff -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -385,7 +385,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="30dp"
-                        android:text="Steal Painting" />
+                        android:text="Steal Painting"
+                        />
 
                     <Button
                         android:id="@+id/disableCameraButton"
