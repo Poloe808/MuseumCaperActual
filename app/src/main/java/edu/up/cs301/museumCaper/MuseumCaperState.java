@@ -839,31 +839,46 @@ public class MuseumCaperState extends GameState {
                 int camNum = (rng.nextInt(6)+1);
                 Camera track = getCameras().get(camNum);
                 if(track.isCameraWorking()) {
-                    //guard go to this space for 2 turns
+                    //guard go to this space for 2 turns/probably will not implement
                 }
-                //TODO use Logan's useEye logic
             }
+            //TODO pathfinding using logic below
             //if 1 do check if thief in line of sight for guard
             else {
-
+                //check for current turn, then that turns guard uses the useEye
+                if(getCurrentPlayer()==1) {
+                    //gets current GamePlayer
+                    //get's last 2 index's in guardLocation arrayList as x,y coordinate pairs
+                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardOneLocation().get(getGuardOneLocation().size()-1)),
+                            (getGuardOneLocation().get(getGuardOneLocation().size()))));
+                }
+                else if(getCurrentPlayer()==2) {
+                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardTwoLocation().get(getGuardTwoLocation().size()-1)),
+                            (getGuardTwoLocation().get(getGuardTwoLocation().size()))));
+                }
+                else if(getCurrentPlayer()==3) {
+                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardThreeLocation().get(getGuardThreeLocation().size()-1)),
+                            (getGuardThreeLocation().get(getGuardThreeLocation().size()))));
+                }
             }
         }
         //Scan action
         if(dieAction==5) {
             //TODO useEye Logic to prompt if any camera can see thief
             for(Camera cam : getCameras()) {
-                if(!cam.isCameraWorking()) {
-
+                if(cam.isCameraWorking()) {
+                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),cam.getCol(),cam.getRow()));
                 }
             }
         }
-        //Motion Detector Action
+        //Motion Detector Action - Stretch Goal
         if(dieAction==6) {
-          // getThiefLocation();
+            //Idea: guards chase current thief location plus 1 in all direction i.e. guards chase general area of thief location
         }
         return true;
     }
-    public boolean rollMovementDie(GameAction action){
+
+    public boolean rollMovementDie(GameAction action) {
         Random rng = new Random();
         moveCount = (rng.nextInt(6)) + 1;
         return true;
