@@ -65,7 +65,12 @@ public class DrawView extends SurfaceView {
         //THIS ONE
         //canvas.drawRect(225+(57*x),(225+(57*y)),(225+(57*x))+55,(225+(57*y))+55, color);
 
-        //external citation: https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
+        /**
+         * @Author Paloma Wilson
+         * External Citation: figuring out how to draw a triangle for the pawn body
+         * Source: https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
+         * Solution: copied some code from the top response
+         */
 
         //draw triangle pawn body
         color.setStrokeWidth(2);
@@ -91,6 +96,7 @@ public class DrawView extends SurfaceView {
 
     }
 
+    //methods to draw the objects on the board
     public void drawPainting(Canvas canvas, int col, int row, Bitmap art){
         canvas.drawBitmap(art, 237+(57*col),(232+(55*row)), null);
     }
@@ -100,7 +106,7 @@ public class DrawView extends SurfaceView {
     }
 
     public void drawLock(Canvas canvas, int col, int row, Bitmap art){
-        canvas.drawBitmap(art, 222+(57*col), (227+(55*row)), null);
+        canvas.drawBitmap(art, 218+(57*col), (225+(55*row)), null);
     }
 
 

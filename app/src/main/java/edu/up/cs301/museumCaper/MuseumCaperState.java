@@ -1,5 +1,7 @@
 package edu.up.cs301.museumCaper;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -68,6 +70,7 @@ public class MuseumCaperState extends GameState {
     private List<Integer> guardOneLocation;
     private List<Integer> guardTwoLocation;
     private List<Integer> guardThreeLocation;
+
 
     /**
 	 * constructor, initializes ALL variables, sets up board
@@ -356,7 +359,7 @@ public class MuseumCaperState extends GameState {
 
         //TODO: could make helper methods here lol
         if (locksList != null) {
-            // have a for loop to gurantee 3 of them to be unlock
+            // have a for loop to guarantee 3 of them to be unlock
             for(int i = 0; i < 3; i++){
                 int chosenLock = rand.nextInt(rList.size());
                 rList.remove(chosenLock);
@@ -568,6 +571,7 @@ public class MuseumCaperState extends GameState {
      * check lock action, tells thief if the lock is locked/unlocked
      * @param action
      * @return true if lock is unlocked, false if locked
+     * TODO: right now, no message displays when the lock is locked, so is looks like the button isn't working
      */
     public boolean checkLock(GameAction action) {
         MapTile currentTile = board.get(thiefLocation.get(1)).get(thiefLocation.get(0));
@@ -810,6 +814,12 @@ public class MuseumCaperState extends GameState {
         return true;
     }
 
+
+    /**
+     * check if the guard is occupying the same location as thief (thus ending the game)
+     * @param thief thief's current location
+     * @param guard guard's current location
+     */
     private void checkIfOccupyingSameSpot(List<Integer> thief, List<Integer> guard){
         if(thief.get(0) == guard.get(0) && thief.get(1) == guard.get(1)){
             thiefCaught = true;
@@ -849,7 +859,7 @@ public class MuseumCaperState extends GameState {
         }
         //Motion Detector Action
         if(dieAction==6) {
-           getThiefLocation();
+          // getThiefLocation();
         }
         return true;
     }
