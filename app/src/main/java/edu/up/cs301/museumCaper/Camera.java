@@ -45,6 +45,13 @@ public class Camera {
     public int getCameraNum(){
         return cameraNum;
     }
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
 
     public boolean isCameraWorking() {
         return working;

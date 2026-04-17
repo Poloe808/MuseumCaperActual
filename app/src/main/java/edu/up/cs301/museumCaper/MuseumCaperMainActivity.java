@@ -45,16 +45,21 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 			}});
 		
 		// a computer player type (player type 1)
-		playerTypes.add(new GamePlayerType("Computer Player") {
+		playerTypes.add(new GamePlayerType("Computer Player 1") {
 			public GamePlayer createPlayer(String name) {
 				return new MuseumCaperComputerPlayer1(name);
 			}});
 		
 		// a computer player type (player type 2)
-		playerTypes.add(new GamePlayerType("Computer Player (GUI)") {
+		playerTypes.add(new GamePlayerType("Computer Player 2") {
 			public GamePlayer createPlayer(String name) {
 				return new MuseumCaperComputerPlayer2(name);
 			}});
+        // a computer player type (player type 2)
+        playerTypes.add(new GamePlayerType("Computer Player 3") {
+            public GamePlayer createPlayer(String name) {
+                return new MuseumCaperComputerPlayer3(name);
+            }});
 
 		// Create a game configuration class for Museum Caper:
 		// - player types as given above

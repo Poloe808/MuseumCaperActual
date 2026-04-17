@@ -137,22 +137,22 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         }
 
         //change the highlight for the current turn list
-        if (getPlayerID() == 0) {
+        if (state.getIsThiefTurn()) {
             thiefText.setBackgroundColor(Color.parseColor("#818181ff"));
             p1Text.setBackgroundColor(Color.parseColor("#00000000"));
             p2Text.setBackgroundColor(Color.parseColor("#00000000"));
             p3Text.setBackgroundColor(Color.parseColor("#00000000"));
-        } else if (getPlayerID() == 1) {
+        } else if (state.getCurrentPlayer() == 1) {
             thiefText.setBackgroundColor(Color.parseColor("#00000000"));
             p1Text.setBackgroundColor(Color.parseColor("#818181ff"));
             p2Text.setBackgroundColor(Color.parseColor("#00000000"));
             p3Text.setBackgroundColor(Color.parseColor("#00000000"));
-        } else if (getPlayerID() == 2) {
+        } else if (state.getCurrentPlayer() == 2) {
             thiefText.setBackgroundColor(Color.parseColor("#00000000"));
             p1Text.setBackgroundColor(Color.parseColor("#00000000"));
             p2Text.setBackgroundColor(Color.parseColor("#818181ff"));
             p3Text.setBackgroundColor(Color.parseColor("#00000000"));
-        } else if (getPlayerID() == 3) {
+        } else if (state.getCurrentPlayer() == 3) {
             thiefText.setBackgroundColor(Color.parseColor("#00000000"));
             p1Text.setBackgroundColor(Color.parseColor("#00000000"));
             p2Text.setBackgroundColor(Color.parseColor("#00000000"));

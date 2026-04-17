@@ -9,6 +9,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * PROJECT #I TURN IN:
+ *
+ * teams are excused from establishing network play
+ * bug/functionality issue: the Check Lock button has no return message if the lock is locked
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
