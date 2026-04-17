@@ -159,4 +159,4 @@ public class MuseumCaperLocalGame extends LocalGame {
 	}
 
 
-}// class CounterLocalGame
+}// class MuseumCaperLocalGame

@@ -311,7 +311,7 @@ public class MuseumCaperStateTest extends TestCase {
 
         //thief behind a wall left
         result = useEyesWhenThiefIs(state, eyesAction, 4, 5);
-        assertTrue(result);
+        assertFalse(result);
 
     }
 
@@ -328,6 +328,7 @@ public class MuseumCaperStateTest extends TestCase {
      *      the col (x-position) we expect them to be in
      */
     public boolean useEyesWhenThiefIs(MuseumCaperState state, MuseumCaperUseEyesAction action, int thiefCol, int thiefRow){
+        state.setThiefVisible(false);
         state.setThiefLocation(thiefRow, thiefCol);
         return state.useEyes(action);
     }

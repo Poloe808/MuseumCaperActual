@@ -508,6 +508,7 @@ public class MuseumCaperState extends GameState {
         thiefLocation.set(0, col);
         thiefLocation.set(1, row);
     }
+    public void setThiefVisible(boolean visibility){thiefVisible = false;}
 
     public void setCamera(int row, int col, int number){
         Camera c = new Camera(number);
@@ -735,31 +736,68 @@ public class MuseumCaperState extends GameState {
 
         for(int dir = 0; dir < 4; dir++){
             int checkingCol = guardCol;
-            int checkingRow= guardRow;
+            int checkingRow = guardRow;
             boolean wallInTheWay = false;
 
             //checking all the tiles to the left til we hit a wall
             if (dir == 0){
-                while(wallInTheWay == false || thiefVisible == false){
+                while(wallInTheWay == false && thiefVisible == false){
                     if(board.get(checkingRow).get(checkingCol).getLeftWall()){
                         wallInTheWay = true;
                     }
                     else{
                         checkingCol -= 1;
+                        if(getThiefLocation().get(0) == checkingCol && getThiefLocation().get(1) == checkingRow){
+                            thiefVisible = true;
+                            return true;
+                        }
                     }
                 }
             }
             //checking all the tiles to the right til we hit a wall
             if (dir == 1){
-
+                while(wallInTheWay == false && thiefVisible == false){
+                    if(board.get(checkingRow).get(checkingCol + 1).getLeftWall()){
+                        wallInTheWay = true;
+                    }
+                    else{
+                        checkingCol += 1;
+                        if(getThiefLocation().get(0) == checkingCol && getThiefLocation().get(1) == checkingRow){
+                            thiefVisible = true;
+                            return true;
+                        }
+                    }
+                }
             }
             //checking all the tiles down
             if (dir == 2){
-
+                while(wallInTheWay == false && thiefVisible == false){
+                    if(board.get(checkingRow + 1).get(checkingCol).getTopWall()){
+                        wallInTheWay = true;
+                    }
+                    else{
+                        checkingRow += 1;
+                        if(getThiefLocation().get(0) == checkingCol && getThiefLocation().get(1) == checkingRow){
+                            thiefVisible = true;
+                            return true;
+                        }
+                    }
+                }
             }
             //checking all the tiles up
             if (dir == 3){
-
+                while(wallInTheWay == false && thiefVisible == false){
+                    if(board.get(checkingRow).get(checkingCol).getTopWall()){
+                        wallInTheWay = true;
+                    }
+                    else{
+                        checkingRow -= 1;
+                        if(getThiefLocation().get(0) == checkingCol && getThiefLocation().get(1) == checkingRow){
+                            thiefVisible = true;
+                            return true;
+                        }
+                    }
+                }
             }
         }
 
@@ -894,5 +932,4 @@ public class MuseumCaperState extends GameState {
  Resource: https://developer.android.com/reference/java/util/ArrayList
  Solution: Utilized the information in the documentation, such as how to use the method get(int x) and such.
  */
-
 

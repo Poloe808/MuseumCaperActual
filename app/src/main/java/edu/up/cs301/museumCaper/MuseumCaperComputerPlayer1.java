@@ -72,6 +72,7 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
         if(state.getIsThiefTurn()){
             return;
         }
+
         try{
             Thread.sleep(300);
         }
@@ -143,3 +144,21 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
         return new int[]{0,0};
     }
 }
+
+/**
+ * @author Logan Ortogero
+ * @author Felipe Lucas Pablo
+External Citation
+Date: 4 April 2026
+Problem: The guards need pathfinding algorithms! dunno what the heck is a bread first is but we need it
+Referenced several websites pertaining to pathfinding, as well as the Oracle Java documentation for
+           hashmaps, linked lists, as well as the queue interface.
+Resources: https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/
+          https://www.redblobgames.com/pathfinding/a-star/introduction.html
+          https://www.geeksforgeeks.org/dsa/shortest-path-unweighted-graph/
+          https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
+          https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html
+          https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
+Solution: Utilized the information in the documentation, as well as some code snippets from
+          each of the non-oracle websites in order to build up the pathfinding to what we needed.
+ */

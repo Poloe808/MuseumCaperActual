@@ -9,7 +9,7 @@ import edu.up.cs301.GameFramework.LocalGame;
 import edu.up.cs301.GameFramework.gameConfiguration.*;
 
 /**
- * this is the primary activity for Counter game
+ * this is the primary activity for MuseumCaper game
  *
  * @author Logan Ortogero
  * @author Paloma Wilson
@@ -17,6 +17,51 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * @author Felipe Lucas Pablo
  *
  * @version July 2013
+ *
+ * //////////////////////// (Project #I Portion) ////////////////////////
+ *
+ * All of the main functionality detailed in the requirements for the Thief is present in the game.
+ * This includes:
+ * - Thief movement
+ * - Stealing paintings
+ * - Disabling cameras
+ * - Checking Locks
+ * - Ending their turn
+ *
+ * Note: There is no indication on the GUI whether or not the Thief has failed a lock check.
+ *       If the thief checks a lock that is unlocked, they escape, and if they check one that *IS*
+ *       locked, nothing occurs.
+ *
+ * For the Guard, or the computer player, their pathfinding algorithm (at least for the "Smart AI")
+ * is implemented. The actions that are implemented are as follows:
+ * - Movement
+ * - using Eyes
+ * - using Cameras
+ *
+ * Notably, the motion detection action and scan actions are absent from this list.
+ *
+ * We indeed have a 'smart' AI and 'dumb' AI. Computer Player 1 is the "Smart" AI, and
+ * Computer Player 2 is the "dumb" AI.
+ * The smart AI utilizes some information that they're given in order to pathfind make what some
+ * would call "actual plays," such as chasing the thief once they become visible on the board.
+ * The dumb AI just does whatever it feels like, randomly.
+ *
+ * The graphics/pngs were cleaned up, and the board now looks a lot cleaner. I believe it looks
+ * appealing, thank u Paloma (^▽^)
+ *
+ * It is currently possible to play with 1 human player and 3 computers; No more, no less.
+ * *IMPORTANT* the game only works with the human player in the first slot of configuration,
+ * with the computer players filling up the rest of the spaces.
+ * This was something being worked on, however I couldn't find the place to access playerNum in
+ * a nice and healthy manner in order to pass it into the State, so the order is hardcoded.
+ * While this wasn't directly addressed in our requirements, Id've liked to implement this.
+ *
+ * All of the elements in the GUI (except for the settings button), are in working order,
+ * and display the information the player needs in order to play effectively.
+ * There are also some extra indicators such as the current player being highlighted in
+ * the top right, and buttons highlighting when actions become available to the player.
+ *
+ * //////////////////////// (Project #I Portion) ////////////////////////
  */
 public class MuseumCaperMainActivity extends GameMainActivity {
 	
@@ -25,9 +70,9 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 
 	/**
 	 * Create the default configuration for this game:
-	 * - one human player vs. one computer player
-	 * - minimum of 1 player, maximum of 2
-	 * - one kind of computer player and one kind of human player available
+	 * - one human player vs. three computer player
+	 * - minimum of 1 human player, maximum of 3 computers
+	 * - two kind of computer player and one kind of human player available
 	 * 
 	 * @return
 	 * 		the new configuration object, representing the default configuration
