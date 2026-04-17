@@ -822,6 +822,26 @@ public class MuseumCaperState extends GameState {
         //thief isn't able to be seen
         return false;
     }
+    public boolean useCamera(MuseumCaperUseCameraAction action){
+        MapTile targetTile = null;
+        int targetCol = 0;
+        int targetRow = 0;
+        for(int row = 0; row < 12; row++){
+            for(int col = 0; col < 13; col++){
+                if (board.get(row).get(col).getCamera().getCameraNum() == action.getCameraNumber()){
+                    targetCol = col;
+                    targetRow = row;
+                    targetTile = board.get(row).get(col);
+                }
+            }
+        }
+        if (targetTile == null){
+            return false;
+        }
+        else{
+            return useEyes(new MuseumCaperUseEyesAction(null, targetCol, targetRow));
+        }
+    }
 
     /**
      * helper method for useEyes

@@ -61,8 +61,8 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * There are also some extra indicators such as the current player being highlighted in
  * the top right, and buttons highlighting when actions become available to the player.
  *
- * POTENTIAL KNOWN BUGS
- * useEyes crashes the game sometimes
+ * POTENTIAL BUGS
+ * Use eyes may not work at it's edges?
  *
  * //////////////////////// (Project #I Portion) ////////////////////////
  */

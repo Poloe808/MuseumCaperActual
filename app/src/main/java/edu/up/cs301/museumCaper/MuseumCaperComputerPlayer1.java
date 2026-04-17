@@ -89,7 +89,8 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
             }
             //if it's 1, use a camera :)
             else if (state.getGuardAction() == 1) {
-
+                int cameraNum = random.nextInt(6) + 1;
+                game.sendAction(new MuseumCaperUseCameraAction(this, cameraNum));
             }
         }
 
