@@ -80,8 +80,7 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
         //check that its not a wall
         //while (state.getBoard().get(rowGoal).get(colGoal).getLeftWall() && state.getBoard().get(rowGoal).get(colGoal).getTopWall()){
         //    rowGoal = random.nextInt(12);
-        //    colGoal = random.nextInt(13);
-        //}
+        //    colGoal = random.nextInt(13)//}
         int[] guardPos = getGuardPosition();
         // now we use the algorithm to move the guards
         int[] move = PathFinding.getMoveNext(state, guardPos[0],guardPos[1],rowGoal,colGoal);
