@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,6 @@ public class DrawView extends SurfaceView {
             BitmapFactory.decodeResource(getResources(), R.drawable.coloredboard);
     private Bitmap lockArt =
             BitmapFactory.decodeResource(getResources(), R.drawable.lock);
-
 
     private List<Bitmap> artList;
     private List<Bitmap> cameraArtList;

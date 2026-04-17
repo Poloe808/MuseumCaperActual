@@ -61,6 +61,9 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * There are also some extra indicators such as the current player being highlighted in
  * the top right, and buttons highlighting when actions become available to the player.
  *
+ * POTENTIAL KNOWN BUGS
+ * useEyes crashes the game sometimes
+ *
  * //////////////////////// (Project #I Portion) ////////////////////////
  */
 public class MuseumCaperMainActivity extends GameMainActivity {

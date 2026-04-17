@@ -64,12 +64,14 @@ public class MuseumCaperState extends GameState {
     private int moveCount; //how many moves the player whose turn it is has left
 
     //may not be necessary but am keeping this for now TODO
-    private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
+    private int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turnprivate int guardMoveTotal; //the random number (1-6) that the guard "rolls" at the start of their turn
 
     private List<Integer> thiefLocation;
     private List<Integer> guardOneLocation;
     private List<Integer> guardTwoLocation;
     private List<Integer> guardThreeLocation;
+    private int guardAction;
+    private boolean guardActionUsed;
 
 
     /**
@@ -78,6 +80,7 @@ public class MuseumCaperState extends GameState {
 	public MuseumCaperState() {
         turn = 0;
         isVisible = false;
+        thiefVisible = false;
         stolenPaintings = 0;
         isThiefTurn = true;
         thiefEscaped = false;
@@ -399,6 +402,7 @@ public class MuseumCaperState extends GameState {
     public boolean getIsVisible() {
         return this.isVisible;
     }
+    public boolean getThiefVisible(){return thiefVisible;}
 
     public int getStolenPaintings() {
         return this.stolenPaintings;
@@ -425,7 +429,8 @@ public class MuseumCaperState extends GameState {
     public int getGuardOneId(){return guardOneId;}
     public int getGuardTwoId(){return guardTwoId;}
     public int getGuardThreeId(){return guardThreeId;}
-
+    public int getGuardAction(){return guardAction;}
+    public boolean getGuardActionUsed(){return guardActionUsed;}
     public List<Painting> getPaintings(){return paintings;}
     public List<Lock> getLocksList(){return locksList;}
     public List<Camera> getCameras(){return cameras;}
@@ -537,6 +542,7 @@ public class MuseumCaperState extends GameState {
     public void setGuardOneId(int id){guardOneId = id;}
     public void setGuardTwoId(int id){guardTwoId = id;}
     public void setGuardThreeId(int id){guardThreeId = id;}
+    public void setGuardUsed(boolean actionUsed){guardActionUsed = actionUsed;}
 
     // ==================================== END OF THE SETTERS =====================================
     //==============================================================================================
@@ -733,7 +739,7 @@ public class MuseumCaperState extends GameState {
         //current position of the guard is embedded in the action
         int guardCol = action.getCol();
         int guardRow = action.getRow();
-
+        guardActionUsed = true;
         for(int dir = 0; dir < 4; dir++){
             int checkingCol = guardCol;
             int checkingRow = guardRow;
@@ -742,6 +748,9 @@ public class MuseumCaperState extends GameState {
             //checking all the tiles to the left til we hit a wall
             if (dir == 0){
                 while(wallInTheWay == false && thiefVisible == false){
+                    if(checkingCol < 0){
+                        break;
+                    }
                     if(board.get(checkingRow).get(checkingCol).getLeftWall()){
                         wallInTheWay = true;
                     }
@@ -757,6 +766,9 @@ public class MuseumCaperState extends GameState {
             //checking all the tiles to the right til we hit a wall
             if (dir == 1){
                 while(wallInTheWay == false && thiefVisible == false){
+                    if (checkingCol >= 13){
+                        break;
+                    }
                     if(board.get(checkingRow).get(checkingCol + 1).getLeftWall()){
                         wallInTheWay = true;
                     }
@@ -772,6 +784,9 @@ public class MuseumCaperState extends GameState {
             //checking all the tiles down
             if (dir == 2){
                 while(wallInTheWay == false && thiefVisible == false){
+                    if (checkingRow > 11){
+                        break;
+                    }
                     if(board.get(checkingRow + 1).get(checkingCol).getTopWall()){
                         wallInTheWay = true;
                     }
@@ -787,6 +802,9 @@ public class MuseumCaperState extends GameState {
             //checking all the tiles up
             if (dir == 3){
                 while(wallInTheWay == false && thiefVisible == false){
+                    if (checkingRow < 0){
+                        break;
+                    }
                     if(board.get(checkingRow).get(checkingCol).getTopWall()){
                         wallInTheWay = true;
                     }
@@ -838,8 +856,11 @@ public class MuseumCaperState extends GameState {
         }
         else{
             Random rng = new Random();
-            moveCount = (rng.nextInt(6)) + 1;
             currentPlayer = (getTurn() % 3) + 1;
+            moveCount = rng.nextInt(6) + 1;
+            guardAction = rng.nextInt(2);
+            guardActionUsed = false;
+
             setTurn(getTurn()+1);
         }
         setIsThiefTurn(!getIsThiefTurn());
@@ -868,51 +889,6 @@ public class MuseumCaperState extends GameState {
     public boolean rollActionDie(GameAction action){
         Random rng = new Random();
         int dieAction = (rng.nextInt(6)+1);
-        //eye action
-        if(dieAction==1||dieAction==2||dieAction==3||dieAction==4) {
-            int camOrEye = (rng.nextInt(2));
-            //random number (either 1 or 2)
-            //if 0 do check working camera prompt
-            if(camOrEye==0) {
-                int camNum = (rng.nextInt(6)+1);
-                Camera track = getCameras().get(camNum);
-                if(track.isCameraWorking()) {
-                    //guard go to this space for 2 turns/probably will not implement
-                }
-            }
-            //TODO pathfinding using logic below
-            //if 1 do check if thief in line of sight for guard
-            else {
-                //check for current turn, then that turns guard uses the useEye
-                if(getCurrentPlayer()==1) {
-                    //gets current GamePlayer
-                    //get's last 2 index's in guardLocation arrayList as x,y coordinate pairs
-                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardOneLocation().get(getGuardOneLocation().size()-1)),
-                            (getGuardOneLocation().get(getGuardOneLocation().size()))));
-                }
-                else if(getCurrentPlayer()==2) {
-                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardTwoLocation().get(getGuardTwoLocation().size()-1)),
-                            (getGuardTwoLocation().get(getGuardTwoLocation().size()))));
-                }
-                else if(getCurrentPlayer()==3) {
-                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),(getGuardThreeLocation().get(getGuardThreeLocation().size()-1)),
-                            (getGuardThreeLocation().get(getGuardThreeLocation().size()))));
-                }
-            }
-        }
-        //Scan action
-        if(dieAction==5) {
-            //TODO useEye Logic to prompt if any camera can see thief
-            for(Camera cam : getCameras()) {
-                if(cam.isCameraWorking()) {
-                    useEyes(new MuseumCaperUseEyesAction(action.getPlayer(),cam.getCol(),cam.getRow()));
-                }
-            }
-        }
-        //Motion Detector Action - Stretch Goal
-        if(dieAction==6) {
-            //Idea: guards chase current thief location plus 1 in all direction i.e. guards chase general area of thief location
-        }
         return true;
     }
 

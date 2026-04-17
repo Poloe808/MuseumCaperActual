@@ -111,6 +111,9 @@ public class MuseumCaperLocalGame extends LocalGame {
         if(action instanceof MuseumCaperRollMoveDie){
             return gameState.rollMovementDie((MuseumCaperRollMoveDie)action);
         }
+        if(action instanceof MuseumCaperUseEyesAction){
+            return gameState.useEyes((MuseumCaperUseEyesAction)action);
+        }
         return false;
 	}//makeMove
 

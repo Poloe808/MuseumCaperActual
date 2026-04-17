@@ -105,7 +105,8 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
 
         //change all the texts to reflect the changes in state
         movesLeftTextView.setText("Moves Left: " + state.getMoveCount());
-        if (state.getIsVisible()) {
+
+        if (state.getThiefVisible()) {
             isSeenTextView.setText("You've been seen!");
         } else {
             isSeenTextView.setText("You've not yet been spotted...");

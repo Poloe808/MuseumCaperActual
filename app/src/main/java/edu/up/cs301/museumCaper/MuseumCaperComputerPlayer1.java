@@ -82,6 +82,17 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
 
         int[] guardPos = getGuardPosition();
 
+        if(!state.getGuardActionUsed()) {
+            //if it's 0, use ya eyes ya big bum
+            if (state.getGuardAction() == 0) {
+                game.sendAction((new MuseumCaperUseEyesAction(this, getGuardPosition()[1], getGuardPosition()[0])));
+            }
+            //if it's 1, use a camera :)
+            else if (state.getGuardAction() == 1) {
+
+            }
+        }
+
         // end the turn if no moves left
         if(state.getMoveCount() == 0){
             do {
@@ -106,6 +117,10 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
             } while ((state.getBoard().get(rowGoal).get(colGoal).getLeftWall() || state.getBoard().get(rowGoal).get(colGoal).getTopWall()));
         }
 
+        if(state.getThiefVisible()){
+            colGoal = state.getThiefLocation().get(0);
+            rowGoal = state.getThiefLocation().get(1);
+        }
 
         // now we use the algorithm to move the guards
         int[] move = PathFinding.getMoveNext(state, guardPos[0], guardPos[1], rowGoal, colGoal);
@@ -120,6 +135,10 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
 
         if(move[0] != 0 || move[1] != 0){
             game.sendAction(new MuseumCaperMoveAction(this, move[0], move[1]));
+        }
+
+        if (state.getMoveCount() == 0){
+            game.sendAction(new MuseumCaperEndTurnAction(this));
         }
     }
 

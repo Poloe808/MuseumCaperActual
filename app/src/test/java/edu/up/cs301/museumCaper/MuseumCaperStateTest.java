@@ -263,18 +263,22 @@ public class MuseumCaperStateTest extends TestCase {
         //thief in line of sight up
         result = useEyesWhenThiefIs(state, eyesAction, 6, 3);
         assertTrue(result);
+        assertTrue(state.getThiefVisible());
 
         //thief in line of sight to the right
         result = useEyesWhenThiefIs(state, eyesAction, 7, 5);
         assertTrue(result);
+        assertTrue(state.getThiefVisible());
 
         //thief in line of sight down
         result = useEyesWhenThiefIs(state, eyesAction, 6, 8);
         assertTrue(result);
+        assertTrue(state.getThiefVisible());
 
         //thief in line of sight to the left
         result = useEyesWhenThiefIs(state, eyesAction, 4, 5);
         assertTrue(result);
+        assertTrue(state.getThiefVisible());
 
         //thief diagonally up and to the left
         result = useEyesWhenThiefIs(state, eyesAction, 5, 4);
