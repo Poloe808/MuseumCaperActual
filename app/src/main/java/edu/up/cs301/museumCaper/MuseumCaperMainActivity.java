@@ -19,7 +19,7 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * @version July 2013
  *
  * //////////////////////// (Project #I Portion) ////////////////////////
- *
+ * =============================================================================================
  * All of the main functionality detailed in the requirements for the Thief is present in the game.
  * This includes:
  * - Thief movement
@@ -39,31 +39,33 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * - using Cameras
  *
  * Notably, the motion detection action and scan actions are absent from this list.
- *
+ * ===================================================================================
  * We indeed have a 'smart' AI and 'dumb' AI. Computer Player 1 is the "Smart" AI, and
  * Computer Player 2 is the "dumb" AI.
  * The smart AI utilizes some information that they're given in order to pathfind make what some
  * would call "actual plays," such as chasing the thief once they become visible on the board.
  * The dumb AI just does whatever it feels like, randomly.
- *
+ * ===================================================================================
  * The graphics/pngs were cleaned up, and the board now looks a lot cleaner. I believe it looks
  * appealing, thank u Paloma (^▽^)
- *
+ * ==========================================================================================
  * It is currently possible to play with 1 human player and 3 computers; No more, no less.
  * *IMPORTANT* the game only works with the human player in the first slot of configuration,
- * with the computer players filling up the rest of the spaces.
+ * with the computer players filling up the rest of the spaces. Any configuration of
+ * "dumb" and "smart" ai should work.
  * This was something being worked on, however I couldn't find the place to access playerNum in
  * a nice and healthy manner in order to pass it into the State, so the order is hardcoded.
  * While this wasn't directly addressed in our requirements, Id've liked to implement this.
- *
+ * =========================================================================================
  * All of the elements in the GUI (except for the settings button), are in working order,
  * and display the information the player needs in order to play effectively.
  * There are also some extra indicators such as the current player being highlighted in
  * the top right, and buttons highlighting when actions become available to the player.
- *
+ * =====================================================================================
  * POTENTIAL BUGS
  * Use eyes may not work at it's edges?
- *
+ * =================================================================
+ * NOTE: It may seem like the AI freezes a bit. Just give it time to think! Promise
  * //////////////////////// (Project #I Portion) ////////////////////////
  */
 public class MuseumCaperMainActivity extends GameMainActivity {
