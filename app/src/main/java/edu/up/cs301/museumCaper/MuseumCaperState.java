@@ -11,7 +11,8 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 
 /**
- * This contains the state for Museum Caper. The state consists of a lot of stuff.
+ * This contains the state for Museum Caper. Creates board, sets positions,
+ * action's, and deep copy cntr's. Game's current data.
  *
  * @author Logan Ortogero
  * @author Paloma Wilson

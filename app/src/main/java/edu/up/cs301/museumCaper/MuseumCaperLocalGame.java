@@ -9,7 +9,8 @@ import android.graphics.Point;
 import android.util.Log;
 
 /**
- * A class that represents the state of a game.
+ * A class that represents the state of a game. Golden State of the Game.
+ * Will be copied, sent out, and changed by user during gameplay.
  *
  *
  * @author Logan Ortogero
