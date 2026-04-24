@@ -961,7 +961,7 @@ public class MuseumCaperState extends GameState {
             Random rng = new Random();
             currentPlayer = (getTurn() % 3) + 1;
             moveCount = rng.nextInt(6) + 1;
-            guardAction = rng.nextInt(2);
+            guardAction = rng.nextInt(3);
             guardActionUsed = false;
 
             setTurn(getTurn()+1);

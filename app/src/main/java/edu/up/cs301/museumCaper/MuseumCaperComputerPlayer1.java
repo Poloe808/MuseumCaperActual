@@ -82,6 +82,9 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
 
         int[] guardPos = getGuardPosition();
 
+        int chosenCol = 0;
+        int chosenRow = 0;
+
         if(!state.getGuardActionUsed()) {
             //if it's 0, use ya eyes ya big bum
             if (state.getGuardAction() == 0) {
@@ -91,6 +94,36 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
             else if (state.getGuardAction() == 1) {
                 int cameraNum = random.nextInt(6) + 1;
                 game.sendAction(new MuseumCaperUseCameraAction(this, cameraNum));
+            }
+            else if(state.getGuardAction() == 2){
+                //motion detector oops oops oops oops oops oops oops TODO
+                int thiefCol = state.getThiefLocation().get(0);
+                int thiefRow = state.getThiefLocation().get(1);
+                String color = checkColor(thiefCol,thiefRow);
+                if (color.equals("Purple")){
+                    chosenCol = 2;
+                    chosenRow = 4;
+                }
+                else if (color.equals("Yellow")){
+                    chosenCol = 2;
+                    chosenRow = 7;
+                }
+                else if (color.equals("Red")){
+                    chosenCol = 6;
+                    chosenRow = 1;
+                }
+                else if (color.equals("White")){
+                    chosenCol = 5;
+                    chosenRow = 5;
+                }
+                else if (color.equals("Blue")){
+                    chosenCol = 9;
+                    chosenRow = 3;
+                }
+                else if (color.equals("Green")){
+                    chosenCol = 9;
+                    chosenRow = 7;
+                }
             }
         }
 
@@ -116,6 +149,11 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
                 rowGoal = random.nextInt(12);
                 colGoal = random.nextInt(13);
             } while ((state.getBoard().get(rowGoal).get(colGoal).getLeftWall() || state.getBoard().get(rowGoal).get(colGoal).getTopWall()));
+        }
+
+        if(chosenCol != 0){
+            colGoal = chosenCol;
+            rowGoal = chosenRow;
         }
 
         if(state.getThiefVisible()){
@@ -162,6 +200,37 @@ public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Ti
             };
         }
         return new int[]{0,0};
+    }
+
+    /**
+     * helper method for the motion detection action
+     * @param col
+     *      the col of the thief
+     * @param row
+     *      row of the thief
+     * @return a string of the Color the thief is in
+     */
+    private String checkColor(int col, int row){
+        String color = "Grey";
+        if(col >= 0 && col <= 2 && row >= 2 && row <= 4){
+            color = "Purple";
+        }
+        if(col >= 0 && col <= 2 && row >= 6 && row <= 8){
+            color = "Yellow";
+        }
+        if(col >= 4 && col <= 7 && row >= 3 && row <= 7){
+            color = "White";
+        }
+        if(col >= 9 && col <= 11 && row >= 2 && row <= 5){
+            color = "Blue";
+        }
+        if(col >= 9 && col <= 11 && row >= 5 && row <= 8){
+            color = "Green";
+        }
+        if(col >= 3 && col <= 8 && row >= 0 && row <= 1){
+            color = "Red";
+        }
+        return color;
     }
 }
 

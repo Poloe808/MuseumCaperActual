@@ -77,6 +77,7 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * The game now starts off in a placement phase
  * - Use the left and right buttons to change where the pawn starts off
  * - press the "end placement" button once you're satisfied, and start playing.
+ * - The guards can now act upon a motion detection action! Albeit only for the turn it was called
  *
  * SMART vs. DUMB
  * Smart AI - ComputerPlayer1
@@ -87,6 +88,8 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * ============================================================================
  * Added the class headers
  * ============================================================================
+ * Note: Camera Scan was not implemented. Couldn't find reasonable behavior as no cameras intersect.
+ *       sightlines.
  * //////////////////////// (Project #H Portion) ////////////////////////
  */
 public class MuseumCaperMainActivity extends GameMainActivity {
