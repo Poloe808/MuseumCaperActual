@@ -67,6 +67,27 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * =================================================================
  * NOTE: It may seem like the AI freezes a bit. Just give it time to think! Promise
  * //////////////////////// (Project #I Portion) ////////////////////////
+ *
+ *
+ * //////////////////////// (Project #H Portion) ////////////////////////
+ * =========================================================================
+ * Most of the same stuff from the Project #I portion!
+ * ======================================================================
+ * Some added Functionality:
+ * The game now starts off in a placement phase
+ * - Use the left and right buttons to change where the pawn starts off
+ * - press the "end placement" button once you're satisfied, and start playing.
+ *
+ * SMART vs. DUMB
+ * Smart AI - ComputerPlayer1
+ * Dumb AI - ComputerPlayer2
+ *
+ * ComputerPlayer3 is just a copy of 1. I'm not quite sure why it was created.
+ * I too wonder that about myself.
+ * ============================================================================
+ * Added the class headers
+ * ============================================================================
+ * //////////////////////// (Project #H Portion) ////////////////////////
  */
 public class MuseumCaperMainActivity extends GameMainActivity {
 	
