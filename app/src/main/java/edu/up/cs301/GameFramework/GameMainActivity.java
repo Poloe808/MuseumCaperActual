@@ -34,6 +34,8 @@ import edu.up.cs301.GameFramework.utilities.IPCoder;
 import edu.up.cs301.GameFramework.utilities.Logger;
 import edu.up.cs301.GameFramework.utilities.MessageBox;
 import edu.up.cs301.GameFramework.utilities.Saving;
+import edu.up.cs301.museumCaper.MuseumCaperLocalGame;
+import edu.up.cs301.museumCaper.MuseumCaperState;
 import edu.up.cs301.museumCaper.R;
 
 /**
@@ -363,6 +365,11 @@ public abstract class GameMainActivity extends Activity implements
 
         // start the game; then return null to indicate that the launch was
         // successful
+
+        //TODO: HEY I MESSED WITH THE CONFIG HERE IF THINGS BLOW UP ITS BECAUSE OF THIS//
+
+        /////////////////////////////////////////////////////////////////////////////////
+
         game.start(players);
         return null;
 

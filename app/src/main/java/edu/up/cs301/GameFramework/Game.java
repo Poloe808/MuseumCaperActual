@@ -40,5 +40,4 @@ public interface Game {
      * @return GameState
      */
     GameState getGameState();
-
 }

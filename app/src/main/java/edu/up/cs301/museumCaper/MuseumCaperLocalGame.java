@@ -56,29 +56,37 @@ public class MuseumCaperLocalGame extends LocalGame {
      * @param state
      */
 	public MuseumCaperLocalGame(GameState state) {
-		// initialize the game state, with the counter value starting at 0
+		// initialize the game state, with everything at initialization values.
 		if (! (state instanceof MuseumCaperState)) {
 			state = new MuseumCaperState();
 		}
 		this.gameState = (MuseumCaperState)state;
 		super.state = state;
-
 	}
 
-    /*
-    /for(GamePlayer p : players){
-            if (p instanceof MuseumCaperHumanPlayer){
-                MuseumCaperHumanPlayer player = (MuseumCaperHumanPlayer) p;
-                gameState.setThiefPlayerId(player.getPlayerID());
-            }
-            else if (p instanceof MuseumCaperComputerPlayer1){
-                MuseumCaperComputerPlayer1 player = (MuseumCaperComputerPlayer1) p;
-                if (gameState.getGuardOneId() == -1) {
-                    gameState.setGuardOneId(player.getPlayerID());
+    public void updateIDs(){
+        if(players != null) {
+            for (GamePlayer p : players) {
+                if (p instanceof MuseumCaperHumanPlayer) {
+                    MuseumCaperHumanPlayer player = (MuseumCaperHumanPlayer) p;
+                    gameState.setThiefPlayerId(player.getPlayerID());
+                } else if (p instanceof MuseumCaperComputerPlayer1) {
+                    MuseumCaperComputerPlayer1 player = (MuseumCaperComputerPlayer1) p;
+                    if (gameState.getGuardOneId() == -1) {
+                        gameState.setGuardOneId(player.getPlayerID());
+                    }
+                    else if (gameState.getGuardTwoId() == -1){
+                        gameState.setGuardTwoId(player.getPlayerID());
+                    }
+                    else if (gameState.getGuardThreeId() == -1){
+                        gameState.setGuardThreeId(player.getPlayerID());
+                    }
                 }
             }
         }
-     */
+
+        gameState.updateGuardIDs();
+    }
 
 	@Override
 	protected boolean makeMove(GameAction action) {
@@ -117,6 +125,12 @@ public class MuseumCaperLocalGame extends LocalGame {
         }
         if (action instanceof MuseumCaperUseCameraAction){
             return gameState.useCamera((MuseumCaperUseCameraAction)action);
+        }
+        if (action instanceof MuseuemCaperChangePositionAction){
+            return gameState.changePosition((MuseuemCaperChangePositionAction)action);
+        }
+        if (action instanceof MuseumCaperEndPlacementAction){
+            return gameState.endPlacement((MuseumCaperEndPlacementAction)action);
         }
         return false;
 	}//makeMove

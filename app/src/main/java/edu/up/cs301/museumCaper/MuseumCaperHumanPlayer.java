@@ -52,6 +52,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
     Button stealPainting;
     Button disableCamera;
     Button checkLock;
+    Button endPlacement;
 
     // the most recent game state, as given to us by the MuseumCaperLocalGame
     private MuseumCaperState state;
@@ -130,6 +131,14 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
             disableCamera.setBackgroundColor(Color.parseColor("#ff828282"));
         }
 
+        //change color of the endPlacement button depending on the phase
+        if(state.getIsSettingUp()){
+            endPlacement.setBackgroundColor(Color.parseColor("#818181ff"));
+        }
+        else{
+            endPlacement.setBackgroundColor(Color.parseColor("#ff828282"));
+        }
+
         //change color of check lock button
         if (mt.hasLock()) {
             checkLock.setBackgroundColor(Color.parseColor("#818181ff"));
@@ -199,39 +208,48 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         }
 		// Construct the action and send it to the game
 		GameAction action = null;
-		if (button.getId() == R.id.upButton) {
-			// up button: creates a "move" action
-			action = new MuseumCaperMoveAction(this,0,1);
-		}
-		else if (button.getId() == R.id.downButton) {
-			// down button: creates a "move" action
-			action = new MuseumCaperMoveAction(this,0,-1);
-		}
-        else if (button.getId() == R.id.leftButton) {
-            // left button: creates a "move" action
-            action = new MuseumCaperMoveAction(this,-1,0);
+        if(state.getIsSettingUp()){
+            if (button.getId() == R.id.leftButton) {
+                action = new MuseuemCaperChangePositionAction(this, -1);
+            }
+            else if (button.getId() == R.id.rightButton) {
+                action = new MuseuemCaperChangePositionAction(this, 1);
+            }
+            else if(button.getId() == R.id.endPlacementButton){
+                action = new MuseumCaperEndPlacementAction(this);
+            }
+            else{
+                //something else was pressed: therefore ignore
+                return;
+            }
         }
-        else if (button.getId() == R.id.rightButton) {
-            // left button: creates a "move" action
-            action = new MuseumCaperMoveAction(this,1,0);
-            Log.i("button", "yeah you clicked the right button");
+        else {
+            if (button.getId() == R.id.upButton) {
+                // up button: creates a "move" action
+                action = new MuseumCaperMoveAction(this, 0, 1);
+            } else if (button.getId() == R.id.downButton) {
+                // down button: creates a "move" action
+                action = new MuseumCaperMoveAction(this, 0, -1);
+            } else if (button.getId() == R.id.leftButton) {
+                // left button: creates a "move" action
+                action = new MuseumCaperMoveAction(this, -1, 0);
+            } else if (button.getId() == R.id.rightButton) {
+                // left button: creates a "move" action
+                action = new MuseumCaperMoveAction(this, 1, 0);
+                Log.i("button", "yeah you clicked the right button");
+            } else if (button.getId() == R.id.stealPaintingButton) {
+                action = new MuseumCaperStealPaintingAction(this);
+            } else if (button.getId() == R.id.endTurnButton) {
+                action = new MuseumCaperEndTurnAction(this);
+            } else if (button.getId() == R.id.checkLockButton) {
+                action = new MuseumCaperCheckLockAction(this);
+            } else if (button.getId() == R.id.disableCameraButton) {
+                action = new MuseumCaperDisableCameraAction(this);
+            } else {
+                // something else was pressed: ignore
+                return;
+            }
         }
-        else if (button.getId() == R.id.stealPaintingButton){
-            action = new MuseumCaperStealPaintingAction(this);
-        }
-        else if (button.getId() == R.id.endTurnButton){
-            action = new MuseumCaperEndTurnAction(this);
-        }
-        else if (button.getId() == R.id.checkLockButton){
-            action = new MuseumCaperCheckLockAction(this);
-        }
-        else if (button.getId() == R.id.disableCameraButton){
-            action = new MuseumCaperDisableCameraAction(this);
-        }
-		else {
-			// something else was pressed: ignore
-			return;
-		}
 		
 		game.sendAction(action); // send action to the game
     }// onClick
@@ -287,6 +305,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         Button downMove = activity.findViewById(R.id.downButton);
 
         Button settings = activity.findViewById(R.id.settingsButton);
+        endPlacement = activity.findViewById(R.id.endPlacementButton);
 
         //Image Views - paintings - cameras//
         //Paintings
@@ -322,6 +341,7 @@ public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickLi
         downMove.setOnClickListener(this);
 
         settings.setOnClickListener(this);
+        endPlacement.setOnClickListener(this);
 		// if we have a game state, "simulate" that we have just received
 		// the state from the game so that the GUI values are updated
 		if (state != null) {

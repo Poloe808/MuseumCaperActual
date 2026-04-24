@@ -145,7 +145,6 @@ public class MuseumCaperMainActivity extends GameMainActivity {
 	public LocalGame createLocalGame(GameState state) {
 		if (state == null) state = new MuseumCaperState();
 		return new MuseumCaperLocalGame(state);
-
 	}
 
 }

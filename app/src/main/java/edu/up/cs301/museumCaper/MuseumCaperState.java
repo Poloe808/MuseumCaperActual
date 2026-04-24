@@ -73,7 +73,11 @@ public class MuseumCaperState extends GameState {
     private List<Integer> guardThreeLocation;
     private int guardAction;
     private boolean guardActionUsed;
-
+    private List<Integer> guardIDs;
+    //col, row format.
+    private List<List<Integer>> thiefStartingLocations;
+    private boolean isSettingUp;
+    private int positionLocation;
 
     /**
 	 * constructor, initializes ALL variables, sets up board
@@ -86,6 +90,8 @@ public class MuseumCaperState extends GameState {
         isThiefTurn = true;
         thiefEscaped = false;
         thiefCaught = false;
+        isSettingUp = true;
+        positionLocation = 0;
 
         //how many times players are allowed to move
         moveCount = 3;
@@ -216,7 +222,37 @@ public class MuseumCaperState extends GameState {
         setPainting(6, 6,7);
         setPainting(8, 0,8);
         setPainting(8, 11,9);
+
+        //initializing thiefLocations
+        thiefStartingLocations = new ArrayList<List<Integer>>();
+        addLocation(0,3);
+        addLocation(0,5);
+        addLocation(0,7);
+        addLocation(1,8);
+        addLocation(5,10);
+        addLocation(6,10);
+        addLocation(11,7);
+        addLocation(11,4);
+        addLocation(10,2);
+        addLocation(7,0);
+        addLocation(4, 0);
+
 	}
+
+    /**
+     * helper method; adds locations to the list of potential thief starting locations
+     *
+     * @param col
+     * 		the column of the location
+     * @param row
+     *      the row of the location
+     */
+    private void addLocation(int col, int row){
+        List<Integer> tempList = new ArrayList<Integer>();
+        tempList.add(col);
+        tempList.add(row);
+        thiefStartingLocations.add(tempList);
+    }
 
 	/**
 	 * copy constructor; makes a copy of the original object
@@ -237,9 +273,9 @@ public class MuseumCaperState extends GameState {
         this.thiefEscaped = orig.thiefEscaped;
         this.thiefCaught = orig.thiefCaught;
         this.thiefVisible = orig.thiefVisible;
+        this.isSettingUp = orig.isSettingUp;
+        this.positionLocation = orig.positionLocation;
 
-        this.x = orig.x;
-        this.y = orig.y;
         this.locksList = orig.locksList;
         this.unlocked = orig.unlocked;
 
@@ -280,9 +316,24 @@ public class MuseumCaperState extends GameState {
             this.locksList = new ArrayList<Lock>(orig.locksList);
         }
 
-    //TODO: pls fix <3
-        if(playerID == thiefPlayerId){
-            // have the coordinates of the thief
+        this.thiefPlayerId = orig.thiefPlayerId;
+        this.guardOneId = orig.guardOneId;
+        this.guardTwoId = orig.guardTwoId;
+        this.guardThreeId = orig.guardThreeId;
+
+        if(guardIDs != null) {
+            for (int i = 0; i < guardIDs.size(); i++) {
+                this.guardIDs.add(orig.guardIDs.get(i));
+            }
+        }
+
+        thiefStartingLocations = new ArrayList<List<Integer>>();
+        for(int row = 0; row < orig.thiefStartingLocations.size(); row++){
+            List<Integer> temp = new ArrayList<Integer>();
+            for(int col = 0; col < orig.thiefStartingLocations.get(0).size(); col++){
+                temp.add(orig.thiefStartingLocations.get(row).get(col));
+            }
+            thiefStartingLocations.add(temp);
         }
 	}
 
@@ -435,6 +486,7 @@ public class MuseumCaperState extends GameState {
     public List<Painting> getPaintings(){return paintings;}
     public List<Lock> getLocksList(){return locksList;}
     public List<Camera> getCameras(){return cameras;}
+    public boolean getIsSettingUp(){return isSettingUp;}
 
     //==============================================================================================
     //====================== END OF THE GETTERS AND START OF THE SETTERS ===========================
@@ -544,6 +596,18 @@ public class MuseumCaperState extends GameState {
     public void setGuardTwoId(int id){guardTwoId = id;}
     public void setGuardThreeId(int id){guardThreeId = id;}
     public void setGuardUsed(boolean actionUsed){guardActionUsed = actionUsed;}
+
+    public void updateGuardIDs(){
+        if(guardOneId != -1){
+            guardIDs.add(guardOneId);
+        }
+        if(guardTwoId != -1){
+            guardIDs.add(guardTwoId);
+        }
+        if(guardThreeId != -1){
+            guardIDs.add(guardThreeId);
+        }
+    }
 
     // ==================================== END OF THE SETTERS =====================================
     //==============================================================================================
@@ -823,6 +887,24 @@ public class MuseumCaperState extends GameState {
         //thief isn't able to be seen
         return false;
     }
+
+    /**
+     * change position action to change the starting position
+     * @param action
+     * @return true, should be no cases where it fails.
+     */
+    public boolean changePosition(MuseuemCaperChangePositionAction action){
+        positionLocation += action.getDirection();
+        int index = positionLocation % 11;
+        setThiefLocation(thiefStartingLocations.get(index).get(1), thiefStartingLocations.get(index).get(0));
+        return true;
+    }
+
+    public boolean endPlacement(MuseumCaperEndPlacementAction action){
+        isSettingUp = false;
+        return true;
+    }
+
     public boolean useCamera(MuseumCaperUseCameraAction action){
         MapTile targetTile = null;
         int targetCol = 0;
