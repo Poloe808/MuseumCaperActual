@@ -12,9 +12,16 @@ import androidx.core.view.WindowInsetsCompat;
 /**
  * PROJECT #I TURN IN:
  *
+ * Contains OnCreate and sets contentView.
  * teams are excused from establishing network play
  * bug/functionality issue: the Check Lock button has no return message if the lock is locked
  *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
+ * @version April 2026
  */
 
 public class MainActivity extends AppCompatActivity {

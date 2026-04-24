@@ -1,12 +1,14 @@
 package edu.up.cs301.museumCaper;
 
 /**
- * @author Logan Ortogero
- *
  * Description
  * The MapTile object stores information about any given space on the board.
  * This object is meant to be stored in the 2D Array, board, in gameState. To utilize this object,
  * call a position on the board array, and use the getters/setters associated in this class
+ *
+ * @author Logan Ortogero
+ *
+ * @version April 2026
  */
 public class MapTile {
     private Camera Camera;

@@ -7,6 +7,8 @@ package edu.up.cs301.museumCaper;
  * @author Paloma Wilson
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
+ *
+ * @version April 2026
  */
 
 public class Camera {

@@ -16,7 +16,7 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
  *
- * @version July 2013
+ * @version April 2026
  *
  * //////////////////////// (Project #I Portion) ////////////////////////
  * =============================================================================================

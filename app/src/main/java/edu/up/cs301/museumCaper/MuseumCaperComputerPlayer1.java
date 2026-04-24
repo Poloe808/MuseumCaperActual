@@ -16,7 +16,7 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
  *
- * @version September 2013
+ * @version April 2026
  */
 
 public class MuseumCaperComputerPlayer1 extends GameComputerPlayer implements Tickable {

@@ -25,14 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This contains the Human-version of a MuseumCaper-player.
  *
  * @author Logan Ortogero
  * @author Paloma Wilson
  * @author Alberto Lucero
  * @author Felipe Lucas Pablo
  *
- * @version February 2026
+ * @version April 2026
  */
 public class MuseumCaperHumanPlayer extends GameHumanPlayer implements OnClickListener {
 

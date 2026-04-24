@@ -15,6 +15,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This contains the Draw View (what is drawn on screen during runtime).
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
+ * @version April 2026
+ */
+
 public class DrawView extends SurfaceView {
 
     //instance variables

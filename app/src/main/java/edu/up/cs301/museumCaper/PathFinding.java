@@ -2,6 +2,16 @@ package edu.up.cs301.museumCaper;
 import  java.util.*;
 import java.util.List;
 
+/**
+ * This contains the pathfinding algorithm for the AI Guard Players.
+ *
+ * @author Logan Ortogero
+ * @author Paloma Wilson
+ * @author Alberto Lucero
+ * @author Felipe Lucas Pablo
+ *
+ * @version April 2026
+ */
 /*
     in this class i will implement a search algorithm so that the ai bots arent moving
     aimlessly and can have a good goal so that they can move more interact with the user.
